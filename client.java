@@ -5,6 +5,7 @@ import java.net.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 
 public class Client extends JFrame {
     
@@ -25,6 +26,8 @@ public class Client extends JFrame {
 
   public Client() {
     // Panel p to hold the label and text field
+      DefaultCaret caret = (DefaultCaret)jta.getCaret();
+ caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
     JPanel p = new JPanel();
     p.setLayout(new BorderLayout());
     p.add(new JLabel("Enter data to encrypt"), BorderLayout.WEST);
@@ -46,7 +49,8 @@ public class Client extends JFrame {
       // Create a socket to connect to the server
      // Socket socket = new Socket("localhost", 8000);
        Socket socket = new Socket("68.134.160.249", 8000);
-      // Socket socket = new Socket("drake.Armstrong.edu", 8000);
+       
+       jta.append("Connection established!\n\n");
 
       // Create an input stream to receive data from the server
       fromServer = new DataInputStream(
@@ -82,8 +86,6 @@ public class Client extends JFrame {
         toServer.flush();
 
         // Display to the text area
-        
-        jta.append("Connection established!\n\n");
         
         jta.append("Data to send to server:\n" + plainText);        
         jta.append("\n\nData encrypted as\n" + new String(clientEncryptedObject.encryptedData));
