@@ -5,10 +5,12 @@ import java.net.*;
 import java.util.*;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 
 public class MultiThreadServer extends JFrame {
   // Text area for displaying contents
   private JTextArea jta = new JTextArea();
+
 
   public static void main(String[] args) {
     new MultiThreadServer();
@@ -16,6 +18,10 @@ public class MultiThreadServer extends JFrame {
 
   public MultiThreadServer() {
     // Place text area on the frame
+      
+   DefaultCaret caret = (DefaultCaret)jta.getCaret();
+ caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+      
     setLayout(new BorderLayout());
     add(new JScrollPane(jta), BorderLayout.CENTER);
 
@@ -37,7 +43,7 @@ public class MultiThreadServer extends JFrame {
         Socket socket = serverSocket.accept();
 
         // Display the client number
-        jta.append("Starting thread for client " + clientNo +
+        jta.append("\n\nStarting thread for client " + clientNo +
           " at " + new Date() + '\n');
 
         // Find the client's host name, and IP address
@@ -99,10 +105,11 @@ public class MultiThreadServer extends JFrame {
            jta.append("\nDecrypted transmission: " + clientDecrypted);
            
            XOR xorEncrypt = new XOR(clientDecrypted);
-       
+           String encryptedText = new String(xorEncrypt.encryptData().encryptedData);
+       DataObject serverEncryptedObject = xorEncrypt.encryptData();
            jta.append("\nMirror original transmission back to client, encrypted as\n" + new String(xorEncrypt.encryptData().encryptedData));
            
-           DataObject serverEncryptedObject = xorEncrypt.encryptData();
+           
            ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
            toClient.writeObject(serverEncryptedObject);
            toClient.flush();
