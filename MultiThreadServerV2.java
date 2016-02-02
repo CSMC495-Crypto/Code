@@ -140,9 +140,17 @@ public class MultiThreadServerV2 extends JFrame {
                 while (true) {
                     
                     jta.append("\n\nget data from client\n");
+                    
+                    jta.append("create DataObject\n");
             
                     DataObject clientEncryptedObject = null;
+                    
+                    jta.append("create ObjectInputStream\n");
+                            
                     ObjectInputStream fromClient = new ObjectInputStream(socket.getInputStream());
+                    
+                    jta.append("read object from client\n");
+                    
                     clientEncryptedObject = (DataObject) fromClient.readObject();
                     
                     jta.append("decrypt and report data\n");
@@ -177,7 +185,7 @@ public class MultiThreadServerV2 extends JFrame {
                         
                         jta.append("encrypt data\n");
                     
-                    XOR xorEncryptInitial = new XOR("Database updated.");
+                    XOR xorEncryptInitial = new XOR("Database successfully updated\n");
                     DataObject serverEncryptedObjectInitial = xorEncryptInitial.encryptData();
                     
                     jta.append("transmit encrypted data\n");
@@ -255,7 +263,34 @@ public class MultiThreadServerV2 extends JFrame {
             }
             
             catch(SQLException ex) {
-               
+                
+                // if client submits an invalid request
+                
+                String error1 = "************************************************\n";
+                String error2 = "   ERROR!!! Incorrectly formatted request\n";
+                String error3 = "************************************************\n\n";
+                
+                jta.append(error1 + error2 + error3);
+                
+                jta.append("\nencrypt data");
+                            
+                XOR xorEncrypt = new XOR(error1 + error2 + error3);
+                DataObject serverEncryptedObject = xorEncrypt.encryptData();
+                            
+                jta.append("\nsend data to client\n");
+                            
+                try {
+           
+                    ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
+                    toClient.writeObject(serverEncryptedObject);
+                    toClient.flush();
+                            
+                }
+                            
+                catch (IOException ex1) {
+                            
+                }
+                
             }
            
             catch(IOException e) {
