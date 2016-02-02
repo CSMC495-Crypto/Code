@@ -3,9 +3,6 @@
 
 package client;
 
-import com.sun.xml.internal.messaging.saaj.util.Base64;
-import java.util.Scanner;
-
 public class XOR {
     
     public static String plainText;
@@ -18,9 +15,9 @@ public class XOR {
     
     public DataObject encryptData() {  
         
+       
         
-        
-        byte[] plainText64 = base64.encode(plainText.getBytes());
+        byte[] plainText64 = base64.encode(plainText.getBytes()).getBytes();
         
         Encrypt encrypt = new Encrypt(plainText64);
         
@@ -37,7 +34,7 @@ public class XOR {
         
         byte[] decryptedData = decrypt.decryptData();
         
-        String decodedData = new String(base64.decode(decryptedData));
+        String decodedData = new String(base64.decode(new String(decryptedData)));
                 
         return decodedData;
         
