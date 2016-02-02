@@ -232,9 +232,28 @@ public class ClientV2 extends JFrame {
                         } 
                         
                     }
+                    
+                    
                 
                 }       
+                
+                else if (Integer.parseInt(jtf.getText().trim()) > 4) {  // since updates don't generate return data
+        
+                    DataObject serverEncryptedObject = null;
+                    try (ObjectInputStream fromServer = new ObjectInputStream(socket.getInputStream())) {
+                        
+                        // get response from server
+              
+                        serverEncryptedObject = (DataObject) fromServer.readObject();
+              
+                        // decrypt and report server response
+                   
+                        jta.append("\n" + xor.decryptData(serverEncryptedObject) + "\n\n");            
+                        
+                    }
       
+                }
+                
             }
       
             catch (IOException ex) {
