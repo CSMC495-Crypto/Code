@@ -3,8 +3,10 @@
 Server program which provides multiple threading to enable multiple clients to connect simultaneously
 Enables clients to access server-based SQL tables and to perform data and table manipulations and other services
 
+Update: Report status in window while server is running
+
 Author: Jonathan Wojack
-Date: February 1, 2016
+Date: February 2, 2016
 Filename: MultiThreadServerV2.java
 
 */
@@ -81,16 +83,16 @@ public class MultiThreadServerV2 extends JFrame {
                 InetAddress inetAddress = socket.getInetAddress();
                 jta.append("Client " + clientNo + "'s host name is " + inetAddress.getHostName() + "\n");
                 jta.append("Client " + clientNo + "'s IP Address is " + inetAddress.getHostAddress() + "\n");
-
-                // create a new thread for the connection
+                
+                jta.append("\ncreate a new thread for the connection\n");
                 
                 HandleAClient task = new HandleAClient(socket);
-
-                // start a new thread
+                
+                jta.append("start a new thread\n");
         
                 new Thread(task).start();
 
-                // increment clientNo
+                jta.append("increment clientNo\n");
         
                 clientNo++;
       
@@ -121,36 +123,36 @@ public class MultiThreadServerV2 extends JFrame {
             this.socket = socket;
     
         }
-
-        // run thread
         
         public void run() {
+            
+            jta.append("run thread\n");
       
             try {
-        
-                // create data input and output streams
+                
+                jta.append("create data input and output streams\n");
         
                 DataInputStream inputFromClient = new DataInputStream(socket.getInputStream());
                 DataOutputStream outputToClient = new DataOutputStream(socket.getOutputStream());
-
-                // continuously serve the client
+                
+                jta.append("continuously serve the client\n");
                 
                 while (true) {
-          
-                    // get data from client
+                    
+                    jta.append("\n\nget data from client\n");
             
                     DataObject clientEncryptedObject = null;
                     ObjectInputStream fromClient = new ObjectInputStream(socket.getInputStream());
                     clientEncryptedObject = (DataObject) fromClient.readObject();
-         
-                    // decrypt and report data
+                    
+                    jta.append("decrypt and report data\n");
                     
                     XOR xorDecrypt = new XOR("");
                     jta.append("Transmission from client encrypted: " + new String(clientEncryptedObject.encryptedData));
                     String clientDecrypted = xorDecrypt.decryptData(clientEncryptedObject);
                     jta.append("\nDecrypted: " + clientDecrypted);
-           
-                    // access SQL database
+                    
+                    jta.append("\naccess SQL database\n");
                     
                     String connUrl="jdbc:mysql://localhost:3306/cmsc495";
                     String username="default";
@@ -158,25 +160,38 @@ public class MultiThreadServerV2 extends JFrame {
                     Class.forName("com.mysql.jdbc.Driver");
                     Connection conn = DriverManager.getConnection(connUrl,username,password);
                     Statement st = conn.createStatement();
-        
-                    // rows of data in database table to be selected
                     
-                    int rows = 0;        
+                    jta.append("rows of data in database table to be selected\n");
                     
-                    // determine whether client desires to display or modify data
+                    int rows = 0;  
+                    
+                    jta.append("determine whether client desires to display or modify data\n");
         
                     String query=clientDecrypted;
         
                     if (!query.startsWith("SELECT")) {  // update data
+                        
+                        jta.append("perform database update\n");
          
-                        st.executeUpdate(query);  // perform database update
+                        st.executeUpdate(query);
+                        
+                        jta.append("encrypt data\n");
+                    
+                    XOR xorEncryptInitial = new XOR("Database updated.");
+                    DataObject serverEncryptedObjectInitial = xorEncryptInitial.encryptData();
+                    
+                    jta.append("transmit encrypted data\n");
+                    
+                    ObjectOutputStream toClientInitial = new ObjectOutputStream(socket.getOutputStream());
+                    toClientInitial.writeObject(serverEncryptedObjectInitial);
+                    toClientInitial.flush();
                         continue;  // wait for next transmission from client...
                         
                     }
                     
                     // otherwise, the client wishes to display data
-       
-                    // determine the number of rows of data in the selected database table
+                    
+                    jta.append("determine the number of rows of data in the selected database table\n");
                     
                     ResultSet rs= st.executeQuery(query);
                                        
@@ -186,7 +201,7 @@ public class MultiThreadServerV2 extends JFrame {
                         
                     }
                     
-                    // determine the number of columns of data in the selected database table
+                    jta.append("determine the number of columns of data in the selected database table\n");
                     
                     ResultSetMetaData rsmd = rs.getMetaData();
                     int columns = rsmd.getColumnCount();
@@ -195,12 +210,12 @@ public class MultiThreadServerV2 extends JFrame {
                     // send client the number of cells in database table
                     // so that the data can be properly displayed
                     
-                    // encrypt data
+                    jta.append("encrypt data\n");
                     
                     XOR xorEncryptInitial = new XOR(Integer.toString(cells));
                     DataObject serverEncryptedObjectInitial = xorEncryptInitial.encryptData();
-      
-                    // transmit encrypted data
+                    
+                    jta.append("transmit encrypted data\n");
                     
                     ObjectOutputStream toClientInitial = new ObjectOutputStream(socket.getOutputStream());
                     toClientInitial.writeObject(serverEncryptedObjectInitial);
@@ -208,24 +223,24 @@ public class MultiThreadServerV2 extends JFrame {
          
                     // execute client's query
                     
-                    // get each desired cell from the table
+                    jta.append("get each desired cell from the table\n");
                     
                     rs = st.executeQuery(query);
         
                     while(rs.next()) {  // get next row from table
                         
-                        // get each cell in the row
+                        jta.append("get each cell in the row\n");
             
                         for (int i = 1; i <= columns; i++) {
                       
-                            jta.append("Sending: " + rs.getString(i));
+                            jta.append("\nSending: " + rs.getString(i));
                             
-                            // encrypt data
+                            jta.append("\nencrypt data");
                             
                             XOR xorEncrypt = new XOR(rs.getString(i));
                             DataObject serverEncryptedObject = xorEncrypt.encryptData();
-        
-                            // send data to client
+                            
+                            jta.append("\nsend data to client\n");
            
                             ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
                             toClient.writeObject(serverEncryptedObject);
