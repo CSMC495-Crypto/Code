@@ -173,7 +173,7 @@ public class ClientV2 extends JFrame {
                   
                     case 8: // update individual cell in bankAccount table
                   
-                        plainText = "UPDATE bankAccount SET accountBalance=1000 WHERE accountNumber='18011809';";
+                        plainText = "UPDATE bankAccount SET accounBalance=1000 WHERE accountNumber='18011809';";
                         break;
                   
                     default: // invalid entry
