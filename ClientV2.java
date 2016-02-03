@@ -86,11 +86,11 @@ public class ClientV2 extends JFrame {
             jta.append("Enter '1' to view personnel database\n");
             jta.append("Enter '2' to view account database\n");
             jta.append("Enter '3' to view transactional database\n");
-            jta.append("Enter '4' to view account number database\n");
+            jta.append("Enter '4' to view Vladimir Putin's transaction frequency\n");
             jta.append("Enter '5' to add customer to database\n");
             jta.append("Enter '6' to delete customer from database\n");
             jta.append("Enter '7' to deposit money into customer's bank account\n");
-            jta.append("Enter '8' to withdrawal money from customer's bank account\n\n");
+            jta.append("Enter '8' to see what happens when an invalid request is made...\n\n");
             jta.append("*****************************************************************\n\n");
 
             // create an input stream to receive data from the server
@@ -135,30 +135,30 @@ public class ClientV2 extends JFrame {
                     case 1: // view Customer table
               
                         plainText = "SELECT * FROM personData;";
-                        columns = 8;
+                        columns = 11;
                         break;
                   
                     case 2: // view Employee table
                   
                         plainText = "SELECT * FROM Accounts;";
-                        columns = 4;
+                        columns = 5;
                         break;
                   
                     case 3: // view bankAccount table
                   
                         plainText = "SELECT * FROM Transactions;";
-                        columns = 6;
+                        columns = 8;
                         break;
                   
                     case 4: // view mortgageAccount table
                   
-                        plainText = "SELECT * FROM accountNumberLookup;";
+                        plainText = "SELECT IDNumber='4' FROM Transactions;";
                         columns = 2;
                         break;
                   
                     case 5: // add entry to Customer table
                   
-                        plainText = "INSERT INTO personData VALUES ('John','Smith','101 Pine Street','202-123-4567','jsmith','P@SSW0RD','1234567',TRUE);";
+                        plainText = "INSERT INTO personData VALUES ('John','Smith', '202-123-4567','101 Pine Street', 'Fayetteville','NC','28301','jsmith','P@SSW0RD','1234567',TRUE);";
                         break;
                   
                     case 6: // remove entry from Customer table
