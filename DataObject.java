@@ -21,4 +21,11 @@ public class DataObject implements java.io.Serializable {
         
     }
     
+    public DataObject(byte[] encryptedData, int[] key) {
+        
+        this.encryptedData = encryptedData;
+        this.key = key;
+        
+    }
+    
 }
