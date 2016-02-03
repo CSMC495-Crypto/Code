@@ -83,10 +83,10 @@ public class ClientV2 extends JFrame {
        
             // display menu
             
-            jta.append("Enter '1' to view customer database\n");
-            jta.append("Enter '2' to view employee database\n");
-            jta.append("Enter '3' to view bank account database\n");
-            jta.append("Enter '4' to view customer database\n");
+            jta.append("Enter '1' to view personnel database\n");
+            jta.append("Enter '2' to view account database\n");
+            jta.append("Enter '3' to view transactional database\n");
+            jta.append("Enter '4' to view account number database\n");
             jta.append("Enter '5' to add customer to database\n");
             jta.append("Enter '6' to delete customer from database\n");
             jta.append("Enter '7' to deposit money into customer's bank account\n");
@@ -134,46 +134,46 @@ public class ClientV2 extends JFrame {
               
                     case 1: // view Customer table
               
-                        plainText = "SELECT * FROM Customer;";
-                        columns = 7;
+                        plainText = "SELECT * FROM personData;";
+                        columns = 8;
                         break;
                   
                     case 2: // view Employee table
                   
-                        plainText = "SELECT * FROM Employee;";
-                        columns = 7;
+                        plainText = "SELECT * FROM Accounts;";
+                        columns = 4;
                         break;
                   
                     case 3: // view bankAccount table
                   
-                        plainText = "SELECT * FROM bankAccount;";
-                        columns = 3;
+                        plainText = "SELECT * FROM Transactions;";
+                        columns = 6;
                         break;
                   
                     case 4: // view mortgageAccount table
                   
-                        plainText = "SELECT * FROM mortgageAccount;";
+                        plainText = "SELECT * FROM accountNumberLookup;";
                         columns = 2;
                         break;
                   
                     case 5: // add entry to Customer table
                   
-                        plainText = "INSERT INTO Customer VALUES ('John','Smith','101 Pine Street','202-123-4567','jsmith','P@SSW0RD','1234567');";
+                        plainText = "INSERT INTO personData VALUES ('John','Smith','101 Pine Street','202-123-4567','jsmith','P@SSW0RD','1234567',TRUE);";
                         break;
                   
                     case 6: // remove entry from Customer table
                   
-                        plainText = "DELETE FROM Customer WHERE accountNumber='1234567';";
+                        plainText = "DELETE FROM personData WHERE IDNumber='1234567';";
                         break;
                   
                     case 7: // update individual cell in bankAccount table
                   
-                        plainText = "UPDATE bankAccount SET accountBalance=5000 WHERE accountNumber='18011809';";
+                        plainText = "UPDATE Accounts SET accountBalance=5000 WHERE accountNumber='18011809';";
                         break;
                   
                     case 8: // update individual cell in bankAccount table
                   
-                        plainText = "UPDATE bankAccount SET accounBalance=1000 WHERE accountNumber='18011809';";
+                        plainText = "UPDATE Accounts SET accounBalance=1000 WHERE accountNumber='18011809';";
                         break;
                   
                     default: // invalid entry
