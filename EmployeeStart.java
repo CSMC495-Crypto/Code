@@ -47,6 +47,7 @@ public class EmployeeStart extends javax.swing.JFrame {
         accountsLabel = new javax.swing.JLabel();
         deleteCustomerButton = new javax.swing.JButton();
         mortgageHistoryButton = new javax.swing.JButton();
+        addAccountButton = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         accountSearchLabel = new javax.swing.JLabel();
         nameSearchLabel = new javax.swing.JLabel();
@@ -88,6 +89,13 @@ public class EmployeeStart extends javax.swing.JFrame {
 
         mortgageHistoryButton.setText("Mortgage Payment History");
 
+        addAccountButton.setText("Add New Bank Account");
+        addAccountButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addAccountButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout customerPanelLayout = new javax.swing.GroupLayout(customerPanel);
         customerPanel.setLayout(customerPanelLayout);
         customerPanelLayout.setHorizontalGroup(
@@ -114,7 +122,7 @@ public class EmployeeStart extends javax.swing.JFrame {
                             .addComponent(cityLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(customerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cityTextField)
+                            .addComponent(cityTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                             .addComponent(phoneNumberTextField))
                         .addGap(18, 18, 18)
                         .addComponent(stateLabel)
@@ -129,6 +137,8 @@ public class EmployeeStart extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerPanelLayout.createSequentialGroup()
                         .addComponent(mortgageHistoryButton)
+                        .addGap(105, 105, 105)
+                        .addComponent(addAccountButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(deleteCustomerButton)))
                 .addContainerGap())
@@ -165,7 +175,8 @@ public class EmployeeStart extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(customerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deleteCustomerButton)
-                    .addComponent(mortgageHistoryButton))
+                    .addComponent(mortgageHistoryButton)
+                    .addComponent(addAccountButton))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -281,6 +292,10 @@ public class EmployeeStart extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_accountSearchTextFieldActionPerformed
 
+    private void addAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAccountButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addAccountButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -322,6 +337,7 @@ public class EmployeeStart extends javax.swing.JFrame {
     private javax.swing.JTextField accountSearchTextField;
     private javax.swing.JLabel accountsLabel;
     private javax.swing.JTextArea accountsTextArea;
+    private javax.swing.JButton addAccountButton;
     private javax.swing.JLabel addressLabel;
     private javax.swing.JTextField addressTextField;
     private javax.swing.JLabel cityLabel;
