@@ -1,8 +1,8 @@
 /*
- *  Class: CMIS495
- *   File: GetEncrypDecryp
+ *  Class: 
+ *   File: 
  *  
- * Author: Walter Baynard
+ * Author:
  */
 package client;
 
@@ -46,4 +46,5 @@ public class GetEncrypDecyrp implements java.io.Serializable
     } 
     
 }
+
 
