@@ -4,6 +4,7 @@
  *  
  * Author: Walter Baynard
  */
+ 
 package client;
 
 import java.security.Key;
@@ -13,6 +14,7 @@ import java.util.Random;
  *
  * @author waltbaynard
  */
+ 
 public class GetEncrypDecyrp implements java.io.Serializable 
 {    
     private static final String ALGO = "AES";
