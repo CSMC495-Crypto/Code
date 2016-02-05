@@ -1,8 +1,8 @@
 /*
- *  Class: 
- *   File: 
+ *  Class: CMIS 495
+ *   File: GetEncrypDecryp
  *  
- * Author:
+ * Author: W.Baynard
  */
 package client;
 
