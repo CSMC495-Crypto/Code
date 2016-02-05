@@ -1,34 +1,30 @@
 /*
- * Class:     CMIS 495
- * File:      Get Encryption-Decryption Program
- *
- * Author:    Walter Baynard
+ *  Class: 
+ *   File: 
+ *  
+ * Author:
  */
-
-package getencrypdecyrp;
+package client;
 
 import java.util.Random;
 
 /**
  *
  * @author waltbaynard
- * 
- * Generates 3 random numbers. To select which encryption program 
- * will be used.
  */
-
-public class GetEncrypDecyrp 
-{
-    /**
-     * @param args the command line arguments
-     */
+public class GetEncrypDecyrp implements java.io.Serializable
+{    
+   
     
     public static void main(String[] args) 
     {
         //Initialize variables
-        boolean 
+         
         int ranNum;                       
         Random getRanNum = new Random();
+        int[] key= null;
+        byte[] encryptedData = null;    
+        String AES = "AESencrp", BlowFish = "BlowFish", EncrypXOR = "XOR";
         
         //Get a random number
         ranNum = getRanNum.nextInt(3) + 1;
@@ -36,13 +32,18 @@ public class GetEncrypDecyrp
         switch (ranNum)
         {
             case 1:
+                DataObject AESEncrpy = new DataObject(encryptedData, key, AES);
                 System.out.println("AES Encryption, place holder");
                 break;
             case 2:
+                DataObject BlowFishEncrpy = new DataObject(encryptedData, key, BlowFish);
                 System.out.println("Blowfish Encryption, place holder");
                 break;
             default:
+                DataObject XOREncrpy = new DataObject(encryptedData, key, EncrypXOR);
                 System.out.println("XOR Encryption, place holder");
         }    
-    }      
+    } 
+    
 }
+
