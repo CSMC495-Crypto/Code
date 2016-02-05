@@ -47,7 +47,7 @@ public class AESencrp
     private static Key generateKey() throws Exception 
     {
         KeyGenerator keyGen = KeyGenerator.getInstance(ALGO);
-        keyGen.init(128); 
+        keyGen.init(256); 
         SecretKey secretKey = keyGen.generateKey();
         byte[] aesKey = secretKey.getEncoded();
         Key key = new SecretKeySpec(aesKey, ALGO);
