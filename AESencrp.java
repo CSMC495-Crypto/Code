@@ -1,11 +1,10 @@
 /*
- *
- * Class:     CMIS 495
- * File:      Homework
- *
+ *  Class: CMIS 495
+ *   File: AESencrp
+ *  
+ * Author:
  */
-
-package encrypdecryp;
+package client;
 
 import java.security.*;
 import javax.crypto.*;
@@ -15,13 +14,16 @@ import sun.misc.*;
 public class AESencrp 
 {    
     private static final String ALGO = "AES";
+    /*
     private static final byte[] keyValue = 
         new byte[] { 'L', 'e', 't', 's', 'U', 's', 'G', 'e', 't', 
             'I', 't', 'R', 'i','g', 'h', 't' };
-
+    */
+    private static Key key = null;
+    
     public static String encrypt(String Data) throws Exception 
     {
-        Key key = generateKey();
+        //key = generateKey();
         Cipher c = Cipher.getInstance(ALGO);
         c.init(Cipher.ENCRYPT_MODE, key);
         byte[] encVal = c.doFinal(Data.getBytes());
@@ -32,7 +34,7 @@ public class AESencrp
 
     public static String decrypt(String encryptedData) throws Exception 
     {
-        Key key = generateKey();
+        //key = generateKey();
         Cipher c = Cipher.getInstance(ALGO);
         c.init(Cipher.DECRYPT_MODE, key);
         byte[] decordedValue = new BASE64Decoder().decodeBuffer(encryptedData);
@@ -44,7 +46,11 @@ public class AESencrp
     
     private static Key generateKey() throws Exception 
     {
-        Key key = new SecretKeySpec(keyValue, ALGO);
+        KeyGenerator keyGen = KeyGenerator.getInstance(ALGO);
+        keyGen.init(128); 
+        SecretKey secretKey = keyGen.generateKey();
+        byte[] aesKey = secretKey.getEncoded();
+        Key key = new SecretKeySpec(aesKey, ALGO);
         
         return key;
     }
