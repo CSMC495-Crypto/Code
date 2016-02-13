@@ -1,165 +1,176 @@
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 
-import java.security.InvalidKeyException;  
-import java.security.NoSuchAlgorithmException;  
-import javax.crypto.BadPaddingException;  
-import javax.crypto.Cipher;  
-import javax.crypto.IllegalBlockSizeException;  
-import javax.crypto.KeyGenerator;  
-import javax.crypto.NoSuchPaddingException;  
-import javax.crypto.SecretKey;  
-  
-/** 
- * This class represents BlowFish algorithm. It generates a random key 
- * in its constructor. Uses Base64 class for padding. 
+/**
+ * This class represents BlowFish algorithm. It generates a random key in its
+ * constructor. Uses Base64 class for padding.
+ * 
  * @author Olga Kazlova
  * @project Bank Encryption Application
  * @course CSMC 495
  * @date Updated on 02/09/2016
- */  
-public class BlowFish {  
-  
-    KeyGenerator keyGenerator = null;  
-    SecretKey secretKey = null;  
-    Cipher cipher = null;  
-  
-    public BlowFish() {  
-        try {  
-            /** 
-             * Generate a random key
-             */  
-            keyGenerator = KeyGenerator.getInstance("Blowfish");  
-            secretKey = keyGenerator.generateKey();  
-  
-            /** 
-             * Create an instance of cipher m
-             */  
-            cipher = Cipher.getInstance("Blowfish");  
-        } catch (NoSuchPaddingException ex) {  
-            System.out.println(ex);  
-        } catch (NoSuchAlgorithmException ex) {  
-            System.out.println(ex);  
-        }  
-  
-    }  
-  
-    /** 
-     * This method encrypts plain text passed as a parameter and 
-     * returns an array of bytes
-     * @param plainText String
-     * @return cipherBytes byte[]
-     */  
-    public byte[] encryptText(String plainText) {  
-        byte[] cipherBytes = null;  
-        try {  
-            /** 
-             * Initialize the cipher for encryption 
-             */  
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);  
-            /** 
-             * Convert the text string to byte format 
-             */  
-            byte[] plainBytes = plainText.getBytes();  
-            /** 
-             * Perform encryption with method doFinal() 
-             */  
-            cipherBytes = cipher.doFinal(plainBytes);  
-        } catch (IllegalBlockSizeException ex) {  
-            System.out.println(ex);  
-        } catch (BadPaddingException ex) {  
-            System.out.println(ex);  
-        } catch (InvalidKeyException ex) {  
-            System.out.println(ex);  
-        }  
-  
-        return cipherBytes;  
-    }  
-  
-    /** 
-     * This method decrypts cipher passed as a parameter and 
-     * returns plain text as a string
-     * @param cipherBytes byte[]
-     * @return plainText String
-     */  
-    public String decryptText(byte[] cipherBytes) {  
-        String plainText = null;  
-        try {  
-            /** 
-             * Initialize the cipher for decryption 
-             */  
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);  
-            /** 
-             * Perform decryption with method doFinal() 
-             */  
-            byte[] plainBytes = cipher.doFinal(cipherBytes);  
-            /** 
-             * Convert encrypted text to string format 
-             */  
-            plainText = new String(plainBytes);  
-        } catch (IllegalBlockSizeException ex) {  
-            System.out.println(ex);  
-        } catch (BadPaddingException ex) {  
-            System.out.println(ex);  
-        } catch (InvalidKeyException ex) {  
-            System.out.println(ex);  
-        }  
-  
-        return plainText;  
-    }  
-  
-    /** 
-     * This method takes a string of plain text as a parameter, calls 
-     * encryptText(String) method, converts returned byte[] into String,
-     * and returns this string of cipher.
-     * @param plainText String
-     * @return cipherText String
-     */  
-    public String encrypt(String plainText) {  
-        String cipherText = null;  
-        byte[] cipherBytes = encryptText(plainText);  
-        cipherText = bytesToString(cipherBytes);  
-        return cipherText;  
-    }  
-  
-    /** 
-     *  This method takes a string of cipher as a parameter, 
-     *  calls decryptText(byte[]) method,  
-     *  and returns a string of a plain text
-     * @param cipherText String
-     * @return plainText String
-     */  
-    public String decrypt(String cipherText) {  
-        String plainText = null;  
-        byte[] cipherBytes = stringToBytes(cipherText);  
-        plainText = decryptText(cipherBytes);  
-        return plainText;  
-    }  
-  
-  
-    /** 
-     *  This method encodes an array of bytes using 
-     *  Base64 class's encode(byte []) method
-     * @param rawText byte[]
-     * @return plainText String
-     * 
-     */  
-    private String bytesToString(byte[] rawText) {  
-        String plainText = null;  
-        plainText = Base64.encode(rawText);  
-        return plainText;  
-    }  
-  
-    /** 
-     *  This method performs Base64 decoding. It takes 
-     *  a string as a parameter, 
-     *  and returns an array of bytes
-     * @param plainText String
-     * @return rawText byte[]
-     * 
-     */  
-    private byte[] stringToBytes(String plainText) {  
-        byte[] rawText = null;  
-        rawText = Base64.decode(plainText);  
-        return rawText;  
-    }  
-}  
+ */
+public class BlowFish {
+
+	KeyGenerator keyGenerator = null;
+	SecretKey secretKey = null;
+	Cipher cipher = null;
+
+	/**
+	 * Constuctor generates secret key for encryption.
+	 */
+	public BlowFish() {
+		try {
+
+			// Generate a random key
+
+			keyGenerator = KeyGenerator.getInstance("Blowfish");
+			secretKey = keyGenerator.generateKey();
+
+			// Create an instance of cipher m
+
+			cipher = Cipher.getInstance("Blowfish");
+		} catch (NoSuchPaddingException ex) {
+			System.out.println(ex);
+		} catch (NoSuchAlgorithmException ex) {
+			System.out.println(ex);
+		}
+
+	}
+
+	/**
+	 * This method encrypts plain text passed as a parameter and returns an
+	 * array of bytes
+	 * 
+	 * @param plainText
+	 *            String
+	 * @return cipherBytes byte[]
+	 */
+	private byte[] encryptText(String plainText) {
+		byte[] cipherBytes = null;
+		try {
+
+			// Initialize the cipher for encryption
+
+			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+
+			// Convert the text string to byte format
+
+			byte[] plainBytes = plainText.getBytes();
+
+			// Perform encryption with method doFinal()
+
+			cipherBytes = cipher.doFinal(plainBytes);
+		} catch (IllegalBlockSizeException ex) {
+			System.out.println(ex);
+		} catch (BadPaddingException ex) {
+			System.out.println(ex);
+		} catch (InvalidKeyException ex) {
+			System.out.println(ex);
+		}
+
+		return cipherBytes;
+	}
+
+	/**
+	 * This method decrypts cipher passed as a parameter and returns plain text
+	 * as a string
+	 * 
+	 * @param cipherBytes
+	 *            byte[]
+	 * @return plainText String
+	 */
+	private String decryptText(byte[] cipherBytes) {
+		String plainText = null;
+		try {
+
+			// Initialize the cipher for decryption
+
+			cipher.init(Cipher.DECRYPT_MODE, secretKey);
+
+			// Perform decryption with method doFinal()
+
+			byte[] plainBytes = cipher.doFinal(cipherBytes);
+
+			// Convert encrypted text to string format
+
+			plainText = new String(plainBytes);
+		} catch (IllegalBlockSizeException ex) {
+			System.out.println(ex);
+		} catch (BadPaddingException ex) {
+			System.out.println(ex);
+		} catch (InvalidKeyException ex) {
+			System.out.println(ex);
+		}
+
+		return plainText;
+	}
+
+	/**
+	 * This method takes a string of plain text as a parameter, calls
+	 * encryptText(String) method, converts returned byte[] into String, and
+	 * returns this string of cipher.
+	 * 
+	 * @param plainText
+	 *            String
+	 * @return cipherText String
+	 */
+	public String encrypt(String plainText) {
+		String cipherText = null;
+		byte[] cipherBytes = encryptText(plainText);
+		cipherText = bytesToString(cipherBytes);
+		return cipherText;
+	}
+
+	/**
+	 * This method takes a string of cipher as a parameter, calls
+	 * decryptText(byte[]) method, and returns a string of a plain text
+	 * 
+	 * @param cipherText
+	 *            String
+	 * @return plainText String
+	 */
+	public String decrypt(String cipherText) {
+		String plainText = null;
+		byte[] cipherBytes = stringToBytes(cipherText);
+		plainText = decryptText(cipherBytes);
+		return plainText;
+	}
+
+	/**
+	 * This method encodes an array of bytes using Base64 class's encode(byte
+	 * []) method
+	 * 
+	 * @param rawText
+	 *            byte[]
+	 * @return plainText String
+	 * 
+	 */
+	private String bytesToString(byte[] rawText) {
+		String plainText = null;
+		plainText = Base64.encode(rawText);
+		return plainText;
+	}
+
+	/**
+	 * This method performs Base64 decoding. It takes a string as a parameter,
+	 * and returns an array of bytes
+	 * 
+	 * @param plainText
+	 *            String
+	 * @return rawText byte[]
+	 * 
+	 */
+	private byte[] stringToBytes(String plainText) {
+		byte[] rawText = null;
+		rawText = Base64.decode(plainText);
+		return rawText;
+	}
+}
