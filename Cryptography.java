@@ -1,3 +1,5 @@
+package client;
+
 /**
  * Interface that all encryption algorithm classes will implement
  * 
