@@ -8,7 +8,7 @@ package client;
  * @project Bank Encryption Application
  * @course CSMC 495
  * @date created 02/02/2016
- * @updated on 02/14/2016 by Olga Kazlova 
+ * @updated on 02/14/2016 by Olga Kazlova and Grant Sweeney
  */
 
 //Changes:
@@ -22,11 +22,6 @@ public class XOR implements Cryptography {
     
    // public static String plainText;
     public static Base64 base64 = new Base64();
-    //public XOR(String plainText) {
-        
-   //     this.plainText = plainText;
-        
-   // }
     
     /**
      * This method encrypts plain text passed as an argument 

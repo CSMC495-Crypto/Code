@@ -2,8 +2,23 @@ package client;
 
 import java.io.ByteArrayOutputStream;
 
+/**
+ * Base 64 encryption
+ * 
+ * @author Jonathan Wojack
+ * @project Bank Encryption Application
+ * @course CSMC 495
+ * @updated on 02/14/2016 by Grant Sweeney
+ */
 public class Base64
 {
+    
+    /**
+     * Base64 encoding
+     * 
+     * @param data data to be encoded
+     * @return encoded data
+     */
     public static String encode(byte[] data)
     {
         char[] tbl = {
@@ -41,6 +56,12 @@ public class Base64
         return buffer.toString();
     }
 
+    /**
+     * Base64 decoding
+     * 
+     * @param data encoded data
+     * @return decoded data
+     */
     public static byte[] decode(String data)
     {
         int[] tbl = {

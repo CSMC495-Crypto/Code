@@ -2,11 +2,20 @@ package client;
 
 import java.security.SecureRandom;
 
+
+/**
+ * This class performs the encryption for the XOR algorithm
+ * 
+ * @author Jonathan Wojack
+ * @project Bank Encryption Application
+ * @course CSMC 495
+ * @updated on 02/14/2016 by Grant Sweeney
+ */
 public class Encrypt {
 
-    int[] keyInitialFirst = new int[8]; // initial key value
-    byte[] plainText64;                 // original data Base64-encoded
-    byte[] encrypted;                   // encrypted data
+    private int[] keyInitialFirst = new int[8]; // initial key value
+    private byte[] plainText64;                 // original data Base64-encoded
+    private byte[] encrypted;                   // encrypted data
     
 
     public Encrypt(byte[] plainText64) {
@@ -15,8 +24,9 @@ public class Encrypt {
         
     }
     
-    // generate 64-bit encryption key composed of eight 8-bit key words
-    
+    /**
+     * generate 64-bit encryption key composed of eight 8-bit key words
+     */
     public void generateKey() {
         
         SecureRandom secureRandom = new SecureRandom();      
@@ -31,49 +41,66 @@ public class Encrypt {
         
     }
     
-    // set method for encryption key
-    
+    /**
+     * set method for encryption key
+     * 
+     * @param keyInitialFirst encryption key
+     */
     public void setKey(int[] keyInitialFirst) {
         
         this.keyInitialFirst = keyInitialFirst;
         
     }
     
-    // get method for encryption key
-  
-    
+    /**
+     * get method for encryption key
+     * 
+     * @return encryption key 
+     */
     public int[] getKey() {
         
         return keyInitialFirst;
         
     }
-    
-    // set method for Base64-encoded plain text
-    
+
+    /**
+     * set method for Base64-encoded plain text
+     * 
+     * @param plainText64 Base64
+     */
     public void setPlainText64(byte[] plainText64) {
         
         this.plainText64 = plainText64;
         
     }
     
-    // get method for Base64-encoded plain text
-    
+    /**
+     * get method for Base64-encoded plain text
+     * 
+     * @return Base64
+     */
     public byte[] getPlainText64() {
         
         return plainText64;
         
     }
     
-    // set method for encrypted data
-    
+    /**
+     * set method for encrypted data
+     * 
+     * @param encrypted encrypted data
+     */
     public void setEncrypted(byte[] encrypted) {
         
         this.encrypted = encrypted;
         
     }
     
-    // get method for encrypted data
-    
+   /**
+    * get method for encrypted data
+    * 
+    * @return encrypted data
+    */ 
     public byte[] getEncrypted() {
         
         return encrypted;
@@ -81,8 +108,12 @@ public class Encrypt {
     }
         
     // encrypt data
-    
-     public DataObject encryptData() {
+    /**
+     * Method that performs the encryption for XOR
+     * 
+     * @return data object including encrypted data and key
+     */
+    public DataObject encryptData() {
          
          
         

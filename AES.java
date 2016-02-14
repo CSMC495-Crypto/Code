@@ -17,11 +17,12 @@ import javax.crypto.SecretKey;
  * @project Bank Encryption Application
  * @course CSMC 495
  * @date Updated on 02/09/2016
+ * @updated on 02/14/2016 by Grant Sweeney
  */
 public class AES implements Cryptography {
 
-	static Cipher cipher;
-	SecretKey secretKey;
+	private static Cipher cipher;
+	private SecretKey secretKey;
 
 	/**
 	 * Constructor generates secret key for encryption.

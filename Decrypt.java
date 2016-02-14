@@ -1,8 +1,16 @@
 package client;
 
+/**
+ * This class performs the decryption for the XOR algorithm
+ * 
+ * @author Jonathan Wojack
+ * @project Bank Encryption Application
+ * @course CSMC 495
+ * @updated on 02/14/2016 by Grant Sweeney
+ */
 public class Decrypt {
     
-    DataObject encryptedData;
+    private DataObject encryptedData;
     
     public Decrypt(DataObject encryptedData) {
         
@@ -10,19 +18,33 @@ public class Decrypt {
            
     }
     
+    /**
+     * Getter method for the data stored by the data object
+     * 
+     * @return data that will be decrypted
+     */
     public byte[] getEncrypted() {
         
         return encryptedData.encryptedData;
         
     }
    
-    
+    /**
+     * Getter method for key stored by the data object
+     * 
+     * @return encryption key
+     */
     public int[] getKeyInitialFirst() {
         
         return encryptedData.key;
         
     }
     
+    /**
+     * Method that performs the decryption
+     * 
+     * @return decrypted data
+     */
     public byte[] decryptData() {
         
         int[] keyInitialFirst = getKeyInitialFirst();

@@ -17,12 +17,13 @@ import javax.crypto.SecretKey;
  * @project Bank Encryption Application
  * @course CSMC 495
  * @date Updated on 02/09/2016
+ * @updated on 02/14/2016 by Grant Sweeney
  */
 public class BlowFish implements Cryptography {
 
-	KeyGenerator keyGenerator = null;
-	SecretKey secretKey = null;
-	Cipher cipher = null;
+	private KeyGenerator keyGenerator = null;
+	private SecretKey secretKey = null;
+	private Cipher cipher = null;
 
 	/**
 	 * Constructor generates secret key for encryption.

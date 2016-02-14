@@ -1,8 +1,14 @@
 package client;
 
-// object to store encrypted data and encryption key
-// to be send between communication parties to enable encrypted communications
-
+/**
+ * object to store encrypted data and encryption key
+ * to be send between communication parties to enable encrypted communications
+ * 
+ * @author Jonathan Wojack
+ * @project Bank Encryption Application
+ * @course CSMC 495
+ * @updated on 02/14/2016 by Grant Sweeney
+ */
 public class DataObject implements java.io.Serializable {
     
     byte[] encryptedData;
@@ -10,7 +16,6 @@ public class DataObject implements java.io.Serializable {
     
     // encryption algorithm identifier
     // possible values are "XOR", "Blowfish", "AES"
-    
     String encryptionAlgorithm;
     
     public DataObject(byte[] encryptedData, int[] key, String encryptionAlgorithm) {
