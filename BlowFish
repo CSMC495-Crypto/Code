@@ -23,7 +23,7 @@ public class BlowFish {
 	Cipher cipher = null;
 
 	/**
-	 * Constuctor generates secret key for encryption.
+	 * Constructor generates secret key for encryption.
 	 */
 	public BlowFish() {
 		try {
