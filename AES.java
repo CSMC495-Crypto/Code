@@ -1,6 +1,3 @@
-
-package client;
-
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import javax.crypto.BadPaddingException;
@@ -36,7 +33,7 @@ public class AES {
 			e.printStackTrace();
 		}
 		keyGenerator.init(128);
-		 secretKey = keyGenerator.generateKey();
+		secretKey = keyGenerator.generateKey();
 		try {
 			cipher = Cipher.getInstance("AES");
 		} catch (NoSuchAlgorithmException e) {
