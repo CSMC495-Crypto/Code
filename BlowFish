@@ -1,4 +1,3 @@
-
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import javax.crypto.BadPaddingException;
@@ -47,48 +46,60 @@ public class BlowFish {
 
 	/**
 	 * This method encrypts plain text passed as a parameter and returns an
-	 * array of bytes
+	 * object of DataObject
 	 * 
 	 * @param plainText
 	 *            String
-	 * @return cipherBytes byte[]
+	 * @return encryptedObject DataObject
 	 */
-	private byte[] encryptText(String plainText) {
+	public DataObject encrypt(String plainText) {
 		byte[] cipherBytes = null;
+
+		// Initialize the cipher for encryption
+
 		try {
-
-			// Initialize the cipher for encryption
-
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-
-			// Convert the text string to byte format
-
-			byte[] plainBytes = plainText.getBytes();
-
-			// Perform encryption with method doFinal()
-
-			cipherBytes = cipher.doFinal(plainBytes);
-		} catch (IllegalBlockSizeException ex) {
-			System.out.println(ex);
-		} catch (BadPaddingException ex) {
-			System.out.println(ex);
-		} catch (InvalidKeyException ex) {
-			System.out.println(ex);
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
-		return cipherBytes;
+		// Convert the text string to byte format
+
+		byte[] plainBytes = plainText.getBytes();
+
+		// Perform encryption with method doFinal()
+
+		try {
+			cipherBytes = cipher.doFinal(plainBytes);
+		} catch (IllegalBlockSizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Encrypt encrypt = new Encrypt(cipherBytes);
+
+		DataObject encryptedObject = encrypt.encryptData();
+
+		return encryptedObject;
 	}
 
 	/**
-	 * This method decrypts cipher passed as a parameter and returns plain text
-	 * as a string
+	 * This method decrypts DataObject passed as a parameter and returns plain
+	 * text as a string
 	 * 
-	 * @param cipherBytes
-	 *            byte[]
+	 * @param encryptedData
+	 *            DataObject
 	 * @return plainText String
 	 */
-	private String decryptText(byte[] cipherBytes) {
+	public String decrypt(DataObject encryptedData) {
 		String plainText = null;
+		Decrypt decrypt = new Decrypt(encryptedData);
+
+		byte[] decryptedData = decrypt.decryptData();
 		try {
 
 			// Initialize the cipher for decryption
@@ -97,7 +108,7 @@ public class BlowFish {
 
 			// Perform decryption with method doFinal()
 
-			byte[] plainBytes = cipher.doFinal(cipherBytes);
+			byte[] plainBytes = cipher.doFinal(decryptedData);
 
 			// Convert encrypted text to string format
 
@@ -113,64 +124,4 @@ public class BlowFish {
 		return plainText;
 	}
 
-	/**
-	 * This method takes a string of plain text as a parameter, calls
-	 * encryptText(String) method, converts returned byte[] into String, and
-	 * returns this string of cipher.
-	 * 
-	 * @param plainText
-	 *            String
-	 * @return cipherText String
-	 */
-	public String encrypt(String plainText) {
-		String cipherText = null;
-		byte[] cipherBytes = encryptText(plainText);
-		cipherText = bytesToString(cipherBytes);
-		return cipherText;
-	}
-
-	/**
-	 * This method takes a string of cipher as a parameter, calls
-	 * decryptText(byte[]) method, and returns a string of a plain text
-	 * 
-	 * @param cipherText
-	 *            String
-	 * @return plainText String
-	 */
-	public String decrypt(String cipherText) {
-		String plainText = null;
-		byte[] cipherBytes = stringToBytes(cipherText);
-		plainText = decryptText(cipherBytes);
-		return plainText;
-	}
-
-	/**
-	 * This method encodes an array of bytes using Base64 class's encode(byte
-	 * []) method
-	 * 
-	 * @param rawText
-	 *            byte[]
-	 * @return plainText String
-	 * 
-	 */
-	private String bytesToString(byte[] rawText) {
-		String plainText = null;
-		plainText = Base64.encode(rawText);
-		return plainText;
-	}
-
-	/**
-	 * This method performs Base64 decoding. It takes a string as a parameter,
-	 * and returns an array of bytes
-	 * 
-	 * @param plainText
-	 *            String
-	 * @return rawText byte[]
-	 * 
-	 */
-	private byte[] stringToBytes(String plainText) {
-		byte[] rawText = null;
-		rawText = Base64.decode(plainText);
-		return rawText;
-	}
 }
