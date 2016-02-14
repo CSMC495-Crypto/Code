@@ -18,7 +18,7 @@ import javax.crypto.SecretKey;
  * @course CSMC 495
  * @date Updated on 02/09/2016
  */
-public class AES {
+public class AES implements Cryptography {
 
 	static Cipher cipher;
 	SecretKey secretKey;

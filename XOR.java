@@ -18,7 +18,7 @@ package client;
 // 4. method name decryptData is changed to 'decrypt' to match interface
 //   added JavaDoc for the class and methods
 
-public class XOR {
+public class XOR implements Cryptography {
     
    // public static String plainText;
     public static Base64 base64 = new Base64();

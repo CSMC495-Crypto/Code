@@ -18,7 +18,7 @@ import javax.crypto.SecretKey;
  * @course CSMC 495
  * @date Updated on 02/09/2016
  */
-public class BlowFish {
+public class BlowFish implements Cryptography {
 
 	KeyGenerator keyGenerator = null;
 	SecretKey secretKey = null;
