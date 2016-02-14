@@ -1,3 +1,4 @@
+package client;
 
 /**
  * This class represents simple cryptographic program 
