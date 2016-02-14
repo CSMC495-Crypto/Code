@@ -1,7 +1,3 @@
-// server class under construction
-// author: Jonathan Wojack
-// date: February 7, 2016
-
 /*
  *  Class: CMIS495
  *   File: GetEncrypDecryp
@@ -24,11 +20,11 @@ public class DataProcessor implements java.io.Serializable
 {    
     private static Key getKey = null;
     String encryptedData = null, decrypData = null;
-    String AESEncrypData, BlowFishEncrypData, XOREncrypData;
+    String dataCryption;
     int[] key= null;    
     int getEncrypNum;
     
-    public void encrypData(int encrypNum) throws Exception
+    public String encrypData(int encrypNum) throws Exception
     {
         switch (encrypNum)
         {
@@ -38,22 +34,24 @@ public class DataProcessor implements java.io.Serializable
                 
                 // get base64 encoded version of the key
                 String AESKey = getKey.toString();                
-                AESEncrypData = AESencrp.encrypt(decrypData, getKey);
+                dataCryption = AESencrp.encrypt(encryptedData, getKey);
                 
                 break;
             //Blowfish decryption
             case 2:                
                            
-                BlowFishEncrypData = BlowFish.encrypt(encryptedData, "blowFishKey");
+                dataCryption = BlowFish.encrypt(encryptedData, "blowFishKey");
                 break;
             //XOR decryption
             default:                
                 //XOR;
-        }    
+        }   
+        
+        return dataCryption;
         
     }
     
-    public void decrypData(int decrypNum) throws Exception
+    public String decrypData(int decrypNum) throws Exception
     {
         switch (decrypNum)
         {
@@ -63,18 +61,20 @@ public class DataProcessor implements java.io.Serializable
                 
                 // get base64 encoded version of the key
                 String AESKey = getKey.toString();                
-                AESDecrypData = AESencrp.decrypt(encryptedData, getKey);
+                dataCryption = AESencrp.decrypt(decrypData, getKey);
                 
                 break;
             //Blowfish encryption
             case 2:                
                            
-                BlowFishEncrypData = BlowFish.encrypt(encryptedData, "blowFishKey");
+                dataCryption = BlowFish.encrypt(decrypData, "blowFishKey");
                 break;
             //XOR encryption
             default:                
                 //XOR..class;
         }   
+        
+        return dataCryption;
     }
     
     public int getEncryptionAlgorithm() throws Exception
@@ -87,4 +87,3 @@ public class DataProcessor implements java.io.Serializable
         return getEncrypNum; 
     }    
 }
-
