@@ -23,12 +23,14 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="customerPanel" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="customerPanel" alignment="1" max="32767" attributes="0"/>
+                  <Component id="mainPanel" alignment="1" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
-          <Component id="mainPanel" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -50,6 +52,7 @@
               <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                 <LineBorder roundedCorners="true"/>
               </Border>
+              <Font PropertyName="font" name="Arial" size="12" style="0"/>
             </TitledBorder>
           </Border>
         </Property>
@@ -61,53 +64,65 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="firstNameLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="firstNameTextField" max="32767" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="lastNameLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lastNameTextField" min="-2" pref="302" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="addressLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="addressTextField" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="phoneNumberLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="cityLabel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="cityTextField" pref="179" max="32767" attributes="0"/>
-                              <Component id="phoneNumberTextField" max="32767" attributes="0"/>
+                              <Component id="jScrollPane1" max="32767" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="0" pref="23" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="addressLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="firstNameLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="firstNameTextField" min="-2" pref="449" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="lastNameLabel" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="lastNameTextField" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Component id="addressTextField" min="-2" pref="875" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="accountsLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="phoneNumberLabel" min="-2" pref="93" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="phoneNumberTextField" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                                          <Component id="cityLabel" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="cityTextField" min="-2" pref="448" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="stateLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="stateTextField" min="-2" pref="152" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="zipCodeLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="zipCodeTextField" min="-2" pref="121" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="stateLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="stateTextField" min="-2" pref="152" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="zipCodeLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="zipCodeTextField" min="-2" pref="121" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="accountsLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="mortgageHistoryButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="171" max="-2" attributes="0"/>
                           <Component id="addAccountButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="deleteCustomerButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -147,7 +162,6 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="deleteCustomerButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="mortgageHistoryButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="addAccountButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="23" max="32767" attributes="0"/>
@@ -158,6 +172,9 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="firstNameLabel">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="First Name: "/>
           </Properties>
         </Component>
@@ -165,6 +182,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lastNameLabel">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Last Name: "/>
           </Properties>
         </Component>
@@ -172,6 +192,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="addressLabel">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Address: "/>
           </Properties>
         </Component>
@@ -179,6 +202,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="cityLabel">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="City: "/>
           </Properties>
         </Component>
@@ -186,6 +212,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="stateLabel">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="State: "/>
           </Properties>
         </Component>
@@ -193,6 +222,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="zipCodeLabel">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Zip Code: "/>
           </Properties>
         </Component>
@@ -200,10 +232,16 @@
         </Component>
         <Component class="javax.swing.JLabel" name="phoneNumberLabel">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Phone Number: "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="phoneNumberTextField">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="phoneNumberTextFieldActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>
@@ -222,21 +260,25 @@
         </Container>
         <Component class="javax.swing.JLabel" name="accountsLabel">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Accounts: "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="deleteCustomerButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Delete Customer Profile"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="mortgageHistoryButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Mortgage Payment History"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="addAccountButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Add New Bank Account"/>
           </Properties>
           <Events>
@@ -250,80 +292,66 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="nameSearchLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="firstNameSearchLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="accountSearchLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="firstNameSearchLabel" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="firstNameSearchTextField" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="employeeProfileButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="nameSearchLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="accountSearchLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="accountSearchTextField" max="32767" attributes="0"/>
-                                      <Component id="nameSearchTextField" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="accountSearchButton" min="-2" max="-2" attributes="0"/>
-                              <Component id="nameSearchButton" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="295" max="-2" attributes="0"/>
-                          <Component id="customerProfileButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="109" max="32767" attributes="0"/>
+                          <Component id="createProfileButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="exitButton" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="firstNameSearchTextField" max="32767" attributes="0"/>
+                      <Component id="nameSearchTextField" max="32767" attributes="0"/>
+                      <Component id="accountSearchTextField" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="nameSearchButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="accountSearchButton" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
+              <Component id="jPanel1" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="64" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="accountSearchLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="accountSearchTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="accountSearchButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="nameSearchLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="nameSearchTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="firstNameSearchLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="firstNameSearchTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
                           <Component id="nameSearchButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="81" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="employeeProfileButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="customerProfileButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="createProfileButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="exitButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
@@ -334,11 +362,17 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="accountSearchLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Enter account Number:"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Enter Account Number:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="nameSearchLabel">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Enter Customer Last Name: "/>
           </Properties>
         </Component>
@@ -352,6 +386,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="accountSearchButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Search for Account"/>
           </Properties>
         </Component>
@@ -359,31 +396,68 @@
         </Component>
         <Component class="javax.swing.JButton" name="nameSearchButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Search for Customer"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="firstNameSearchLabel">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Enter Customer First Name: "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="firstNameSearchTextField">
         </Component>
-        <Component class="javax.swing.JButton" name="employeeProfileButton">
+        <Component class="javax.swing.JButton" name="createProfileButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Create Employee Profile"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="customerProfileButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Create Customer Profile"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Create User Profile"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="exitButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Exit Program"/>
           </Properties>
         </Component>
+        <Container class="javax.swing.JPanel" name="jPanel1">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="99" green="33" red="0" type="rgb"/>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="jLabel1">
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
   </SubComponents>
