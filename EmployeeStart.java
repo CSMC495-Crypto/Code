@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client;
 
 /**
  *
- * @author Grant
+ * @author Grant Sweeney
  */
 public class EmployeeStart extends javax.swing.JFrame {
 
@@ -224,9 +219,19 @@ public class EmployeeStart extends javax.swing.JFrame {
 
         createProfileButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         createProfileButton.setText("Create User Profile");
+        createProfileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createProfileButtonActionPerformed(evt);
+            }
+        });
 
         exitButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         exitButton.setText("Exit Program");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 153));
 
@@ -328,12 +333,20 @@ public class EmployeeStart extends javax.swing.JFrame {
     }//GEN-LAST:event_accountSearchTextFieldActionPerformed
 
     private void addAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAccountButtonActionPerformed
-        // TODO add your handling code here:
+        new CreateBankAccount().setVisible(true);
     }//GEN-LAST:event_addAccountButtonActionPerformed
 
     private void phoneNumberTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneNumberTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_phoneNumberTextFieldActionPerformed
+
+    private void createProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createProfileButtonActionPerformed
+        new CreateUserProfile().setVisible(true);
+    }//GEN-LAST:event_createProfileButtonActionPerformed
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitButtonActionPerformed
 
     /**
      * @param args the command line arguments

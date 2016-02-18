@@ -419,6 +419,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Create User Profile"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createProfileButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="exitButton">
           <Properties>
@@ -427,6 +430,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Exit Program"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitButtonActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanel1">
           <Properties>
