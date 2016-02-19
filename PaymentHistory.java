@@ -2,7 +2,7 @@
 
 package client;
 
-**
+/*
  * This class is a GUI to display history of payments.
  * 
  * @author Olga Kazlova
