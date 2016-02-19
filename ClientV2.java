@@ -4,7 +4,7 @@ Client program which provides local and network connectivity to server
 Remotely connects to SQL database and provides text-based table and data manipulation
 
 Author: Jonathan Wojack
-Date: February 1, 2016
+Date: February 19, 2016
 Filename: ClientV2.java
 
 */
@@ -76,8 +76,8 @@ public class ClientV2 extends JFrame {
             
             // establish connection to server
 
-            // Socket socket = new Socket("localhost", 8000); // local connection
-            Socket socket = new Socket("68.134.160.249", 8000);  // network connection
+           //  Socket socket = new Socket("localhost", 8000); // local connection
+             Socket socket = new Socket("68.134.160.249", 8000);  // network connection
        
             jta.append("Connection established!\n\n");
        
@@ -124,7 +124,7 @@ public class ClientV2 extends JFrame {
                 // socket connection
                 
                 Socket socket = new Socket("68.134.160.249", 8000);  // network connection
-                // Socket socket = new Socket("localhost", 8000);  // local connection       
+               //  Socket socket = new Socket("localhost", 8000);  // local connection       
           
                 // get user input from text field and convert to data to send to server
           
@@ -185,8 +185,8 @@ public class ClientV2 extends JFrame {
                 
                 // encrypt data to be sent to server with custom XOR encryption algorithm       
         
-                XOR xor = new XOR(plainText);        
-                DataObject clientEncryptedObject = xor.encryptData();
+                XOR xor = new XOR();        
+                DataObject clientEncryptedObject = xor.encrypt(plainText);
                 
                 // transmit encrypted data to the server
                 
@@ -211,7 +211,7 @@ public class ClientV2 extends JFrame {
                         // get number of cells in selected SQL table
                         // decrypt and process data
                         
-                        String cellsString = xor.decryptData(serverEncryptedObject).trim();
+                        String cellsString = xor.decrypt(serverEncryptedObject).trim();
                         int cells = Integer.parseInt(cellsString);
                                       
                         // get table data from server, decrypt, and then process and display data
@@ -223,7 +223,7 @@ public class ClientV2 extends JFrame {
                                 DataObject serverEncryptedObjectLoop = null;                      
                                 ObjectInputStream fromServerLoop = new ObjectInputStream(socket.getInputStream());
                                 serverEncryptedObjectLoop = (DataObject) fromServerLoop.readObject();
-                                jta.append("\n" + xor.decryptData(serverEncryptedObjectLoop));
+                                jta.append("\n" + xor.decrypt(serverEncryptedObjectLoop));
                                 
                             }
                   
@@ -248,7 +248,7 @@ public class ClientV2 extends JFrame {
               
                         // decrypt and report server response
                    
-                        jta.append("\n" + xor.decryptData(serverEncryptedObject) + "\n\n");            
+                        jta.append("\n" + xor.decrypt(serverEncryptedObject) + "\n\n");            
                         
                     }
       
