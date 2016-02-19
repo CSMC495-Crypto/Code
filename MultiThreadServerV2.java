@@ -3,10 +3,10 @@
 Server program which provides multiple threading to enable multiple clients to connect simultaneously
 Enables clients to access server-based SQL tables and to perform data and table manipulations and other services
 
-Update: Report status in window while server is running
+Update: Change class and method names to comply with the rest of the project
 
 Author: Jonathan Wojack
-Date: February 2, 2016
+Date: February 19, 2016
 Filename: MultiThreadServerV2.java
 
 */
@@ -155,9 +155,9 @@ public class MultiThreadServerV2 extends JFrame {
                     
                     jta.append("decrypt and report data\n");
                     
-                    XOR xorDecrypt = new XOR("");
+                    XOR xorDecrypt = new XOR();
                     jta.append("Transmission from client encrypted: " + new String(clientEncryptedObject.encryptedData));
-                    String clientDecrypted = xorDecrypt.decryptData(clientEncryptedObject);
+                    String clientDecrypted = xorDecrypt.decrypt(clientEncryptedObject);
                     jta.append("\nDecrypted: " + clientDecrypted);
                     
                     jta.append("\naccess SQL database\n");
@@ -185,8 +185,8 @@ public class MultiThreadServerV2 extends JFrame {
                         
                         jta.append("encrypt data\n");
                     
-                    XOR xorEncryptInitial = new XOR("Database successfully updated\n");
-                    DataObject serverEncryptedObjectInitial = xorEncryptInitial.encryptData();
+                    XOR xorEncryptInitial = new XOR();
+                    DataObject serverEncryptedObjectInitial = xorEncryptInitial.encrypt("Database successfully updated\n");
                     
                     jta.append("transmit encrypted data\n");
                     
@@ -220,8 +220,8 @@ public class MultiThreadServerV2 extends JFrame {
                     
                     jta.append("encrypt data\n");
                     
-                    XOR xorEncryptInitial = new XOR(Integer.toString(cells));
-                    DataObject serverEncryptedObjectInitial = xorEncryptInitial.encryptData();
+                    XOR xorEncryptInitial = new XOR();
+                    DataObject serverEncryptedObjectInitial = xorEncryptInitial.encrypt(Integer.toString(cells));
                     
                     jta.append("transmit encrypted data\n");
                     
@@ -245,8 +245,8 @@ public class MultiThreadServerV2 extends JFrame {
                             
                             jta.append("\nencrypt data");
                             
-                            XOR xorEncrypt = new XOR(rs.getString(i));
-                            DataObject serverEncryptedObject = xorEncrypt.encryptData();
+                            XOR xorEncrypt = new XOR();
+                            DataObject serverEncryptedObject = xorEncrypt.encrypt(rs.getString(i));
                             
                             jta.append("\nsend data to client\n");
            
@@ -274,8 +274,8 @@ public class MultiThreadServerV2 extends JFrame {
                 
                 jta.append("\nencrypt data");
                             
-                XOR xorEncrypt = new XOR(error1 + error2 + error3);
-                DataObject serverEncryptedObject = xorEncrypt.encryptData();
+                XOR xorEncrypt = new XOR();
+                DataObject serverEncryptedObject = xorEncrypt.encrypt(error1 + error2 + error3);
                             
                 jta.append("\nsend data to client\n");
                             
