@@ -273,7 +273,7 @@ public class Encrypt {
         
         }
         
-        DataObject dataObject = new DataObject(encrypted, keyInitialFirst);
+        DataObject dataObject = new DataObject(encrypted, keyInitialFirst, "XOR");
         
         // final iteration done and encryption complete
         
