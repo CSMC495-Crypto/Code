@@ -1,14 +1,19 @@
 /*
- *  Class: CMIS495
- *   File: GetEncrypDecryp
- *  
+ * Class: CMSC495
+ * File: DataProcessor.java  
  * Author: Walter Baynard
+ * 
+ * Interface between client/server and data; performs encryption/decryption
+ *
+ * @Updated on 2/20/2016 by Jonathan Wojack: completed all methods
+ *
  */
 
 package client;
 
 import java.security.Key;
 import java.util.Random;
+import javax.crypto.SecretKey;
 
 
 /**
@@ -18,72 +23,102 @@ import java.util.Random;
 
 public class DataProcessor implements java.io.Serializable 
 {    
-    private static Key getKey = null;
-    String encryptedData = null, decrypData = null;
-    String dataCryption;
-    int[] key= null;    
-    int getEncrypNum;
-    
-    public String encrypData(int encrypNum) throws Exception
-    {
-        switch (encrypNum)
-        {
-            //AES decryption
+       
+    public DataObject encryptData(String data) throws Exception {
+        
+        DataObject encryptedData;
+        
+        switch (getEncryptionAlgorithm()) {
+            
+            // AES encryption
+            
             case 1:
-                getKey = AESencrp.generateKey();
                 
-                // get base64 encoded version of the key
-                String AESKey = getKey.toString();                
-                dataCryption = AESencrp.encrypt(encryptedData, getKey);
+                AES aes = new AES();
+                encryptedData = aes.encrypt(data);
                 
                 break;
-            //Blowfish decryption
-            case 2:                
-                           
-                dataCryption = BlowFish.encrypt(encryptedData, "blowFishKey");
+                
+            //Blowfish encryption
+                
+            case 2:     
+                
+                BlowFish blowFish = new BlowFish();
+                encryptedData = blowFish.encrypt(data);
+
                 break;
-            //XOR decryption
-            default:                
-                //XOR;
+                
+            //XOR encryption
+                
+            case 3:
+            default:
+                
+                XOR xor = new XOR();
+                encryptedData = xor.encrypt(data);
+                
+                break;
+                
         }   
         
-        return dataCryption;
+        return encryptedData;
         
     }
     
-    public String decrypData(int decrypNum) throws Exception
-    {
-        switch (decrypNum)
-        {
-            //AES encryption
+    public String decryptData(DataObject encryptedData) throws Exception {
+        
+        String decryptedData = null;
+        
+        switch (encryptedData.encryptionAlgorithm) {
+            
+            //AES decryption
+            
             case 1:
-                getKey = AESencrp.generateKey();
-                
-                // get base64 encoded version of the key
-                String AESKey = getKey.toString();                
-                dataCryption = AESencrp.decrypt(decrypData, getKey);
+            
+                AES aes = new AES();
+                decryptedData = aes.decrypt(encryptedData);
                 
                 break;
-            //Blowfish encryption
+            
+            // BlowFish decryption
+                
             case 2:                
                            
-                dataCryption = BlowFish.encrypt(decrypData, "blowFishKey");
+                BlowFish blowFish = new BlowFish();
+                decryptedData = blowFish.decrypt(encryptedData);
+                
                 break;
+                
             //XOR encryption
+                
+            case 3:
+                
+                XOR xor = new XOR();
+                decryptedData = xor.decrypt(encryptedData);
+                
+                break;
+                
+            // invalid algorithm indicator
+                
             default:                
-                //XOR..class;
+                
+                System.out.println("ERROR!!! Invalid decryption algorithm!");
+                System.out.println("Program will now terminate.");
+                
+                System.exit(1);
         }   
         
-        return dataCryption;
+        return decryptedData;
     }
     
     public int getEncryptionAlgorithm() throws Exception
     {
-        Random getRanNum = new Random();
+        Random randomNumber = new Random();
         
-        //Get a random number
-        getEncrypNum = getRanNum.nextInt(3) + 1;        
+        // get random number
+        int getEncryptionSelector = randomNumber.nextInt(3) + 1;        
                         
-        return getEncrypNum; 
-    }    
+        return getEncryptionSelector; 
+        
+    }   
+    
 }
