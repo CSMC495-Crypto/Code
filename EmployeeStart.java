@@ -1,8 +1,15 @@
-package client;
+package gui;
 
 /**
- *
+ * Screen with all employee functionality
+ * 
  * @author Grant Sweeney
+ */
+
+/*
+ * Project: CryptographyBankingApplication
+ * Course: CMSC 495
+ * Date: 02/20/2016
  */
 public class EmployeeStart extends javax.swing.JFrame {
 

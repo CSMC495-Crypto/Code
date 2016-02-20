@@ -1,9 +1,16 @@
-
-package client;
+package gui;
 
 /**
- *
+ * Form for adding a new bank account to the database
+ * 
  * @author Grant Sweeney
+ * 
+ */
+
+/*
+ * Project: CryptographyBankingApplication
+ * Course: CMSC 495
+ * Date: 02/20/2016
  */
 public class CreateBankAccount extends javax.swing.JFrame {
 

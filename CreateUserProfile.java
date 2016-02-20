@@ -1,13 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package client;
+package gui;
 
 /**
- *
- * @author Grant
+ * Form for adding a new user to the database
+ * 
+ * @author Grant Sweeney
+ */
+
+/*
+ * Project: CryptographyBankingApplication
+ * Course: CMSC 495
+ * Date: 02/20/2016
  */
 public class CreateUserProfile extends javax.swing.JFrame {
 
