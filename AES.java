@@ -18,6 +18,8 @@ import javax.crypto.SecretKey;
  * @course CSMC 495
  * @date Updated on 02/09/2016
  * @updated on 02/14/2016 by Grant Sweeney
+ * @updated on 2/19/2016 by Jonathan Wojack: code was encrypting/decrypting data 
+ *  with both the AES and XOR algorithms; removed XOR code references from file
  */
 public class AES implements Cryptography {
 
@@ -85,11 +87,9 @@ public class AES implements Cryptography {
 			e.printStackTrace();
 		}
 
-		Encrypt encrypt = new Encrypt(cipherBytes);
-
-		DataObject encryptedObject = encrypt.encryptData();
-
-		return encryptedObject;
+	        DataObject encryptedObject = new DataObject(cipherBytes, secretKey, "AES");
+                return encryptedObject;
+                
 	}
 
 	/**
@@ -102,18 +102,16 @@ public class AES implements Cryptography {
 	 */
 	public String decrypt(DataObject encryptedData) {
 		String plainText = null;
-		Decrypt decrypt = new Decrypt(encryptedData);
-
-		byte[] decryptedData = decrypt.decryptData();
+		
 		try {
 
 			// Initialize the cipher for decryption
 
-			cipher.init(Cipher.DECRYPT_MODE, secretKey);
+			cipher.init(Cipher.DECRYPT_MODE, encryptedData.secretKey);
 
 			// Perform decryption with method doFinal()
 
-			byte[] plainBytes = cipher.doFinal(decryptedData);
+			byte[] plainBytes = cipher.doFinal(encryptedData.encryptedData);
 
 			// Convert encrypted text to string format
 
