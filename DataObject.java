@@ -18,9 +18,11 @@ public class DataObject implements java.io.Serializable {
     SecretKey secretKey;    // for AES and Blowfish
     
     // encryption algorithm identifier
-    // possible values are "XOR", "Blowfish", "AES"
+    // 1 = AES
+    // 2 = BlowFish
+    // 3 = XOR
     
-    String encryptionAlgorithm;
+    int encryptionAlgorithm;
     
     // constructor for XOR algorithm, since it does not store key as SecretKey
     
@@ -28,7 +30,7 @@ public class DataObject implements java.io.Serializable {
         
         this.encryptedData = encryptedData;
         this.key = key;
-        this.encryptionAlgorithm = encryptionAlgorithm;
+        this.encryptionAlgorithm = getEncryptionAlgorithmDesignator(encryptionAlgorithm);
         
     }
     
@@ -38,7 +40,33 @@ public class DataObject implements java.io.Serializable {
         
         this.encryptedData = encryptedData;
         this.secretKey = secretKey;
-        this.encryptionAlgorithm = encryptionAlgorithm;
+        this.encryptionAlgorithm = getEncryptionAlgorithmDesignator(encryptionAlgorithm);
+        
+    }
+    
+    public int getEncryptionAlgorithmDesignator(String encryptionAlgorithm) {
+        
+        if (encryptionAlgorithm.startsWith("AES")) {
+            
+            return 1;
+            
+        }
+        
+        else if (encryptionAlgorithm.startsWith("BlowFish")) {
+            
+            return 2;
+            
+        }
+        
+        else if (encryptionAlgorithm.startsWith("XOR")) {
+            
+            return 3;
+            
+        }
+        
+        // invalid algorithm
+        
+        return -1;
         
     }
     
