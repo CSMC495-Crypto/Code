@@ -9,6 +9,9 @@ package client;
  * @project Bank Encryption Application
  * @course CSMC 495
  * @date Updated on 02/19/2016
+ *
+ * 02/20/2016 - Banner added by Brandon Lawson
+ *
  */
 
 
@@ -32,6 +35,7 @@ public class Transactions extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        bannerLabel = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -46,6 +50,10 @@ public class Transactions extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel1.setText("  Transactions");
+        
+        bannerLabel.setBackground(new java.awt.Color(0, 0, 153));
+        bannerLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/client/UMUC logo.jpg")));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -89,17 +97,25 @@ public class Transactions extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(bannerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .add(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
                 .addContainerGap())
+            .add(Return, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel4Layout.setVerticalGroup(
+                
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(bannerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
             .add(jPanel4Layout.createSequentialGroup()
-                .add(112, 112, 112)
+                .add(160, 160, 160)
+                .add(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 368, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE)
+                .add(10, 10, 10)
+                .add(Return, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         Return.setText("Back to Account");
@@ -193,6 +209,7 @@ public class Transactions extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify                     
+    private javax.swing.JLabel bannerLabel;
     private javax.swing.JButton Return;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
@@ -203,4 +220,3 @@ public class Transactions extends javax.swing.JFrame {
     // End of variables declaration                   
     
 }
-
