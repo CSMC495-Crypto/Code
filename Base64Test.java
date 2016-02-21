@@ -1,3 +1,14 @@
+package test;
+/**
+ * This JUnit test case tests methods of class Base64
+ * 
+ * @author Olga Kazlova
+ * @project Bank Encryption Application
+ * @course CSMC 495
+ * @date 02/14/2016
+ * @updated 02/21/2016 by Olga Kazlova; moved to package test.
+ **/
+
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
@@ -5,6 +16,8 @@ import java.util.Arrays;
 /*This class tests encrypt and decrypt methods of Base64 classes*/
 
 import org.junit.Test;
+
+import cryptography.Base64;
 
 public class Base64Test {
 	
