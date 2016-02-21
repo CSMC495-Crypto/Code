@@ -30,7 +30,7 @@ public class Transactions extends javax.swing.JFrame {
         bannerLabel = new javax.swing.JLabel();
         transactionHistoryTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        transactionsTable = new javax.swing.JTable();
         backToAccountButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -41,8 +41,8 @@ public class Transactions extends javax.swing.JFrame {
         transactionHistoryTitle.setForeground(new java.awt.Color(0, 0, 204));
         transactionHistoryTitle.setText("Transaction History");
 
-        jTable1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        transactionsTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        transactionsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -77,9 +77,9 @@ public class Transactions extends javax.swing.JFrame {
                 "Transaction Number", "Account Number", "Starting Balance", "Transaction Type", "Amount", "Ending Balance"
             }
         ));
-        jTable1.setName(""); // NOI18N
-        jTable1.setRowHeight(20);
-        jScrollPane1.setViewportView(jTable1);
+        transactionsTable.setName(""); // NOI18N
+        transactionsTable.setRowHeight(20);
+        jScrollPane1.setViewportView(transactionsTable);
 
         backToAccountButton.setText("Back to Account");
         backToAccountButton.addActionListener(new java.awt.event.ActionListener() {
@@ -131,7 +131,7 @@ public class Transactions extends javax.swing.JFrame {
     private javax.swing.JButton backToAccountButton;
     private javax.swing.JLabel bannerLabel;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel transactionHistoryTitle;
+    private javax.swing.JTable transactionsTable;
     // End of variables declaration//GEN-END:variables
 }

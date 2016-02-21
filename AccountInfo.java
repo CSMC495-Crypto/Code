@@ -35,6 +35,7 @@ public class AccountInfo extends javax.swing.JFrame {
         accountTypeTextField = new javax.swing.JTextField();
         accountNumberLabel1 = new javax.swing.JLabel();
         accountNumberTextField1 = new javax.swing.JTextField();
+        transactionButton = new javax.swing.JButton();
         depositWithdrawalPanel = new javax.swing.JPanel();
         amountTextField1 = new javax.swing.JTextField();
         depositButton = new javax.swing.JButton();
@@ -47,6 +48,7 @@ public class AccountInfo extends javax.swing.JFrame {
         accountTextField = new javax.swing.JTextField();
         amountLabel = new javax.swing.JLabel();
         accountNumberLabel = new javax.swing.JLabel();
+        backToCustomerButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("UMUC Bank - Account Info");
@@ -67,11 +69,19 @@ public class AccountInfo extends javax.swing.JFrame {
         accountNumberLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         accountNumberLabel1.setText("Account Number");
 
+        transactionButton.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        transactionButton.setText("Transaction History");
+        transactionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transactionButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout accountDetailsPanelLayout = new javax.swing.GroupLayout(accountDetailsPanel);
         accountDetailsPanel.setLayout(accountDetailsPanelLayout);
         accountDetailsPanelLayout.setHorizontalGroup(
             accountDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accountDetailsPanelLayout.createSequentialGroup()
+            .addGroup(accountDetailsPanelLayout.createSequentialGroup()
                 .addContainerGap(18, Short.MAX_VALUE)
                 .addGroup(accountDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(accountBalanceLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -85,6 +95,10 @@ public class AccountInfo extends javax.swing.JFrame {
                     .addComponent(accountNumberLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(accountNumberTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21))
+            .addGroup(accountDetailsPanelLayout.createSequentialGroup()
+                .addGap(146, 146, 146)
+                .addComponent(transactionButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         accountDetailsPanelLayout.setVerticalGroup(
             accountDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,6 +113,8 @@ public class AccountInfo extends javax.swing.JFrame {
                     .addComponent(accountBalanceTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(accountTypeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(accountNumberTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(transactionButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -206,6 +222,13 @@ public class AccountInfo extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        backToCustomerButton.setText("Back to Customer");
+        backToCustomerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backToCustomerButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -217,7 +240,9 @@ public class AccountInfo extends javax.swing.JFrame {
                     .addComponent(depositWithdrawalPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(transferPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(accountDetailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(274, Short.MAX_VALUE))
+                .addGap(48, 48, 48)
+                .addComponent(backToCustomerButton)
+                .addContainerGap(109, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,15 +250,29 @@ public class AccountInfo extends javax.swing.JFrame {
                 .addComponent(bannerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(accountDetailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGap(24, 24, 24)
                 .addComponent(depositWithdrawalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(transferPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(transferPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(backToCustomerButton)
+                        .addGap(26, 26, 26))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void transactionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionButtonActionPerformed
+        new Transactions().setVisible(true);
+    }//GEN-LAST:event_transactionButtonActionPerformed
+
+    private void backToCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToCustomerButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_backToCustomerButtonActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -250,10 +289,12 @@ public class AccountInfo extends javax.swing.JFrame {
     private javax.swing.JLabel amountLabel2;
     private javax.swing.JTextField amountTextField1;
     private javax.swing.JTextField amountTextField2;
+    private javax.swing.JButton backToCustomerButton;
     private javax.swing.JLabel bannerLabel;
     private javax.swing.JButton depositButton;
     private javax.swing.JPanel depositWithdrawalPanel;
     private javax.swing.JButton payMortgageButton;
+    private javax.swing.JButton transactionButton;
     private javax.swing.JButton transferButton;
     private javax.swing.JPanel transferPanel;
     private javax.swing.JButton withdrawalButton;

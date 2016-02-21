@@ -35,22 +35,17 @@ public class CustomerStart extends javax.swing.JFrame {
         firstNameLabel = new javax.swing.JLabel();
         lastNameLabel = new javax.swing.JLabel();
         accountDetailsPanel1 = new javax.swing.JPanel();
-        accountBalanceLabel2 = new javax.swing.JLabel();
-        accountBalanceTextField2 = new javax.swing.JTextField();
-        accountTypeLabel2 = new javax.swing.JLabel();
-        accountTypeTextField1 = new javax.swing.JTextField();
-        accountNumberLabel2 = new javax.swing.JLabel();
-        accountNumberTextField2 = new javax.swing.JTextField();
-        transactionsLabel = new javax.swing.JLabel();
-        accountComboBox = new javax.swing.JComboBox<>();
-        navTransactionsButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        accountDetailsTable = new javax.swing.JTable();
         transferPanel = new javax.swing.JPanel();
         payMortgageButton = new javax.swing.JButton();
         transferButton = new javax.swing.JButton();
         amountTextField = new javax.swing.JTextField();
-        accountTextField = new javax.swing.JTextField();
+        accountNumberToTextField = new javax.swing.JTextField();
         amountLabel = new javax.swing.JLabel();
-        accountNumberLabel = new javax.swing.JLabel();
+        accountNumberToLabel = new javax.swing.JLabel();
+        accountNumberFromLabel = new javax.swing.JLabel();
+        accountNumberFromTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UMUC Bank - Customer Screen");
@@ -115,86 +110,49 @@ public class CustomerStart extends javax.swing.JFrame {
         accountDetailsPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Account Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 13))); // NOI18N
         accountDetailsPanel1.setPreferredSize(new java.awt.Dimension(448, 94));
 
-        accountBalanceLabel2.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        accountBalanceLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        accountBalanceLabel2.setText("Account Balance");
+        accountDetailsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"}
+            },
+            new String [] {
+                "Account Number", "Account Type", "Account Balance", "Transaction History", "Transfer Funds"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
-        accountBalanceTextField2.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-
-        accountTypeLabel2.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        accountTypeLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        accountTypeLabel2.setText("Account Type");
-
-        accountTypeTextField1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-
-        accountNumberLabel2.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        accountNumberLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        accountNumberLabel2.setText("Account Number");
-
-        accountNumberTextField2.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-
-        transactionsLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        transactionsLabel.setText("Transactions");
-
-        accountComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        navTransactionsButton.setText("Go To Transactions");
-        navTransactionsButton.setToolTipText("");
-        navTransactionsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                navTransactionsButtonActionPerformed(evt);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        accountDetailsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                accountDetailsTableMousePressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(accountDetailsTable);
 
         javax.swing.GroupLayout accountDetailsPanel1Layout = new javax.swing.GroupLayout(accountDetailsPanel1);
         accountDetailsPanel1.setLayout(accountDetailsPanel1Layout);
         accountDetailsPanel1Layout.setHorizontalGroup(
             accountDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accountDetailsPanel1Layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addGroup(accountDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(accountDetailsPanel1Layout.createSequentialGroup()
-                        .addComponent(transactionsLabel)
-                        .addGap(34, 34, 34))
-                    .addGroup(accountDetailsPanel1Layout.createSequentialGroup()
-                        .addGroup(accountDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(accountDetailsPanel1Layout.createSequentialGroup()
-                                .addComponent(accountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                                .addComponent(navTransactionsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(accountDetailsPanel1Layout.createSequentialGroup()
-                                .addGroup(accountDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(accountBalanceTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                                    .addComponent(accountBalanceLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(accountDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(accountTypeTextField1)
-                                    .addComponent(accountTypeLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(accountDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(accountNumberLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                                    .addComponent(accountNumberTextField2))))
-                        .addContainerGap())))
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
+                .addContainerGap())
         );
         accountDetailsPanel1Layout.setVerticalGroup(
             accountDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(accountDetailsPanel1Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .addGroup(accountDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(accountBalanceLabel2)
-                    .addComponent(accountTypeLabel2)
-                    .addComponent(accountNumberLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(accountDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(accountBalanceTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(accountTypeTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(accountNumberTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(transactionsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(accountDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(accountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(navTransactionsButton)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accountDetailsPanel1Layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         transferPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transfer / Pay Mortgage", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 13))); // NOI18N
@@ -207,30 +165,40 @@ public class CustomerStart extends javax.swing.JFrame {
 
         amountTextField.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
 
-        accountTextField.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        accountNumberToTextField.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
 
         amountLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         amountLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         amountLabel.setText("Amount");
 
-        accountNumberLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        accountNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        accountNumberLabel.setText("Account Number");
+        accountNumberToLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        accountNumberToLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        accountNumberToLabel.setText("Account Number To");
+
+        accountNumberFromLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        accountNumberFromLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        accountNumberFromLabel.setText("Account Number From");
+
+        accountNumberFromTextField.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
 
         javax.swing.GroupLayout transferPanelLayout = new javax.swing.GroupLayout(transferPanel);
         transferPanel.setLayout(transferPanelLayout);
         transferPanelLayout.setHorizontalGroup(
             transferPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(transferPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addGroup(transferPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(accountNumberFromLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(accountNumberFromTextField))
+                .addGap(36, 36, 36)
                 .addGroup(transferPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(amountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(amountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
                 .addGroup(transferPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(accountTextField)
-                    .addComponent(accountNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                    .addComponent(accountNumberToTextField)
+                    .addComponent(accountNumberToLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(transferPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(transferButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(payMortgageButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -246,13 +214,17 @@ public class CustomerStart extends javax.swing.JFrame {
                 .addGap(7, 7, 7))
             .addGroup(transferPanelLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(transferPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(amountLabel)
-                    .addComponent(accountNumberLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(transferPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(accountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(amountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(transferPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(accountNumberFromTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(transferPanelLayout.createSequentialGroup()
+                        .addGroup(transferPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(amountLabel)
+                            .addComponent(accountNumberToLabel)
+                            .addComponent(accountNumberFromLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(transferPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(accountNumberToTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(amountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -262,57 +234,61 @@ public class CustomerStart extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(bannerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(customerInformationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(271, 271, 271)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(accountDetailsPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(transferPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(125, 125, 125)
-                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addGap(837, 837, 837)
+                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(250, 250, 250)
+                        .addComponent(customerInformationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(accountDetailsPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 771, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(87, 87, 87))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(transferPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(165, 165, 165))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(bannerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(customerInformationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(accountDetailsPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(exitButton)
-                    .addComponent(transferPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(transferPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addComponent(exitButton)
                 .addGap(26, 26, 26))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void navTransactionsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_navTransactionsButtonActionPerformed
-        new Transactions().setVisible(true);
-    }//GEN-LAST:event_navTransactionsButtonActionPerformed
-
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
+    private void accountDetailsTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountDetailsTableMousePressed
+        int col = accountDetailsTable.columnAtPoint(evt.getPoint());
+        if(col == 3) {
+            new Transactions().setVisible(true);
+        }
+    }//GEN-LAST:event_accountDetailsTableMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel accountBalanceLabel2;
-    private javax.swing.JTextField accountBalanceTextField2;
-    private javax.swing.JComboBox<String> accountComboBox;
     private javax.swing.JPanel accountDetailsPanel1;
-    private javax.swing.JLabel accountNumberLabel;
-    private javax.swing.JLabel accountNumberLabel2;
-    private javax.swing.JTextField accountNumberTextField2;
-    private javax.swing.JTextField accountTextField;
-    private javax.swing.JLabel accountTypeLabel2;
-    private javax.swing.JTextField accountTypeTextField1;
+    private javax.swing.JTable accountDetailsTable;
+    private javax.swing.JLabel accountNumberFromLabel;
+    private javax.swing.JTextField accountNumberFromTextField;
+    private javax.swing.JLabel accountNumberToLabel;
+    private javax.swing.JTextField accountNumberToTextField;
     private javax.swing.JLabel amountLabel;
     private javax.swing.JTextField amountTextField;
     private javax.swing.JLabel bannerLabel;
@@ -320,11 +296,10 @@ public class CustomerStart extends javax.swing.JFrame {
     private javax.swing.JButton exitButton;
     private javax.swing.JLabel firstNameLabel;
     private javax.swing.JTextField firstNameTextField;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lastNameLabel;
     private javax.swing.JTextField lastNameTextField;
-    private javax.swing.JButton navTransactionsButton;
     private javax.swing.JButton payMortgageButton;
-    private javax.swing.JLabel transactionsLabel;
     private javax.swing.JButton transferButton;
     private javax.swing.JPanel transferPanel;
     // End of variables declaration//GEN-END:variables
