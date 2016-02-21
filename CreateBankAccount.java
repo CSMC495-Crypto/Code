@@ -131,8 +131,7 @@ public class CreateBankAccount extends javax.swing.JFrame {
                 .addGap(32, 32, 32))
         );
 
-        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/client/UMUC logo.jpg"))); // NOI18N
-        bannerLabel.setText("jLabel1");
+        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/UMUC.logo.jpg"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -234,8 +234,7 @@ public class CreateUserProfile extends javax.swing.JFrame {
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
-        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/client/UMUC logo.jpg"))); // NOI18N
-        bannerLabel.setText("jLabel1");
+        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/UMUC.logo.jpg"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

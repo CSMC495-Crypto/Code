@@ -305,18 +305,19 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="createProfileButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="397" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="exitButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="firstNameSearchTextField" max="32767" attributes="0"/>
                       <Component id="nameSearchTextField" max="32767" attributes="0"/>
-                      <Component id="accountSearchTextField" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="accountSearchTextField" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="accountSearchButton" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="nameSearchButton" min="-2" max="-2" attributes="0"/>
-                      <Component id="accountSearchButton" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="nameSearchButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Component id="jPanel1" max="32767" attributes="0"/>
@@ -392,6 +393,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Search for Account"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="accountSearchButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="nameSearchTextField">
         </Component>
@@ -470,7 +474,7 @@
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/client/UMUC logo.jpg"/>
+          <Image iconType="3" name="/gui/UMUC.logo.jpg"/>
         </Property>
       </Properties>
     </Component>

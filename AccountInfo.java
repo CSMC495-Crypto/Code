@@ -7,7 +7,7 @@ Filename: ClientV2.java
 02/20/2016 - Modified layout
 */
 
-package client;
+package gui;
 
 public class AccountInfo extends javax.swing.JFrame {
 
@@ -48,11 +48,10 @@ public class AccountInfo extends javax.swing.JFrame {
         amountLabel = new javax.swing.JLabel();
         accountNumberLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("UMUC Bank - Account Info");
 
-        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/client/UMUC logo.jpg"))); // NOI18N
-        bannerLabel.setText("jLabel1");
+        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/UMUC.logo.jpg"))); // NOI18N
 
         accountDetailsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Account Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 13))); // NOI18N
 
@@ -211,7 +210,7 @@ public class AccountInfo extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bannerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, Short.MAX_VALUE)
+            .addComponent(bannerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(273, 273, 273)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)

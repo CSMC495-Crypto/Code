@@ -1,6 +1,6 @@
 
 
-package client;
+package gui;
 
 /*
  * This class is a GUI to display history of payments.
@@ -41,7 +41,7 @@ public class Transactions extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         Return = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("UMUC Bank");
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -53,7 +53,7 @@ public class Transactions extends javax.swing.JFrame {
         
         bannerLabel.setBackground(new java.awt.Color(0, 0, 153));
         bannerLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/client/UMUC logo.jpg")));
+        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/UMUC.logo.jpg")));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -121,7 +121,7 @@ public class Transactions extends javax.swing.JFrame {
         Return.setText("Back to Account");
         Return.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ReturnActionPerformed(evt);
+               
             }
         });
 

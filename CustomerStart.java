@@ -7,7 +7,7 @@ Filename: ClientV2.java
 02/20/2016 - Modified layout
 */
 
-package client;
+package gui;
 
 public class CustomerStart extends javax.swing.JFrame {
 
@@ -59,9 +59,13 @@ public class CustomerStart extends javax.swing.JFrame {
 
         exitButton.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         exitButton.setText("Exit Program");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
 
-        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/client/UMUC logo.jpg"))); // NOI18N
-        bannerLabel.setText("jLabel2");
+        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/UMUC.logo.jpg"))); // NOI18N
         bannerLabel.setMaximumSize(new java.awt.Dimension(637, 590));
         bannerLabel.setMinimumSize(new java.awt.Dimension(637, 590));
         bannerLabel.setName(""); // NOI18N
@@ -86,7 +90,7 @@ public class CustomerStart extends javax.swing.JFrame {
         customerInformationPanelLayout.setHorizontalGroup(
             customerInformationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(customerInformationPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addComponent(firstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -136,13 +140,18 @@ public class CustomerStart extends javax.swing.JFrame {
 
         navTransactionsButton.setText("Go To Transactions");
         navTransactionsButton.setToolTipText("");
+        navTransactionsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                navTransactionsButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout accountDetailsPanel1Layout = new javax.swing.GroupLayout(accountDetailsPanel1);
         accountDetailsPanel1.setLayout(accountDetailsPanel1Layout);
         accountDetailsPanel1Layout.setHorizontalGroup(
             accountDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accountDetailsPanel1Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addGroup(accountDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(accountDetailsPanel1Layout.createSequentialGroup()
                         .addComponent(transactionsLabel)
@@ -170,7 +179,7 @@ public class CustomerStart extends javax.swing.JFrame {
         accountDetailsPanel1Layout.setVerticalGroup(
             accountDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(accountDetailsPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addGroup(accountDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(accountBalanceLabel2)
                     .addComponent(accountTypeLabel2)
@@ -256,7 +265,7 @@ public class CustomerStart extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(customerInformationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(customerInformationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(271, 271, 271)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -283,6 +292,14 @@ public class CustomerStart extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void navTransactionsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_navTransactionsButtonActionPerformed
+        new Transactions().setVisible(true);
+    }//GEN-LAST:event_navTransactionsButtonActionPerformed
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitButtonActionPerformed
 
     /**
      * @param args the command line arguments

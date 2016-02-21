@@ -7,7 +7,7 @@ Filename: ClientV2.java
 02/20/2016 - Modified layout
 */
 
-package client;
+package gui;
 
 /**
  *
@@ -56,7 +56,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
         bannerLabel.setBackground(new java.awt.Color(0, 0, 153));
         bannerLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/client/UMUC logo.jpg"))); // NOI18N
+        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/UMUC.logo.jpg"))); // NOI18N
 
         userNameLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         userNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -80,13 +80,13 @@ public class LoginScreen extends javax.swing.JFrame {
                     .addComponent(loginButton)
                     .addComponent(userNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(399, Short.MAX_VALUE))
+                .addContainerGap(411, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(bannerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(142, 142, 142)
+                .addGap(151, 151, 151)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(userNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(userNameLabel))
@@ -96,7 +96,7 @@ public class LoginScreen extends javax.swing.JFrame {
                     .addComponent(passwordLabel))
                 .addGap(18, 18, 18)
                 .addComponent(loginButton)
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addContainerGap(194, Short.MAX_VALUE))
         );
 
         pack();
@@ -107,8 +107,20 @@ public class LoginScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordTextFieldActionPerformed
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
-            CustomerStart CS = new CustomerStart();
-            CS.setVisible(true);
+            
+            //temporary log in for testing
+            //enter customer for customer page or employee for employee page
+            if(userNameTextField.getText().equalsIgnoreCase("customer")) {
+                new CustomerStart().setVisible(true);
+                this.dispose();
+            } // end if
+            else if(userNameTextField.getText().equalsIgnoreCase("employee")) {
+                new EmployeeStart().setVisible(true);
+                this.dispose();
+            } //end if
+            else {
+                System.out.println("Invalid entry");
+            }
     }//GEN-LAST:event_loginButtonMouseClicked
 
     /**

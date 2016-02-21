@@ -218,6 +218,11 @@ public class EmployeeStart extends javax.swing.JFrame {
 
         accountSearchButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         accountSearchButton.setText("Search for Account");
+        accountSearchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accountSearchButtonActionPerformed(evt);
+            }
+        });
 
         nameSearchButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         nameSearchButton.setText("Search for Customer");
@@ -272,15 +277,16 @@ public class EmployeeStart extends javax.swing.JFrame {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(createProfileButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 397, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(exitButton))
                     .addComponent(firstNameSearchTextField)
                     .addComponent(nameSearchTextField)
-                    .addComponent(accountSearchTextField))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(accountSearchTextField)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(accountSearchButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nameSearchButton)
-                    .addComponent(accountSearchButton))
+                .addComponent(nameSearchButton)
                 .addContainerGap())
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -307,14 +313,13 @@ public class EmployeeStart extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                         .addComponent(nameSearchButton)
                         .addGap(12, 12, 12)))
-                .addGap(18, 18, 18)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(createProfileButton)
                     .addComponent(exitButton))
                 .addGap(19, 19, 19))
         );
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/client/UMUC logo.jpg"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/UMUC.logo.jpg"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -360,6 +365,10 @@ public class EmployeeStart extends javax.swing.JFrame {
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void accountSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountSearchButtonActionPerformed
+        new AccountInfo().setVisible(true);
+    }//GEN-LAST:event_accountSearchButtonActionPerformed
 
     /**
      * @param args the command line arguments
