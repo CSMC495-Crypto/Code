@@ -1,8 +1,11 @@
-package client;
+package test;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import cryptography.Encrypt;
+import data.DataObject;
 
 /**
  * This JUnit test case tests methods of class Encrypt
@@ -11,6 +14,7 @@ import org.junit.Test;
  * @project Bank Encryption Application
  * @course CSMC 495
  * @date 02/14/2016
+ * @updated 02/21 by Olga Kazlova, moved to package test
  **/
 
 public class EncryptTest {
@@ -33,32 +37,32 @@ public class EncryptTest {
 		// test case 1
 		DataObject data1 = encryptObj1.encryptData();
 
-		System.out.print(new String("\nInitial data to encrypt: " + string1));
+		System.out.print("\nInitial data to encrypt: " + string1);
 		System.out.print("\nResult of encryption: "
-				+ new String(data1.encryptedData));
+				+ new String(data1.getEncryptedData()));
 		assertTrue(!string1.equals(new String(
-				encryptObj1.encryptData().encryptedData)));
-		assertTrue(data1.getClass().getName().equals("DataObject"));
+				encryptObj1.encryptData().getEncryptedData())));
+		assertTrue(data1.getClass().getName().equals("data.DataObject"));
 
 		// test case 2
 		DataObject data2 = encryptObj2.encryptData();
 
-		System.out.print(new String("\n\nInitial data to encrypt: " + string2));
+		System.out.print("\n\nInitial data to encrypt: " + string2);
 		System.out.print("\nResult of encryption: "
-				+ new String(data2.encryptedData));
+				+ new String(data2.getEncryptedData()));
 		assertTrue(!string2.equals(new String(
-				encryptObj2.encryptData().encryptedData)));
-		assertTrue(data2.getClass().getName().equals("DataObject"));
+				encryptObj2.encryptData().getEncryptedData())));
+		assertTrue(data2.getClass().getName().equals("data.DataObject"));
 
 		// test case 3
 		DataObject data3 = encryptObj3.encryptData();
 
-		System.out.print(new String("\n\nInitial data to encrypt: " + string3));
+		System.out.print("\n\nInitial data to encrypt: " + string3);
 		System.out.print("\nResult of encryption: "
-				+ new String(data3.encryptedData));
+				+ new String(data3.getEncryptedData()));
 		assertTrue(!string3.equals(new String(
-				encryptObj3.encryptData().encryptedData)));
-		assertTrue(data3.getClass().getName().equals("DataObject"));
+				encryptObj3.encryptData().getEncryptedData())));
+		assertTrue(data3.getClass().getName().equals("data.DataObject"));
 	}
 
 }
