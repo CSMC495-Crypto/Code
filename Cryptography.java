@@ -9,12 +9,13 @@ import data.DataObject;
  * 
  * @updated by Olga Kazlova on 02/14/2016
  * @updated by Jonathan Wojack on 2/20/2016
+ * @updated by Jonathan Wojack on 2/21/2016
  * 
  */
 
 // Changes: 
 //
-// Changed package to cryptography
+// Corrected Javadoc comments
 
 public interface Cryptography {
     
@@ -22,16 +23,18 @@ public interface Cryptography {
      * Encrypts given data
      * 
      * @param data Data to be encrypted
-     * @return DataObjrct encrypted data 
+     * @return DataObject encrypted data 
      */
+    
     public DataObject encrypt(String data);
     
     /**
      * Decrypts given data
      * 
-     * @param DataObject to be decrypted
+     * @param data to be decrypted
      * @return Original data
      */
+    
     public String decrypt(DataObject data);
     
-} //end interface
+}
