@@ -12,17 +12,11 @@ import java.security.SecureRandom;
  * @course CSMC 495
  * @updated on 02/14/2016 by Grant Sweeney
  * @updated on 2/20/2016 by Jonathan Wojack
+ * @updated on 2/21/2016 by Jonathan Wojack
  * 
  * Changes:
  * 
- * 1.  Changed line 
- * 
- * DataObject dataObject = new DataObject(encrypted, keyInitialFirst, "XOR");
- * 
- *  to reflect new constructor parameters
- * 2.  Changed package to cryptography
- * 3.  Beautified code
- * 4.  Added Javadoc comments
+ * 1.  Removed unnecessary setEncrypted and setPlainText64 methods
  * 
  */
 
@@ -87,18 +81,6 @@ public class Encrypt {
     }
 
     /**
-     * set method for Base64-encoded plain text
-     * 
-     * @param plainText64 Base64
-     */
-    
-    public void setPlainText64(byte[] plainText64) {
-        
-        this.plainText64 = plainText64;
-        
-    }
-    
-    /**
      * get method for Base64-encoded plain text
      * 
      * @return Base64
@@ -109,19 +91,7 @@ public class Encrypt {
         return plainText64;
         
     }
-    
-    /**
-     * set method for encrypted data
-     * 
-     * @param encrypted encrypted data
-     */
-    
-    public void setEncrypted(byte[] encrypted) {
         
-        this.encrypted = encrypted;
-        
-    }
-    
    /**
     * get method for encrypted data
     * 
