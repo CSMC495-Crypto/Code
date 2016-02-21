@@ -21,123 +21,115 @@ import javax.crypto.SecretKey;
  * @updated on 02/14/2016 by Grant Sweeney
  * @updated on 2/19/2016 by Jonathan Wojack
  * @updated on 2/20/2016 by Jonathan Wojack
- * @updated on 2/21/2016 by Jonathan Wojack
- * 
+ * @updated on 02/21 by Olga Kazlova changed string from 'Blowfish' to 'BlowFish'
  * Changes:
  * 
- * 1.  Replaced catch statements with multicatch statements
- * 2.  Removed printStackTrace statements
- * 3.  Added Override annotation
- * 4.  Beautified code
+ * 1.  Changed package to cryptography
+ * 2.  decrypt method accesses secretKey and encryptedData fields by using getter
+ *  methods in DataObject
  * 
  */
-
 public class BlowFish implements Cryptography {
 
-    private KeyGenerator keyGenerator = null;
-    private SecretKey secretKey = null;
-    private Cipher cipher = null;
+	private KeyGenerator keyGenerator = null;
+	private SecretKey secretKey = null;
+	private Cipher cipher = null;
 
-    /**
-     * Constructor generates secret key for encryption.
-     */
-        
-    public BlowFish() {
+	/**
+	 * Constructor generates secret key for encryption.
+	 */
+	public BlowFish() {
+		try {
 
-        try {
+			// Generate a random key
 
-            // Generate a random key
+			keyGenerator = KeyGenerator.getInstance("BlowFish");
+			secretKey = keyGenerator.generateKey();
 
-            keyGenerator = KeyGenerator.getInstance("Blowfish");
-            secretKey = keyGenerator.generateKey();
+			// Create an instance of cipher m
 
-            // Create an instance of Cipher
+			cipher = Cipher.getInstance("BlowFish");
+		} catch (NoSuchPaddingException ex) {
+			System.out.println(ex);
+		} catch (NoSuchAlgorithmException ex) {
+			System.out.println(ex);
+		}
 
-            cipher = Cipher.getInstance("Blowfish");
-	
-        } catch (NoSuchPaddingException|NoSuchAlgorithmException ex) {
-            
-            System.out.println(ex);
-	
-        } 
-
-    }
-
-    /**
-     * This method encrypts plain text passed as a parameter and returns an
-     * object of DataObject
-     * 
-     * @param plainText
-     *            String
-     * @return encryptedObject DataObject
-     */
-
-    @Override
-    public DataObject encrypt(String plainText) {
-
-        byte[] cipherBytes = null;	
-
-	try {
-            
-            // Initialize the cipher for encryption
-            
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            
-            // Convert the text string to byte format
-            
-            byte[] plainBytes = plainText.getBytes();
-        
-            // Perform encryption with method doFinal()
-        
-            cipherBytes = cipher.doFinal(plainBytes);
-        
-        } catch (InvalidKeyException|IllegalBlockSizeException|BadPaddingException ex) {
-			
 	}
-        
-        // store encrypted data in DataObject
-        
-        DataObject encryptedObject = new DataObject(cipherBytes, secretKey, "Blowfish");
-        return encryptedObject;
+
+	/**
+	 * This method encrypts plain text passed as a parameter and returns an
+	 * object of DataObject
+	 * 
+	 * @param plainText
+	 *            String
+	 * @return encryptedObject DataObject
+	 */
+	public DataObject encrypt(String plainText) {
+		byte[] cipherBytes = null;
+
+		// Initialize the cipher for encryption
+
+		try {
+			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// Convert the text string to byte format
+
+		byte[] plainBytes = plainText.getBytes();
+
+		// Perform encryption with method doFinal()
+
+		try {
+			cipherBytes = cipher.doFinal(plainBytes);
+		} catch (IllegalBlockSizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+                
+                DataObject encryptedObject = new DataObject(cipherBytes, secretKey, "BlowFish");
+                return encryptedObject;
+	}
+
+	/**
+	 * This method decrypts DataObject passed as a parameter and returns plain
+	 * text as a string
+	 * 
+	 * @param encryptedData
+	 *            DataObject
+	 * @return plainText String
+	 */
+	public String decrypt(DataObject encryptedData) {
+		String plainText = null;
 	
-    }
+		try {
 
-    /**
-     * This method decrypts DataObject passed as a parameter and returns plain
-     * text as a string
-     * 
-     * @param encryptedData
-     *            DataObject
-     * @return plainText String
-     */
+			// Initialize the cipher for decryption
 
-    @Override
-    public String decrypt(DataObject encryptedData) {
+			cipher.init(Cipher.DECRYPT_MODE, encryptedData.getSecretKey());
 
-        String plainText = null;
-	
-        try {
+			// Perform decryption with method doFinal()
 
-            // Initialize the cipher for decryption
+			byte[] plainBytes = cipher.doFinal(encryptedData.getEncryptedData());
 
-            cipher.init(Cipher.DECRYPT_MODE, encryptedData.getSecretKey());
+			// Convert encrypted text to string format
 
-            // Perform decryption with method doFinal()
+			plainText = new String(plainBytes);
+		} catch (IllegalBlockSizeException ex) {
+			System.out.println(ex);
+		} catch (BadPaddingException ex) {
+			System.out.println(ex);
+		} catch (InvalidKeyException ex) {
+			System.out.println(ex);
+		}
 
-            byte[] plainBytes = cipher.doFinal(encryptedData.getEncryptedData());
-
-            // Convert decrypted text to string format
-
-            plainText = new String(plainBytes);
-	
-        } catch (IllegalBlockSizeException|BadPaddingException|InvalidKeyException ex) {
-		
-            System.out.println(ex);
-		
-        } 
-
-        return plainText;
-	
-    }
+		return plainText;
+	}
 
 }
