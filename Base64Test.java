@@ -1,4 +1,4 @@
-package test;
+
 /**
  * This JUnit test case tests methods of class Base64
  * 
