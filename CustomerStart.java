@@ -1,13 +1,18 @@
-/*
-Customer Main Screen
-Author: Brandon Lawson
-Date: February 18, 2016
-Filename: ClientV2.java
-
-02/20/2016 - Modified layout
-*/
-
 package gui;
+
+/**
+ * Screen with all customer functionality functionality
+ * 
+ * @author Brandon Lawson
+ * 
+ */
+
+/*
+ * Project: CryptographyBankingApplication
+ * Course: CMSC 495
+ * Date: 02/18/2016
+ * 02/21/2016 - Updated by Grant Sweeney
+ */
 
 public class CustomerStart extends javax.swing.JFrame {
 

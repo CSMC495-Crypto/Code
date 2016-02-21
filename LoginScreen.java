@@ -1,18 +1,20 @@
-/*
-Login screen used by customers and employees
-Author: Brandon Lawson
-Date: February 18, 2016
-Filename: ClientV2.java
-
-02/20/2016 - Modified layout
-*/
-
 package gui;
 
 /**
- *
- * @author brand
+ * Login screen used by customers and employees
+ * 
+ * @author Brandon Lawson
+ * 
  */
+
+/*
+ * Project: CryptographyBankingApplication
+ * Course: CMSC 495
+ * Date: 02/18/2016
+ * 02/20/2016 - Modified layout
+ * 02/21/2016 - Updated by Grant Sweeney
+ */
+
 public class LoginScreen extends javax.swing.JFrame {
 
     /**
