@@ -16,8 +16,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import Cryptography.AES;
-import Cryptography.Base64;
+import cryptography.AES;
+import cryptography.Base64;
+
 import data.DataObject;
 
 public class AESTest {
