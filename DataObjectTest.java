@@ -9,6 +9,17 @@ import cryptography.BlowFish;
 import cryptography.XOR;
 import data.DataObject;
 
+/**
+ * This JUnit test case tests method of class DataObject
+ * 
+ * @author Olga Kazlova
+ * @project Bank Encryption Application
+ * @course CSMC 495
+ * @date Updated on 02/21/2016
+ * @updated 02/21 by Olga Kazlova, moved to package test, 
+ * updated with getters of DataObject 
+ **/
+
 public class DataObjectTest {
 
 	AES aes = new AES();
