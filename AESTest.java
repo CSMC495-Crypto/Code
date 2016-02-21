@@ -1,8 +1,6 @@
-package client;
+package test;
 
 import static org.junit.Assert.*;
-
-import org.junit.Test;
 
 /**
  * This JUnit test case tests methods of class AES
@@ -11,7 +9,16 @@ import org.junit.Test;
  * @project Bank Encryption Application
  * @course CSMC 495
  * @date 02/14/2016
+ * @updated 02/21/2016 by Olga Kazlova Changed package, updated with getters from DataObject
+ * 
  **/
+
+
+import org.junit.Test;
+
+import Cryptography.AES;
+import Cryptography.Base64;
+import data.DataObject;
 
 public class AESTest {
 
@@ -25,17 +32,17 @@ public class AESTest {
 		// test case 1
 		System.out.println("\nText before Encryption: " + text1);
 		DataObject cipherText1 = aes.encrypt(text1);
-		String plainText1 = Base64.encode(cipherText1.encryptedData);
+		String plainText1 = Base64.encode(cipherText1.getEncryptedData());
 		System.out.println("Cipher Text: " + plainText1);
 		// test case 2
 		System.out.println("\nText before Encryption: " + text2);
 		DataObject cipherText2 = aes.encrypt(text2);
-		String plainText2 = Base64.encode(cipherText2.encryptedData);
+		String plainText2 = Base64.encode(cipherText2.getEncryptedData());
 		System.out.println("Cipher Text: " + plainText2);
 		// test case 3
 		System.out.println("\nText before Encryption: " + text3);
 		DataObject cipherText3 = aes.encrypt(text3);
-		String plainText3 = Base64.encode(cipherText3.encryptedData);
+		String plainText3 = Base64.encode(cipherText3.getEncryptedData());
 		System.out.println("Cipher Text: " + plainText3);
 
 		assertFalse(text1.equals(cipherText1));
@@ -48,7 +55,7 @@ public class AESTest {
 		// test case 1
 		String text1 = "Test case 1";
 		DataObject cipherText1 = aes.encrypt(text1);
-		String plainText1 = Base64.encode(cipherText1.encryptedData);
+		String plainText1 = Base64.encode(cipherText1.getEncryptedData());
 		System.out.println("\nCipher Text: " + plainText1);
 		String decr1 = aes.decrypt(cipherText1);
 		System.out.println("Text after Decryption: " + decr1);
@@ -56,7 +63,7 @@ public class AESTest {
 		// test case 2
 		String text2 = "Test case 2";
 		DataObject cipherText2 = aes.encrypt(text2);
-		String plainText2 = Base64.encode(cipherText2.encryptedData);
+		String plainText2 = Base64.encode(cipherText2.getEncryptedData());
 		System.out.println("\nCipher Text: " + plainText2);
 		String decr2 = aes.decrypt(cipherText2);
 		System.out.println("Text after Decryption: " + decr2);
@@ -64,7 +71,7 @@ public class AESTest {
 		// test case 3
 		String text3 = "Test case 3";
 		DataObject cipherText3 = aes.encrypt(text3);
-		String plainText3 = Base64.encode(cipherText3.encryptedData);
+		String plainText3 = Base64.encode(cipherText3.getEncryptedData());
 		System.out.println("\nCipher Text: " + plainText3);
 		String decr3 = aes.decrypt(cipherText3);
 		System.out.println("Text after Decryption: " + decr1);
@@ -73,5 +80,6 @@ public class AESTest {
 		assertTrue(text2.equals(decr2));
 		assertTrue(text3.equals(decr3));
 	}
+
 
 }
