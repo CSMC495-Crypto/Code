@@ -1,8 +1,12 @@
-package client;
+package test;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import cryptography.Base64;
+import cryptography.XOR;
+import data.DataObject;
 
 /**
  * This JUnit test case tests methods of class XOR
@@ -11,6 +15,7 @@ import org.junit.Test;
  * @project Bank Encryption Application
  * @course CSMC 495
  * @date 02/14/2016
+ * @updated 02/21 by Olga Kazlova, moved to package test
  **/
 
 public class XORTest {
@@ -25,17 +30,17 @@ public class XORTest {
 		//test case 1
 		System.out.println("\nText before Encryption: " + text1);
 		DataObject cipherText1 = xor.encrypt(text1);
-		String plainText1 = Base64.encode(cipherText1.encryptedData);
+		String plainText1 = Base64.encode(cipherText1.getEncryptedData());
 		System.out.println("Cipher Text: " + plainText1);
 		//test case 2
 		System.out.println("\nText before Encryption: " + text2);
 		DataObject cipherText2 = xor.encrypt(text2);
-		String plainText2 = Base64.encode(cipherText2.encryptedData);
+		String plainText2 = Base64.encode(cipherText2.getEncryptedData());
 		System.out.println("Cipher Text: " + plainText2);
 		//test case 3
 		System.out.println("\nText before Encryption: " + text3);
 		DataObject cipherText3 = xor.encrypt(text3);
-		String plainText3 = Base64.encode(cipherText3.encryptedData);
+		String plainText3 = Base64.encode(cipherText3.getEncryptedData());
 		System.out.println("Cipher Text: " + plainText3);
 		
 		assertFalse(text1.equals(cipherText1));
@@ -48,7 +53,7 @@ public class XORTest {
 		//test case 1
 		String text1 = "Test case 1";
 		DataObject cipherText1 = xor.encrypt(text1);
-		String plainText1 = Base64.encode(cipherText1.encryptedData);
+		String plainText1 = Base64.encode(cipherText1.getEncryptedData());
 		System.out.println("\nCipher Text: " + plainText1);
 		String decr1 = xor.decrypt(cipherText1);
 		System.out.println("Text after Decryption: "
@@ -57,7 +62,7 @@ public class XORTest {
 		//test case 2
 		String text2 = "Test case 2";
 		DataObject cipherText2 = xor.encrypt(text2);
-		String plainText2 = Base64.encode(cipherText2.encryptedData);
+		String plainText2 = Base64.encode(cipherText2.getEncryptedData());
 		System.out.println("\nCipher Text: " + plainText2);
 		String decr2 = xor.decrypt(cipherText2);
 		System.out.println("Text after Decryption: "
@@ -66,7 +71,7 @@ public class XORTest {
 		//test case 3
 		String text3 = "Somithing random";
 		DataObject cipherText3 = xor.encrypt(text3);
-		String plainText3 = Base64.encode(cipherText3.encryptedData);
+		String plainText3 = Base64.encode(cipherText3.getEncryptedData());
 		System.out.println("\nCipher Text: " + plainText3);
 		String decr3 = xor.decrypt(cipherText3);
 		System.out.println("Text after Decryption: "
@@ -76,3 +81,4 @@ public class XORTest {
 		assertTrue(text2.equals(decr2));
 		assertTrue(text3.equals(decr3));
 	}
+}
