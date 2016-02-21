@@ -1,4 +1,6 @@
-package client;
+package cryptography;
+
+import data.DataObject;
 
 /**
  * This class represents simple cryptographic program 
@@ -9,18 +11,18 @@ package client;
  * @course CSMC 495
  * @date created 02/02/2016
  * @updated on 02/14/2016 by Olga Kazlova and Grant Sweeney
+ * @updated on 2/20/2016 by Jonathan Wojack
  */
 
-//Changes:
-// 1. method name changed from encryptData to encrypt to match interface
-// 2. Constructor that initializes a value to String plainText removed
-// 3. String plainText is passed as argument to encrypt method to match interface
-// 4. method name decryptData is changed to 'decrypt' to match interface
-//   added JavaDoc for the class and methods
+// Changes:
+//
+// 1. Changed package to cryptography 
+// 2. Updated Javadoc comments
 
 public class XOR implements Cryptography {
     
    // public static String plainText;
+    
     public static Base64 base64 = new Base64();
     
     /**
@@ -30,16 +32,13 @@ public class XOR implements Cryptography {
      * @return DataObject decodedData
      */
     
-    public DataObject encrypt(String plainText) {  
-        
-       
+    public DataObject encrypt(String plainText) {         
         
         byte[] plainText64 = base64.encode(plainText.getBytes()).getBytes();
         
         Encrypt encrypt = new Encrypt(plainText64);
         
-        DataObject encryptedObject = encrypt.encryptData();
-       
+        DataObject encryptedObject = encrypt.encryptData();       
         
         return encryptedObject;
     }
@@ -61,7 +60,6 @@ public class XOR implements Cryptography {
                 
         return decodedData;
         
-    }
+    }        
         
-        
-    }
+}

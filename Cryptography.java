@@ -1,4 +1,6 @@
-package client;
+package cryptography;
+
+import data.DataObject;
 
 /**
  * Interface that all encryption algorithm classes will implement
@@ -6,12 +8,13 @@ package client;
  * @author Grant Sweeney
  * 
  * @updated by Olga Kazlova on 02/14/2016
+ * @updated by Jonathan Wojack on 2/20/2016
  * 
  */
 
 // Changes: 
-// 1. return value of encrypt(String) was changed from String to DataObject
-// 2. arguments of decrupt method was changed from String to DataObject
+//
+// Changed package to cryptography
 
 public interface Cryptography {
     

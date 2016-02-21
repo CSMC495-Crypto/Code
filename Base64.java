@@ -1,4 +1,4 @@
-package client;
+package cryptography;
 
 import java.io.ByteArrayOutputStream;
 
@@ -9,6 +9,11 @@ import java.io.ByteArrayOutputStream;
  * @project Bank Encryption Application
  * @course CSMC 495
  * @updated on 02/14/2016 by Grant Sweeney
+ * @updated on 2/20/2016 by Jonathan Wojack
+ * 
+ * Changes:
+ * 
+ * 1.  Changed package to cryptography
  */
 public class Base64
 {
