@@ -1,4 +1,4 @@
-package client;
+package data;
 
 import javax.crypto.SecretKey;
 
@@ -10,6 +10,9 @@ import javax.crypto.SecretKey;
  * @project Bank Encryption Application
  * @course CSMC 495
  * @updated on 02/19/2016 by Jonathan Wojack
+ * @updated on 02/21/2016 by Olga Kazlova (added getSecretKey() and getEncryptedData()), package data;
+ * 
+ * 
  */
 public class DataObject implements java.io.Serializable {
     
@@ -68,6 +71,14 @@ public class DataObject implements java.io.Serializable {
         
         return -1;
         
+    }
+    
+    public SecretKey getSecretKey(){
+    	return secretKey;
+    }
+    
+    public byte[] getEncryptedData(){
+    	return encryptedData;
     }
     
 }
