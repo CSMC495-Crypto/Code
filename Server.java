@@ -21,6 +21,7 @@
 
 package server;
 
+import cryptography.DataProcessor;
 import data.DataObject;
 import cryptography.XOR;
 import java.io.*;
@@ -35,7 +36,7 @@ import java.sql.*;
 
 public class Server extends JFrame {
   
-    private JTextArea jta = new JTextArea();
+    public JTextArea jta = new JTextArea();
     
     /**
      * Initialize server
@@ -174,152 +175,17 @@ public class Server extends JFrame {
                     
                     jta.append("decrypt and report data\n");
                     
-                    XOR xorDecrypt = new XOR();
+                    BankingDOA bankingDOA = new BankingDOA(socket);
+                    bankingDOA.processData(clientEncryptedObject);
                     
-                    jta.append("Transmission from client encrypted: " + new String(clientEncryptedObject.getEncryptedData()));
-                    String clientDecrypted = xorDecrypt.decrypt(clientEncryptedObject);
-                    
-                    jta.append("\nDecrypted: " + clientDecrypted);
-                    jta.append("\naccess SQL database\n");
-                    
-                    String connUrl="jdbc:mysql://localhost:3306/cmsc495";
-                    String username="default";
-                    String password="superSecretPassword";
-                    Class.forName("com.mysql.jdbc.Driver");
-                    Connection conn = DriverManager.getConnection(connUrl,username,password);
-                    Statement st = conn.createStatement();
-                    
-                    jta.append("rows of data in database table to be selected\n");
-                    
-                    int rows = 0;  
-                    
-                    jta.append("determine whether client desires to display or modify data\n");
-        
-                    String query = clientDecrypted;
-        
-                    if (!query.startsWith("SELECT")) {  // update data
-                        
-                        jta.append("perform database update\n");
-         
-                        st.executeUpdate(query);
-                        
-                        jta.append("encrypt data\n");
-                    
-                        XOR xorEncryptInitial = new XOR();
-                        DataObject serverEncryptedObjectInitial = xorEncryptInitial.encrypt("Database successfully updated\n");
-                    
-                        jta.append("transmit encrypted data\n");
-                    
-                        ObjectOutputStream toClientInitial = new ObjectOutputStream(socket.getOutputStream());
-                        toClientInitial.writeObject(serverEncryptedObjectInitial);
-                        toClientInitial.flush();
-                        
-                        continue;  // wait for next transmission from client...
-                        
-                    }
-                    
-                    // otherwise, the client wishes to display data
-                    
-                    jta.append("determine the number of rows of data in the selected database table\n");
-                    
-                    ResultSet rs= st.executeQuery(query);
-                                       
-                    while(rs.next()) {
-            
-                        rows++;
-                        
-                    }
-                    
-                    jta.append("determine the number of columns of data in the selected database table\n");
-                    
-                    ResultSetMetaData rsmd = rs.getMetaData();
-                    int columns = rsmd.getColumnCount();
-                    int cells = rows * columns;
-
-                    // send client the number of cells in database table
-                    // so that the data can be properly displayed
-                    
-                    jta.append("encrypt data\n");
-                    
-                    XOR xorEncryptInitial = new XOR();
-                    DataObject serverEncryptedObjectInitial = xorEncryptInitial.encrypt(Integer.toString(cells));
-                    
-                    jta.append("transmit encrypted data\n");
-                    
-                    ObjectOutputStream toClientInitial = new ObjectOutputStream(socket.getOutputStream());
-                    toClientInitial.writeObject(serverEncryptedObjectInitial);
-                    toClientInitial.flush();
-         
-                    // execute client's query
-                    
-                    jta.append("get each desired cell from the table\n");
-                    
-                    rs = st.executeQuery(query);
-        
-                    while(rs.next()) {  // get next row from table
-                        
-                        jta.append("get each cell in the row\n");
-            
-                        for (int i = 1; i <= columns; i++) {
-                      
-                            jta.append("\nSending: " + rs.getString(i));
+                } 
+                
+            } catch (IOException|ClassNotFoundException ex) {
                             
-                            jta.append("\nencrypt data");
-                            
-                            XOR xorEncrypt = new XOR();
-                            DataObject serverEncryptedObject = xorEncrypt.encrypt(rs.getString(i));
-                            
-                            jta.append("\nsend data to client\n");
-           
-                            ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
-                            toClient.writeObject(serverEncryptedObject);
-                            toClient.flush();
-                            
-                        }
-                        
-                    }
-        
-                }
-        
             }
-            
-            catch(SQLException ex) {
-                
-                // if client submits an invalid request
-                
-                String error1 = "************************************************\n";
-                String error2 = "   ERROR!!! Incorrectly formatted request\n";
-                String error3 = "************************************************\n\n";
-                
-                jta.append(error1 + error2 + error3);
-                
-                jta.append("\nencrypt data");
-                            
-                XOR xorEncrypt = new XOR();
-                DataObject serverEncryptedObject = xorEncrypt.encrypt(error1 + error2 + error3);
-                            
-                jta.append("\nsend data to client\n");
-                            
-                try {
-           
-                    ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
-                    toClient.writeObject(serverEncryptedObject);
-                    toClient.flush();
-                            
-                }
-                            
-                catch (IOException ex1) {
-                            
-                }
-                
-            }
-           
-            catch(IOException|ClassNotFoundException ex) {
-        
-            }
-    
-        }       
-        
+                    
+        }
+               
     }
-  
+            
 }
