@@ -34,6 +34,12 @@ public class BankingDOA extends Server {
         
     }
     
+    /**
+     * Process data from client
+     * 
+     * @param encryptedObject 
+     */
+    
     public void processData(DataObject encryptedObject) {
         
         try {
@@ -143,6 +149,12 @@ public class BankingDOA extends Server {
         
     }
     
+    /**
+     * Decrypt data from client
+     * 
+     * @return 
+     */
+    
     public String retrieveData() {
                 
         try {
@@ -151,18 +163,24 @@ public class BankingDOA extends Server {
             DataObject object = getEncryptedObject();
             
             String decryptedData = dataProcessor.decryptData(object);
-            System.out.println(decryptedData);
             return decryptedData;
-      //  return ("yes");
+            
         } catch (Exception ex) {
             
             System.out.println(ex);
             
         }    
         
-        return ("retrieveData");
+        return null;
         
     }
+    
+    /**
+     * Encrypt data before sending it to the client
+     * 
+     * @param data
+     * @return 
+     */
     
     public DataObject prepareData(String data) {
                 
@@ -180,15 +198,21 @@ public class BankingDOA extends Server {
         
     }
     
+    /**
+     * Send data to client
+     * 
+     * @param encryptedToClient 
+     */
+    
     public void transmitData(DataObject encryptedToClient) {
         
         jta.append("transmit encrypted data\n");
         
         try {
                     
-                        ObjectOutputStream toClientInitial = new ObjectOutputStream(socket.getOutputStream());
-                        toClientInitial.writeObject(encryptedToClient);
-                        toClientInitial.flush();
+            ObjectOutputStream toClientInitial = new ObjectOutputStream(socket.getOutputStream());
+            toClientInitial.writeObject(encryptedToClient);
+            toClientInitial.flush();
                         
         } catch (IOException ex) {
             
@@ -196,11 +220,23 @@ public class BankingDOA extends Server {
         
     }
     
+    /**
+     * DataObject setter method
+     * 
+     * @param encryptedObject 
+     */
+    
     public void setEncryptedObject(DataObject encryptedObject) {
         
         this.encryptedObject = encryptedObject;
         
     }
+    
+    /**
+     * DataObject getter method
+     * 
+     * @return 
+     */
     
     public DataObject getEncryptedObject() {
         
