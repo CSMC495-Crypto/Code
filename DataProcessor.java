@@ -25,6 +25,10 @@ import javax.crypto.SecretKey;
 
 public class DataProcessor implements java.io.Serializable {
     
+    public DataProcessor() {
+        
+    }
+    
     /**
      * Encrypts data using random encryption algorithm (XOR by default)
      * 
@@ -45,6 +49,7 @@ public class DataProcessor implements java.io.Serializable {
                 
                 AES aes = new AES();
                 encryptedData = aes.encrypt(data);
+                System.out.println("AES");
                 
                 break;
                 
@@ -54,6 +59,7 @@ public class DataProcessor implements java.io.Serializable {
                 
                 BlowFish blowFish = new BlowFish();
                 encryptedData = blowFish.encrypt(data);
+                System.out.println("BlowFish");
 
                 break;
                 
@@ -64,6 +70,7 @@ public class DataProcessor implements java.io.Serializable {
                 
                 XOR xor = new XOR();
                 encryptedData = xor.encrypt(data);
+                System.out.println("XOR");
                 
                 break;
                 
@@ -120,9 +127,10 @@ public class DataProcessor implements java.io.Serializable {
             default:                
                 
                 System.out.println("ERROR!!! Invalid decryption algorithm!");
+                System.out.println("Algorithm " + encryptedData.getEncryptionAlgorithm());
                 System.out.println("Program will now terminate.");
                 
-                System.exit(1);
+            //    System.exit(1);
                 
         }   
         

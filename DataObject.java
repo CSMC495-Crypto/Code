@@ -91,32 +91,32 @@ public class DataObject implements java.io.Serializable {
         }
         
         // invalid algorithm
-        
+        System.out.println("Algorithm: " + encryptionAlgorithm);
         return -1;
         
     }
     
     public SecretKey getSecretKey() {
         
-        return this.secretKey;
+        return secretKey;
         
     }
     
     public int[] getKey() {
         
-        return this.key;
+        return key;
         
     }
     
     public byte[] getEncryptedData() {
         
-        return this.encryptedData;
+        return encryptedData;
         
     }
     
     public int getEncryptionAlgorithm() {
         
-        return this.encryptionAlgorithm;
+        return encryptionAlgorithm;
         
     }
     

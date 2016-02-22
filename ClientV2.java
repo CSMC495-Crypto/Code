@@ -4,13 +4,16 @@ Client program which provides local and network connectivity to server
 Remotely connects to SQL database and provides text-based table and data manipulation
 
 Author: Jonathan Wojack
-Date: February 19, 2016
+Date: February 1, 2016
 Filename: ClientV2.java
 
 */
 
 package client;
 
+import cryptography.DataProcessor;
+import data.DataObject;
+import cryptography.XOR;
 import java.io.*;
 import java.net.*;
 import java.awt.*;
@@ -120,6 +123,8 @@ public class ClientV2 extends JFrame {
         public void actionPerformed(ActionEvent e) {
   
             try {
+                
+                DataProcessor dataProcessor = new DataProcessor();
           
                 // socket connection
                 
@@ -185,8 +190,7 @@ public class ClientV2 extends JFrame {
                 
                 // encrypt data to be sent to server with custom XOR encryption algorithm       
         
-                XOR xor = new XOR();        
-                DataObject clientEncryptedObject = xor.encrypt(plainText);
+                DataObject clientEncryptedObject = dataProcessor.encryptData(plainText);
                 
                 // transmit encrypted data to the server
                 
@@ -197,7 +201,7 @@ public class ClientV2 extends JFrame {
                 // display transmission data
         
                 jta.append("Data to send to server:\n" + plainText);        
-                jta.append("\n\nData encrypted as\n" + new String(clientEncryptedObject.encryptedData) + "\n\n");
+                jta.append("\n\nData encrypted as\n" + new String(clientEncryptedObject.getEncryptedData()) + "\n\n");
         
                 // get data from server
                 
@@ -211,7 +215,10 @@ public class ClientV2 extends JFrame {
                         // get number of cells in selected SQL table
                         // decrypt and process data
                         
-                        String cellsString = xor.decrypt(serverEncryptedObject).trim();
+                     
+                        String cellsString = dataProcessor.decryptData(serverEncryptedObject).trim();
+                        
+                      //  String cellsString = xor.decrypt(serverEncryptedObject).trim();
                         int cells = Integer.parseInt(cellsString);
                                       
                         // get table data from server, decrypt, and then process and display data
@@ -223,7 +230,7 @@ public class ClientV2 extends JFrame {
                                 DataObject serverEncryptedObjectLoop = null;                      
                                 ObjectInputStream fromServerLoop = new ObjectInputStream(socket.getInputStream());
                                 serverEncryptedObjectLoop = (DataObject) fromServerLoop.readObject();
-                                jta.append("\n" + xor.decrypt(serverEncryptedObjectLoop));
+                                jta.append("\n" + dataProcessor.decryptData(serverEncryptedObjectLoop));
                                 
                             }
                   
@@ -247,8 +254,10 @@ public class ClientV2 extends JFrame {
                         serverEncryptedObject = (DataObject) fromServer.readObject();
               
                         // decrypt and report server response
+                        
+                        jta.append("\n" + dataProcessor.decryptData(serverEncryptedObject) + "\n\n");
                    
-                        jta.append("\n" + xor.decrypt(serverEncryptedObject) + "\n\n");            
+                  //      jta.append("\n" + xor.decrypt(serverEncryptedObject) + "\n\n");            
                         
                     }
       
@@ -256,14 +265,10 @@ public class ClientV2 extends JFrame {
                 
             }
       
-            catch (IOException ex) {
+            catch (Exception ex) {
                 
                 System.err.println(ex);
                 
-            }
-      
-            catch (ClassNotFoundException ex) {
-          
             }
     
         }

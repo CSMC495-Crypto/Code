@@ -24,9 +24,8 @@ import java.sql.Statement;
 import javax.swing.JTextArea;
 
 public class BankingDOA extends Server {
-    
+   
     DataObject encryptedObject;
-    DataProcessor dataProcessor;
     Socket socket;
     
     public BankingDOA(Socket socket) {
@@ -38,9 +37,12 @@ public class BankingDOA extends Server {
     public void processData(DataObject encryptedObject) {
         
         try {
+            
+            DataProcessor dataProcessor = new DataProcessor();
         
             setEncryptedObject(encryptedObject);
-            String query = retrieveData();       
+            String query = retrieveData();     
+            System.out.println(query);
         
             String connUrl="jdbc:mysql://localhost:3306/cmsc495";
             String username="default";
@@ -55,8 +57,9 @@ public class BankingDOA extends Server {
                     
             jta.append("determine whether client desires to display or modify data\n");
         
-            // String query = clientDecrypted;
-        
+            
+            jta.append(query);
+            
             if (!query.startsWith("SELECT")) {  // update data
                         
                 jta.append("perform database update\n");
@@ -141,34 +144,39 @@ public class BankingDOA extends Server {
     }
     
     public String retrieveData() {
-        
-        String decryptedData = null;
-        
+                
         try {
-        
-            decryptedData = dataProcessor.decryptData(getEncryptedObject());          
-        
+            
+            DataProcessor dataProcessor = new DataProcessor();
+            DataObject object = getEncryptedObject();
+            
+            String decryptedData = dataProcessor.decryptData(object);
+            System.out.println(decryptedData);
+            return decryptedData;
+      //  return ("yes");
         } catch (Exception ex) {
+            
+            System.out.println(ex);
             
         }    
         
-        return decryptedData;
+        return ("retrieveData");
         
     }
     
     public DataObject prepareData(String data) {
-        
-        DataObject encryptedData = null;
-        
+                
         try {
-        
-        encryptedData = dataProcessor.encryptData(data);
+            
+            DataObject encryptedData;
+            DataProcessor dataProcessor = new DataProcessor();
+            encryptedData = dataProcessor.encryptData(data);
                
         } catch (Exception ex) {
             
         }
         
-        return encryptedData;
+        return null;
         
     }
     
@@ -196,7 +204,7 @@ public class BankingDOA extends Server {
     
     public DataObject getEncryptedObject() {
         
-        return this.encryptedObject;
+        return encryptedObject;
         
     }
     
