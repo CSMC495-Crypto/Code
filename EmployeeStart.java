@@ -1,5 +1,9 @@
 package gui;
 
+import java.awt.Component;
+
+import javax.swing.JOptionPane;
+
 import server.DatabaseController;
 
 /**
@@ -22,7 +26,7 @@ import server.DatabaseController;
  *     2. added listener for Delete Customer Profile
  *        (uses DAOInterface.deleteUsersProfile (String, String), 
  *        gets the first and last name from the form above,
- *        ////needs confirmation window if the user is really sure to delete
+ *     3. confirmation window if the user is really sure to delete profile
  *           
  */
 
@@ -412,11 +416,20 @@ public class EmployeeStart extends javax.swing.JFrame {
     }//GEN-LAST:event_accountSearchButtonActionPerformed
     
     private void nameSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        BankingDAO.getCustomerInformation(firstNameSearchTextField.getText(), nameSearchTextField.getText());
+        //BankingDAO.getCustomerInformation(firstNameSearchTextField.getText(), nameSearchTextField.getText());
     }
 
     private void deleteCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        BankingDAO.deleteUserProfile(firstNameTextField.getText(), lastNameTextField.getText());
+    	
+    	int value = JOptionPane.showConfirmDialog((Component) null, "The customer's profile will be deleted permanently.\n"
+    		    + "Do you want to delete this profile?",
+    	        "alert", JOptionPane.YES_NO_OPTION);
+    	if (value == JOptionPane.YES_OPTION) {
+    		 //BankingDAO.deleteUserProfile(firstNameTextField.getText(), lastNameTextField.getText());
+    	} else if (value == JOptionPane.NO_OPTION) {
+    	    //close dialog box
+    	}
+       
     }
     
     private void addAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAccountButtonActionPerformed
