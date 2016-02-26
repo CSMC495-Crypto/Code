@@ -12,6 +12,7 @@ package gui;
  * Course: CMSC 495
  * Date: 02/18/2016
  * 02/21/2016 - Updated by Grant Sweeney
+ * 02/25/2016 - Added code to submit user information in a string format - WBaynard
  */
 
 public class CustomerStart extends javax.swing.JFrame {
