@@ -11,6 +11,7 @@ package gui;
  * Course: CMSC 495
  * Date: 02/20/2016
  * 02/20/2016 - Banner added by Brandon Lawson
+ * 02/25/2016 - Added code to submit user information in a string format - WBaynard
  */
 
 public class CreateBankAccount extends javax.swing.JFrame {
@@ -169,6 +170,10 @@ public class CreateBankAccount extends javax.swing.JFrame {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // code for submitting form goes here
+        String startBalance = startingBalanceTextField.toString();
+        String acctType = accountTypeComboBox.toString();
+        String dateSubmitted = dateTextField.toString();
+        
         this.dispose();
     }//GEN-LAST:event_submitButtonActionPerformed
 
