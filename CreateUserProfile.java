@@ -12,6 +12,7 @@ package gui;
  * Course: CMSC 495
  * Date: 02/20/2016
  * 02/20/2016 - Banner added by Brandon Lawson
+ * 02/25/2016 - Added code to submit user information in a string format - WBaynard
  */
 
 public class CreateUserProfile extends javax.swing.JFrame {
@@ -282,6 +283,16 @@ public class CreateUserProfile extends javax.swing.JFrame {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // code for submitting form goes here
+        String userName = addressTextField.toString();
+        String userPassword = confirmPasswordTextField.toString();
+        String userFirstName = firstNameTextField.toString();
+        String userLastName = lastNameTextField.toString();
+        String userAddress = addressTextField.toString();
+        String userCity = cityTextField.toString();
+        String userState = stateTextField.toString();
+        String userZip = zipCodeTextField.toString();
+        String userPhoneNumber = phoneNumberTextField.toString();
+        //Transmitt User Profile.
         this.dispose();
     }//GEN-LAST:event_submitButtonActionPerformed
 
