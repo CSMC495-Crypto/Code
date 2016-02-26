@@ -287,6 +287,34 @@ public class CustomerStart extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_accountDetailsTableMousePressed
 
+    private void transferButtonActionPerformed(java.awt.event.ActionEvent evt)                                               
+    {                                                   
+        // TODO add your handling code here:
+        //String amount = amountTextField.toString();
+        String acctNumberfrom = accountNumberFromTextField.toString();
+        String firstName = firstNameTextField.toString();
+        String lastName = lastNameTextField.toString();
+        String acctNumberTo = accountNumberToTextField.toString();
+        String amount = amountTextField.toString();
+        
+        //Trans mit account information
+        //DatabaseController acctTransfer = 
+
+    } 
+    
+    private void payMortgageButtonActionPerformed(java.awt.event.ActionEvent evt)                                                  
+    {                                                      
+        // TODO add your handling code here:
+        //String amount = amountTextField.toString();
+        String acctNumberfrom = accountNumberFromTextField.toString();
+        String firstName = firstNameTextField.toString();
+        String lastName = lastNameTextField.toString();
+        String acctNumberTo = accountNumberToTextField.toString();
+        String amount = amountTextField.toString();
+        
+        //Trans mit account information
+        //DatabaseController acctTransfer = 
+    }   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel accountDetailsPanel1;
