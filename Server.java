@@ -17,6 +17,8 @@
  *  with the new getter method in DataObject
  * 3.  Added Javadoc comments
  * 4.  Beautified code
+ * 
+ * Replaced the BankingDOA class with DatabaseController. (WBaynard)
  */
 
 package server;
@@ -175,8 +177,11 @@ public class Server extends JFrame {
                     
                     jta.append("decrypt and report data\n");
                     
-                    BankingDOA bankingDOA = new BankingDOA(socket);
-                    bankingDOA.processData(clientEncryptedObject);
+                    //BankingDOA bankingDOA = new BankingDOA(socket);
+                    //bankingDOA.processData(clientEncryptedObject);
+                    // Replaced the BankingDOA with DatabaseController
+                    DatabaseController databaseControl = new DatabaseController(socket);
+                    databaseControl.processData(clientEncryptedObject);
                     
                 } 
                 
