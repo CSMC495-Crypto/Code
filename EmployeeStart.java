@@ -1,5 +1,7 @@
 package gui;
 
+import server.DatabaseController;
+
 /**
  * Screen with all employee functionality
  * 
@@ -12,6 +14,16 @@ package gui;
  * Course: CMSC 495
  * Date: 02/20/2016
  * 02/20/2016 - Banner added by Brandon Lawson
+ * 
+ * 02/24/2016 - Olga Kazlova: 
+ *     1. added actionListener for Search Customer button 
+ *        (uses DAOInterface.getCustomerInformation(String, String),
+ *        populates the form below with retrieved information 
+ *     2. added listener for Delete Customer Profile
+ *        (uses DAOInterface.deleteUsersProfile (String, String), 
+ *        gets the first and last name from the form above,
+ *        ////needs confirmation window if the user is really sure to delete
+ *           
  */
 
 public class EmployeeStart extends javax.swing.JFrame {
@@ -103,6 +115,11 @@ public class EmployeeStart extends javax.swing.JFrame {
 
         deleteCustomerButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         deleteCustomerButton.setText("Delete Customer Profile");
+        deleteCustomerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteCustomerButtonActionPerformed(evt);
+            }
+        });
 
         addAccountButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         addAccountButton.setText("Add New Bank Account");
@@ -255,6 +272,11 @@ public class EmployeeStart extends javax.swing.JFrame {
 
         nameSearchButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         nameSearchButton.setText("Search for Customer");
+        nameSearchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameSearchButtonActionPerformed(evt);
+            }
+        });
 
         firstNameSearchLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         firstNameSearchLabel.setText("Enter Customer First Name: ");
@@ -388,7 +410,15 @@ public class EmployeeStart extends javax.swing.JFrame {
     private void accountSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountSearchButtonActionPerformed
         new AccountInfo().setVisible(true);
     }//GEN-LAST:event_accountSearchButtonActionPerformed
+    
+    private void nameSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        BankingDAO.getCustomerInformation(firstNameSearchTextField.getText(), nameSearchTextField.getText());
+    }
 
+    private void deleteCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        BankingDAO.deleteUserProfile(firstNameTextField.getText(), lastNameTextField.getText());
+    }
+    
     private void addAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAccountButtonActionPerformed
         new CreateBankAccount().setVisible(true);
     }//GEN-LAST:event_addAccountButtonActionPerformed
