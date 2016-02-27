@@ -27,7 +27,9 @@ import server.DatabaseController;
  *        (uses DAOInterface.deleteUsersProfile (String, String), 
  *        gets the first and last name from the form above,
  *     3. confirmation window if the user is really sure to delete profile
- *           
+ *     4. added actionListener for Search Account button 
+ *        (uses DAOInterface.getAccountInformation(String),
+ *        populates the form below in pop-up window (account balance, type, number)       
  */
 
 public class EmployeeStart extends javax.swing.JFrame {
@@ -413,10 +415,25 @@ public class EmployeeStart extends javax.swing.JFrame {
 
     private void accountSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountSearchButtonActionPerformed
         new AccountInfo().setVisible(true);
+    	
+        /*
+         * String accountNumber = accountSearchTextField.getText();
+         * String accountInfo = BankingDAO.getCustomerAccount(accountNumber);
+         * if (!accountInfo.equals(""))
+         * 		//populate Account balance Account Type Account Number
+         *      
+         * else {
+         *     //pop-up window "Account not found"
+         *     JOptionPane.showConfirmDialog((Component) null, "Account not found.",
+    	 *      "alert", JOptionPane.OK_OPTION);
+    	 *      }
+         *     
+        */
     }//GEN-LAST:event_accountSearchButtonActionPerformed
     
     private void nameSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {
         //BankingDAO.getCustomerInformation(firstNameSearchTextField.getText(), nameSearchTextField.getText());
+    	//populate form below with customers info
     }
 
     private void deleteCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {
