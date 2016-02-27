@@ -15,12 +15,16 @@ import javax.crypto.SecretKey;
  * constructor. Uses Base64 class for padding.
  * 
  * @author Olga Kazlova
- * @project Bank Encryption Application
- * @course CSMC 495
- * @date Updated on 02/09/2016
- * @updated on 02/14/2016 by Grant Sweeney
- * @updated on 2/19/2016 by Jonathan Wojack
- * @updated on 2/20/2016 by Jonathan Wojack
+ */
+
+/*
+ * project Bank Encryption Application
+ * course CSMC 495
+ * date Updated on 02/09/2016
+ * updated on 02/14/2016 by Grant Sweeney
+ * updated on 2/19/2016 by Jonathan Wojack
+ * updated on 2/20/2016 by Jonathan Wojack
+ * updated by Grant Sweeney on 2/27/2016
  * 
  * Changes:
  * 
@@ -30,6 +34,7 @@ import javax.crypto.SecretKey;
  * 3.  Beautified code
  * 
  */
+
 public class AES implements Cryptography {
 
     private static Cipher cipher;
@@ -60,8 +65,7 @@ public class AES implements Cryptography {
      * This method encrypts plain text passed as a parameter and returns an
      * object of DataObject
      * 
-     * @param plainText
-     *            String
+     * @param plainText String
      * @return encryptedObject DataObject
      */
 	
@@ -103,8 +107,7 @@ public class AES implements Cryptography {
      * This method decrypts DataObject passed as a parameter and returns plain
      * text as a string
      * 
-     * @param encryptedData
-     *            DataObject
+     * @param encryptedData DataObject
      * @return plainText String
      */
         

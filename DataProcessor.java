@@ -1,12 +1,17 @@
 /**
+ * Interface between client/server and data; performs encryption/decryption
+ *
+ * @author Walter Baynard
+ */
+
+/*
  * Class: CMSC495
  * File: DataProcessor.java  
  * Author: Walter Baynard
- * 
- * Interface between client/server and data; performs encryption/decryption
  *
- * @Completed on 2/20/2016 by Jonathan Wojack
- * @Updated on 2/20/2016 by Jonathan Wojack
+ * Completed on 2/20/2016 by Jonathan Wojack
+ * Updated on 2/20/2016 by Jonathan Wojack
+ * updated by Grant Sweeney on 2/27/2016
  *
  * Changes:
  * 
@@ -32,9 +37,9 @@ public class DataProcessor implements java.io.Serializable {
     /**
      * Encrypts data using random encryption algorithm (XOR by default)
      * 
-     * @param data
-     * @return
-     * @throws Exception 
+     * @param data String to be encrypted
+     * @return encrypted data
+     * @throws Exception error encrypting
      */
        
     public DataObject encryptData(String data) throws Exception {
@@ -84,9 +89,9 @@ public class DataProcessor implements java.io.Serializable {
      * Decrypts data from DataObject object which stores encrypted data, encryption key, 
      * and encryption algorithm
      * 
-     * @param encryptedData
-     * @return
-     * @throws Exception 
+     * @param encryptedData data to decrypt
+     * @return data
+     * @throws Exception error in method
      */
     
     public String decryptData(DataObject encryptedData) throws Exception {
@@ -141,11 +146,10 @@ public class DataProcessor implements java.io.Serializable {
     /**
      * Get random integer to select encryption algorithm at random
      * 
-     * @return
-     * @throws Exception 
+     * @return integer representing algorithm choice
      */
     
-    public int getEncryptionAlgorithm() throws Exception {
+    public int getEncryptionAlgorithm() {
         
         Random randomNumber = new Random();
         

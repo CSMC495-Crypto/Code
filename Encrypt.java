@@ -8,11 +8,15 @@ import java.security.SecureRandom;
  * This class performs the encryption for the XOR algorithm
  * 
  * @author Jonathan Wojack
- * @project Bank Encryption Application
- * @course CSMC 495
- * @updated on 02/14/2016 by Grant Sweeney
- * @updated on 2/20/2016 by Jonathan Wojack
- * @updated on 2/21/2016 by Jonathan Wojack
+ */
+
+/*
+ * project Bank Encryption Application
+ * course CSMC 495
+ * updated on 02/14/2016 by Grant Sweeney
+ * updated on 2/20/2016 by Jonathan Wojack
+ * updated on 2/21/2016 by Jonathan Wojack
+ * updated by Grant Sweeney on 2/27/2016
  * 
  * Changes:
  * 
@@ -29,7 +33,7 @@ public class Encrypt {
     /**
      * Constructor
      * 
-     * @param plainText64 
+     * @param plainText64 text
      */    
 
     public Encrypt(byte[] plainText64) {

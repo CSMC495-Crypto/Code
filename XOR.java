@@ -6,12 +6,17 @@ import data.DataObject;
  * This class represents simple cryptographic program 
  * which encrypts and decrypts data
  * by XORing a binary key to each byte of data.
+ * 
  * @author Jonathan Wojack
- * @project Bank Encryption Application
- * @course CSMC 495
- * @date created 02/02/2016
- * @updated on 02/14/2016 by Olga Kazlova and Grant Sweeney
- * @updated on 2/20/2016 by Jonathan Wojack
+ */
+
+/*
+ * project Bank Encryption Application
+ * course CSMC 495
+ * date created 02/02/2016
+ * updated on 02/14/2016 by Olga Kazlova and Grant Sweeney
+ * updated on 2/20/2016 by Jonathan Wojack
+ * updated by Grant Sweeney on 2/27/2016
  */
 
 // Changes:
@@ -28,6 +33,7 @@ public class XOR implements Cryptography {
     /**
      * This method encrypts plain text passed as an argument 
      * by XORing a binary key to each byte of the data 
+     * 
      * @param plainText String
      * @return DataObject decodedData
      */
@@ -46,7 +52,7 @@ public class XOR implements Cryptography {
     /**
      * This method decrypts encrypted text passed as a DataObject
      * argument by removing binary key to each byte of the data 
-     * @param DataObject encryptedData
+     * 
      * @return String decodedData
      */
     

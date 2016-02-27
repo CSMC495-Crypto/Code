@@ -3,9 +3,13 @@
  * Enables clients to access server-based SQL tables and to perform data and table manipulations and other services
  *
  * @Author: Jonathan Wojack
- * @Project: Bank Encryption Application
- * @Course: CMSC495
- * @Updated on 2/21/2016 by Jonathan Wojack
+ */
+
+/*
+ * Project: Bank Encryption Application
+ * Course: CMSC495
+ * updated on 2/21/2016 by Jonathan Wojack
+ * updated by Grant Sweeney on 2/27/2016
  * 
  * Changes:
  * 
@@ -43,7 +47,7 @@ public class Server extends JFrame {
     /**
      * Initialize server
      * 
-     * @param args 
+     * @param args main
      */
 
     public static void main(String[] args) {

@@ -2,10 +2,14 @@
  * Database controller
  * 
  * @author Jonathan Wojack
- * @project Bank Encryption Application
- * @course CMSC495
- * @date 2/21/2016
- * @updated by Jonathan Wojack on 2/23/2016
+ */
+
+/* 
+ * project Bank Encryption Application
+ * course CMSC495
+ * date 2/21/2016
+ * updated by Jonathan Wojack on 2/23/2016
+ * updated by Grant Sweeney on 2/27/2016
  * 
  * Changes:
  * 
@@ -53,7 +57,7 @@ public class DatabaseController extends Server {
     /**
      * Process data from client
      * 
-     * @param encryptedObject 
+     * @param encryptedObject Encrypted data to be processed
      */
     
     public void processData(DataObject encryptedObject) {
@@ -170,7 +174,7 @@ public class DatabaseController extends Server {
     /**
      * Decrypt data from client
      * 
-     * @return 
+     * @return decrypted data
      */
     
     public String retrieveData() {
@@ -196,8 +200,8 @@ public class DatabaseController extends Server {
     /**
      * Encrypt data before sending it to the client
      * 
-     * @param data
-     * @return 
+     * @param data data to be encrypted
+     * @return data object to be returned
      */
     
     public DataObject prepareData(String data) {
@@ -219,7 +223,7 @@ public class DatabaseController extends Server {
     /**
      * Send data to client
      * 
-     * @param encryptedToClient 
+     * @param encryptedToClient data to be transferred
      */
     
     public void transmitData(DataObject encryptedToClient) {
@@ -241,7 +245,7 @@ public class DatabaseController extends Server {
     /**
      * DataObject setter method
      * 
-     * @param encryptedObject 
+     * @param encryptedObject object to be set
      */
     
     public void setEncryptedObject(DataObject encryptedObject) {
@@ -253,7 +257,7 @@ public class DatabaseController extends Server {
     /**
      * DataObject getter method
      * 
-     * @return 
+     * @return current data object
      */
     
     public DataObject getEncryptedObject() {
