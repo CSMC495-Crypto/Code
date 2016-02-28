@@ -1,5 +1,8 @@
 package gui;
 
+import javax.swing.JOptionPane;
+import javax.swing.JDialog;
+
 /**
  * Form for adding a new user to the database
  * 
@@ -293,6 +296,12 @@ public class CreateUserProfile extends javax.swing.JFrame {
         String userZip = zipCodeTextField.toString();
         String userPhoneNumber = phoneNumberTextField.toString();
         //Transmitt User Profile.
+        
+        JOptionPane pane = new JOptionPane();
+        pane.setMessage("Your profile has been saved.");
+        JDialog d = pane.createDialog(null, "Conformation");
+        d.setVisible(true);
+        
         this.dispose();
     }//GEN-LAST:event_submitButtonActionPerformed
 
