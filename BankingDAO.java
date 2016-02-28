@@ -379,7 +379,23 @@ public class BankingDAO implements DAOInterface {
      * @return "confirm" if deleted, "error" if error occurs
      */
     
-    public String deleteAccount(String...data);
+    public String deleteAccount(String...data) {
+        
+        // validate arguments
+        
+        if (!errorChecking(data, 1).isEmpty()) {
+            
+            return errorChecking(data, 1);
+            
+        }
+        
+        String accountNumber = data[0];
+        
+        String command = ("DELETE FROM Accounts WHERE accountNumber='" + accountNumber + "';");
+        
+        return client(command, false);
+        
+    }
     
     /**
      * Request for the transaction history of a bank account
@@ -390,7 +406,23 @@ public class BankingDAO implements DAOInterface {
      *         comma-separated fields, with newlines between transactions
      */
     
-    public String getTransactionHistory(String...data);
+    public String getTransactionHistory(String...data) {
+        
+        // validate arguments
+        
+        if (!errorChecking(data, 1).isEmpty()) {
+            
+            return errorChecking(data, 1);
+            
+        }
+        
+        String accountNumber = data[0];
+        
+        String command = ("SELECT * FROM Transactions WHERE accountNumber='" + accountNumber + "';");
+        
+        return client(command, true);
+        
+    }
     
     /**
      * Request to deposit money in selected account
@@ -400,7 +432,42 @@ public class BankingDAO implements DAOInterface {
      * @return new account balance if successful, "error" if error occurs
      */
     
-    public String depositMoney(String...data);
+    public String depositMoney(String...data) {
+        
+        // validate arguments
+        
+        if (!errorChecking(data, 2).isEmpty()) {
+            
+            return errorChecking(data, 2);
+            
+        }
+        
+        String accountNumber = data[0];
+        int amount = Integer.parseInt(data[1]);
+        
+        String command = ("UPDATE Accounts SET accountBalance = accountBalance + " + amount + " WHERE "
+                + "accountNumber='" + accountNumber + "';");
+        
+        String result = client(command, false);
+        
+        command = ("SELECT IDNumber FROM Accounts WHERE accountNumber='" + accountNumber + ';');        
+        String idNumber = client(command, false);
+        
+        command = ("getRows Transactions");        
+        int transactionNumber = Integer.parseInt(client(command, false));
+        
+        command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountNumber + 
+                "' ORDER BY transactionNumber DESC LIMIT 1;");
+        int startingBalance = Integer.parseInt(client(command, false));
+        
+        int endingBalance = startingBalance + amount;
+        
+        command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumber + "', '" +
+                accountNumber + ", " + startingBalance + ", 'Deposit', " + amount + ", " + endingBalance + ");");
+        
+        return client(command, false);
+        
+    }
 
     /**
      * Request to withdraw money from selected account
@@ -410,7 +477,42 @@ public class BankingDAO implements DAOInterface {
      * @return new account balance if successful, error type if error occurs
      */
     
-    public String withdrawMoney(String...data);
+    public String withdrawMoney(String...data){
+        
+        // validate arguments
+        
+        if (!errorChecking(data, 2).isEmpty()) {
+            
+            return errorChecking(data, 2);
+            
+        }
+        
+        String accountNumber = data[0];
+        int amount = Integer.parseInt(data[1]);
+        
+        String command = ("UPDATE Accounts SET accountBalance = accountBalance - " + amount + " WHERE "
+                + "accountNumber='" + accountNumber + "';");
+        
+        String result = client(command, false);
+        
+        command = ("SELECT IDNumber FROM Accounts WHERE accountNumber='" + accountNumber + ';');        
+        String idNumber = client(command, false);
+        
+        command = ("getRows Transactions");        
+        int transactionNumber = Integer.parseInt(client(command, false));
+        
+        command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountNumber + 
+                "' ORDER BY transactionNumber DESC LIMIT 1;");
+        int startingBalance = Integer.parseInt(client(command, false));
+        
+        int endingBalance = startingBalance - amount;
+        
+        command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumber + "', '" +
+                accountNumber + ", " + startingBalance + ", 'Withdrawal', " + amount + ", " + endingBalance + ");");
+        
+        return client(command, false);
+        
+    }
     
     /**
      * Request to transfer money between two accounts
@@ -420,7 +522,42 @@ public class BankingDAO implements DAOInterface {
      * @return new account balance for both accounts if successful, error type if error occurs
      */
     
-    public String transferMoney(String...data);
+    public String transferMoney(String...data) {
+        
+        // validate arguments
+        
+        if (!errorChecking(data, 2).isEmpty()) {
+            
+            return errorChecking(data, 2);
+            
+        }
+        
+        String accountNumber = data[0];
+        int amount = Integer.parseInt(data[1]);
+        
+        String command = ("UPDATE Accounts SET accountBalance = accountBalance - " + amount + " WHERE "
+                + "accountNumber='" + accountNumber + "';");
+        
+        String result = client(command, false);
+        
+        command = ("SELECT IDNumber FROM Accounts WHERE accountNumber='" + accountNumber + ';');        
+        String idNumber = client(command, false);
+        
+        command = ("getRows Transactions");        
+        int transactionNumber = Integer.parseInt(client(command, false));
+        
+        command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountNumber + 
+                "' ORDER BY transactionNumber DESC LIMIT 1;");
+        int startingBalance = Integer.parseInt(client(command, false));
+        
+        int endingBalance = startingBalance - amount;
+        
+        command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumber + "', '" +
+                accountNumber + ", " + startingBalance + ", 'Withdrawal', " + amount + ", " + endingBalance + ");");
+        
+        return client(command, false);
+        
+    }
     
     /**
      * Request to pay mortgage from a bank account
