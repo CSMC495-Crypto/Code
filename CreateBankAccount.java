@@ -1,5 +1,8 @@
 package gui;
 
+import javax.swing.JOptionPane;
+import javax.swing.JDialog;
+
 /**
  * Form for adding a new bank account to the database
  * 
@@ -173,6 +176,13 @@ public class CreateBankAccount extends javax.swing.JFrame {
         String startBalance = startingBalanceTextField.toString();
         String acctType = accountTypeComboBox.toString();
         String dateSubmitted = dateTextField.toString();
+        
+        //Submit User Info to BankingDOA
+        
+        JOptionPane pane = new JOptionPane();
+        pane.setMessage("Your Account information again.");
+        JDialog d = pane.createDialog(null, "Account Added");
+        d.setVisible(true);
         
         this.dispose();
     }//GEN-LAST:event_submitButtonActionPerformed
