@@ -136,7 +136,6 @@ public class LoginScreen extends javax.swing.JFrame {
         if (loginAttempts == 3) {
             System.exit(0);
         }
-        this.dispose();
 
     }//GEN-LAST:event_loginButtonMouseClicked
 
