@@ -192,7 +192,7 @@ public class BankingDAO implements DAOInterface {
         String username = data[0];
         String password = data[1];
         
-        String command = ("GetCustomer " + username + " " + password);
+        String command = (getUsername() + " " + getPassword() + " SELECT * FROM personData WHERE username='" + username + "' AND password='" + password + "';");
         
         return client(command, true);
         
@@ -220,7 +220,7 @@ public class BankingDAO implements DAOInterface {
         
         String accountNumber = data[0];
         
-        String command = ("GetAccountInformation " + accountNumber);
+        String command = (getUsername() + " " + getPassword() + " SELECT * FROM accounts WHERE accountNumber='" + accountNumber + "';");
         
         return client(command, true);
         
@@ -249,7 +249,7 @@ public class BankingDAO implements DAOInterface {
         String firstName = data[0];
         String lastName = data[1];
         
-        String command = ("GetCustomerInformation " + firstName + " " + lastName);
+        String command = (getUsername() + " " + getPassword() + " SELECT * FROM personData WHERE firstName='" + firstName + "' AND lastName='" + lastName + "';");
         
         return client(command, true);
         
@@ -292,7 +292,11 @@ public class BankingDAO implements DAOInterface {
         String zipCode = data[8];
         String phoneNumber = data[9];
         
-        String command = ("CreateUser " + accountNumber);
+        String command = (getUsername() + " " + getPassword() + " getRows personData");
+        
+        return client(command, false);
+        
+        String command = (getUsername() + " " + getPassword() + " INSERT INTO personData VALUES=();
         
         return client(command, true);
         

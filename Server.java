@@ -3,13 +3,9 @@
  * Enables clients to access server-based SQL tables and to perform data and table manipulations and other services
  *
  * @Author: Jonathan Wojack
- */
-
-/*
- * Project: Bank Encryption Application
- * Course: CMSC495
- * updated on 2/21/2016 by Jonathan Wojack
- * updated by Grant Sweeney on 2/27/2016
+ * @Project: Bank Encryption Application
+ * @Course: CMSC495
+ * @Updated on 2/21/2016 by Jonathan Wojack
  * 
  * Changes:
  * 
@@ -21,8 +17,6 @@
  *  with the new getter method in DataObject
  * 3.  Added Javadoc comments
  * 4.  Beautified code
- * 
- * Replaced the BankingDOA class with DatabaseController. (WBaynard)
  */
 
 package server;
@@ -47,7 +41,7 @@ public class Server extends JFrame {
     /**
      * Initialize server
      * 
-     * @param args main
+     * @param args 
      */
 
     public static void main(String[] args) {
@@ -138,6 +132,8 @@ public class Server extends JFrame {
         // handle connection
         
         private Socket socket;
+        String username;
+        String password;
 
         // constructor creates a thread
     
@@ -181,11 +177,11 @@ public class Server extends JFrame {
                     
                     jta.append("decrypt and report data\n");
                     
-                    //BankingDOA bankingDOA = new BankingDOA(socket);
-                    //bankingDOA.processData(clientEncryptedObject);
-                    // Replaced the BankingDOA with DatabaseController
-                    DatabaseController databaseControl = new DatabaseController(socket);
-                    databaseControl.processData(clientEncryptedObject);
+                    DatabaseController bankingDOA = new DatabaseController(socket);
+                    String[] loginCredentials = bankingDOA.processData(clientEncryptedObject, getUsername(), getPassword());
+                    
+                    setUsername(loginCredentials[0]);
+                    setPassword(loginCredentials[1]);
                     
                 } 
                 
@@ -194,6 +190,30 @@ public class Server extends JFrame {
             }
                     
         }
+        
+        public void setUsername(String username) {
+        
+        this.username = username;
+        
+    }
+    
+    public void setPassword(String password) {
+        
+        this.password = password;
+        
+    }
+    
+    public String getUsername() {
+        
+        return this.username;
+        
+    }
+    
+    public String getPassword() {
+        
+        return this.password;
+        
+    }
                
     }
             

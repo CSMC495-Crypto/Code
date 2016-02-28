@@ -57,10 +57,13 @@ public class DatabaseController extends Server {
     /**
      * Process data from client
      * 
-     * @param encryptedObject 
+     * @param encryptedObject
+     * @param username
+     * @param password
+     * @return loginCredentials
      */
     
-    public void processData(DataObject encryptedObject) {
+    public String[] processData(DataObject encryptedObject, String username, String password) {
         
         try {
             
@@ -115,6 +118,12 @@ public class DatabaseController extends Server {
                          
                      }
                         
+            }
+            
+            else if (query.startsWith("getRows")) {
+                
+                String 
+                
             }
             
             else if (query.startsWith("SELECT")) {
@@ -196,9 +205,13 @@ public class DatabaseController extends Server {
                             
         } catch (Exception ex) {
             
-        }
+        }        
         
         dispose();
+        
+        String[] storeLoginCredentials = {getUsername(), getPassword()};
+        
+        return storeLoginCredentials;
         
     }
     
@@ -217,12 +230,18 @@ public class DatabaseController extends Server {
             
             String decryptedData = dataProcessor.decryptData(object);
             
+            if (decryptedData.startsWith("Login")) {
+            
             String[] loginCredentials = decryptedData.split(" ", 3);
             
-            setUsername(loginCredentials[0]);
-            setPassword(loginCredentials[1]);
+            setUsername(loginCredentials[1]);
+            setPassword(loginCredentials[2]);
             
-            return loginCredentials[2];
+            return loginCredentials[0];
+            
+            }
+            
+            return decryptedData;
             
         } catch (Exception ex) {
             
