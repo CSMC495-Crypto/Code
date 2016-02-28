@@ -12,6 +12,7 @@ package gui;
  * Course: CMSC 495
  * Date: 02/18/2016
  * 02/21/2016 - Updated by Grant Sweeney
+ * 02/28/2016 - Added functionality to buttons - Brandon Lawson
  */
 
 public class AccountInfo extends javax.swing.JFrame {
@@ -282,6 +283,104 @@ public class AccountInfo extends javax.swing.JFrame {
     private void backToCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToCustomerButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_backToCustomerButtonActionPerformed
+    
+    private void depositButtonMouseClicked(java.awt.event.MouseEvent evt) {                                           
+        String accountNumber = accountNumberTextField1.getText();
+        double depositAmount = Double.parseDouble(amountTextField1.getText());
+        
+        //Process deposit
+        
+        JOptionPane jPane = new JOptionPane();
+        jPane.setMessage("Complete");
+        JDialog jDialog = jPane.createDialog(null, "Transaction processed");
+        jDialog.setVisible(true);
+
+        //Set new blanace
+        
+        this.dispose();
+    }                                          
+
+    private void withdrawalButtonMouseClicked(java.awt.event.MouseEvent evt) {                                              
+        String accountNumber = accountNumberTextField1.getText();
+        double accountBalance = Double.parseDouble(accountBalanceTextField1.getText());
+        double withdrawalAmount = Double.parseDouble(amountTextField1.getText());
+        
+        if (withdrawalAmount > accountBalance) {
+            
+            JOptionPane jPane = new JOptionPane();
+            jPane.setMessage("Not enough available funds");
+            JDialog jDialog = jPane.createDialog(null, "Transaction not processed");
+            jDialog.setVisible(true);
+            
+        } else {
+            //Process withdrawal
+            
+            JOptionPane jPane = new JOptionPane();
+            jPane.setMessage("Complete");
+            JDialog jDialog = jPane.createDialog(null, "Transaction processed");
+            jDialog.setVisible(true);
+            
+            //Set new blanace
+        }
+        
+        this.dispose();
+        
+    }                                             
+
+    private void transferButtonMouseClicked(java.awt.event.MouseEvent evt) {                                            
+        String accountNumber = accountNumberTextField1.getText();
+        String toAccountNumber = accountTextField.getText();
+        double accountBalance = Double.parseDouble(accountBalanceTextField1.getText());
+        double transferAmount = Double.parseDouble(amountTextField2.getText());
+        
+        
+        if (transferAmount > accountBalance) {
+            
+            JOptionPane jPane = new JOptionPane();
+            jPane.setMessage("Not enough available funds");
+            JDialog jDialog = jPane.createDialog(null, "Transaction not processed");
+            jDialog.setVisible(true);
+            
+        } else {
+            //Process transfer
+            
+            JOptionPane jPane = new JOptionPane();
+            jPane.setMessage("Complete");
+            JDialog jDialog = jPane.createDialog(null, "Transaction processed");
+            jDialog.setVisible(true);
+            
+            //Set new blanace
+        }
+        
+        this.dispose();
+    }                                           
+
+    private void payMortgageButtonMouseClicked(java.awt.event.MouseEvent evt) {                                               
+        String accountNumber = accountNumberTextField1.getText();
+        String toAccountNumber = accountTextField.getText();
+        double accountBalance = Double.parseDouble(accountBalanceTextField1.getText());
+        double transferAmount = Double.parseDouble(amountTextField2.getText());
+        
+        if (transferAmount > accountBalance) {
+            
+            JOptionPane jPane = new JOptionPane();
+            jPane.setMessage("Not enough available funds");
+            JDialog jDialog = jPane.createDialog(null, "Transaction not processed");
+            jDialog.setVisible(true);
+            
+        } else {
+            //Process transfer
+            
+            JOptionPane jPane = new JOptionPane();
+            jPane.setMessage("Complete");
+            JDialog jDialog = jPane.createDialog(null, "Transaction processed");
+            jDialog.setVisible(true);
+            
+            //Set new blanace
+        }
+        
+        this.dispose();
+    }                 
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
