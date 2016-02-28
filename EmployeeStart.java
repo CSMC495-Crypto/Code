@@ -443,13 +443,14 @@ public class EmployeeStart extends javax.swing.JFrame {
         if (!customerInfo.equals("")) {
         	
         //parse customerInfo populate form below with customers info
-        	firstNameTextField.setText("something");
-        	lastNameTextField.setText("something");
-        	addressTextField.setText("something");
-        	cityTextField.setText("something");
-        	stateTextField.setText("something");
-        	zipCodeTextField.setText("something");
-        	phoneNumberTextField.setText("something");
+        	String[] customerInfoArray = customerInfo.split("\\s*,\\s*");
+        	firstNameTextField.setText(customerInfoArray[0]);
+        	lastNameTextField.setText(customerInfoArray[1]);
+        	addressTextField.setText(customerInfoArray[2]);
+        	cityTextField.setText(customerInfoArray[3]);
+        	stateTextField.setText(customerInfoArray[4]);
+        	zipCodeTextField.setText(customerInfoArray[5]);
+        	phoneNumberTextField.setText(customerInfoArray[6]);
         	//accountsTable
         }
         else {
