@@ -1,13 +1,13 @@
 package gui;
 
+import java.awt.Component;
 import javax.swing.JOptionPane;
-import javax.swing.JDialog;
+import client.BankingDAO;
 
 /**
  * Form for adding a new user to the database
  * 
  * @author Grant Sweeney
-
  */
 
 /*
@@ -16,9 +16,15 @@ import javax.swing.JDialog;
  * Date: 02/20/2016
  * 02/20/2016 - Banner added by Brandon Lawson
  * 02/25/2016 - Added code to submit user information in a string format - WBaynard
+ * 02/28/2016 - Added code for BankingDAO - WBaynard
  */
 
 public class CreateUserProfile extends javax.swing.JFrame {
+
+    private static final BankingDAO bankingDAO = new BankingDAO();
+    
+    //Returns true when user profile is created.
+    private boolean profileCreated = false;
 
     /**
      * Creates new form CreateUserProfile
@@ -295,12 +301,29 @@ public class CreateUserProfile extends javax.swing.JFrame {
         String userState = stateTextField.toString();
         String userZip = zipCodeTextField.toString();
         String userPhoneNumber = phoneNumberTextField.toString();
-        //Transmitt User Profile.
+        String employeeStatus = "";
         
-        JOptionPane pane = new JOptionPane();
-        pane.setMessage("Your profile has been saved.");
-        JDialog d = pane.createDialog(null, "Conformation");
-        d.setVisible(true);
+        //Transmitt User Profile.        
+        String[] createProfile = { userName, userPassword, employeeStatus, 
+            userFirstName, userLastName, userAddress, userCity, userState, 
+            userZip, userPhoneNumber };
+        
+        //BankingDAO bankingDAO = new BankingDAO();
+        bankingDAO.createUserProfile(createProfile);
+        bankingDAO.client(userPassword, profileCreated);
+        
+        if (profileCreated)
+        {
+            JOptionPane.showMessageDialog((Component) null, 
+                    "Your profile was created.",
+    	       "Information", JOptionPane.OK_OPTION);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog((Component) null, 
+                    "Your profile was NOT created.",
+    	       "alert", JOptionPane.OK_OPTION);
+        }
         
         this.dispose();
     }//GEN-LAST:event_submitButtonActionPerformed
