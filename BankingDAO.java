@@ -177,6 +177,7 @@ public class BankingDAO implements DAOInterface {
      * @return customer first name, last name, and all customer account information
      */
     
+    @Override
     public String getCustomerScreenInfo(String...data) {
         
         // validate arguments
@@ -192,7 +193,7 @@ public class BankingDAO implements DAOInterface {
         String username = data[0];
         String password = data[1];
         
-        String command = (getUsername() + " " + getPassword() + " SELECT * FROM personData WHERE username='" + username + "' AND password='" + password + "';");
+        String command = ("SELECT * FROM personData WHERE username='" + username + "' AND password='" + password + "';");
         
         return client(command, true);
         
@@ -206,6 +207,7 @@ public class BankingDAO implements DAOInterface {
      * @return account information including account balance, type, and number
      */
     
+    @Override
     public String getCustomerAccount(String...data) {
         
         // validate arguments
@@ -220,7 +222,7 @@ public class BankingDAO implements DAOInterface {
         
         String accountNumber = data[0];
         
-        String command = (getUsername() + " " + getPassword() + " SELECT * FROM accounts WHERE accountNumber='" + accountNumber + "';");
+        String command = ("SELECT * FROM accounts WHERE accountNumber='" + accountNumber + "';");
         
         return client(command, true);
         
@@ -234,6 +236,7 @@ public class BankingDAO implements DAOInterface {
      * @return all customer information including name, address, phone number, and account info
      */
 
+    @Override
     public String getCustomerInformation(String...data) {
         
         // validate arguments
@@ -249,7 +252,7 @@ public class BankingDAO implements DAOInterface {
         String firstName = data[0];
         String lastName = data[1];
         
-        String command = (getUsername() + " " + getPassword() + " SELECT * FROM personData WHERE firstName='" + firstName + "' AND lastName='" + lastName + "';");
+        String command = ("SELECT * FROM personData WHERE firstName='" + firstName + "' AND lastName='" + lastName + "';");
         
         return client(command, true);
         
@@ -258,11 +261,12 @@ public class BankingDAO implements DAOInterface {
     /**
      * Request to create a new user
      * 
-     * @param data: username, password, employeeStatus, firstName, lastName, address, city, state, zipCode, phoneNumber
+     * @param data: firstName, lastName, phoneNumber, address, city, state, zipCode, username, password, personType
      * 
      * @return "confirm" if created, "username taken" or "profile exists" if these errors occur
      */
 
+    @Override
     public String createUserProfile(String...data) {
         
         // validate arguments
@@ -273,7 +277,7 @@ public class BankingDAO implements DAOInterface {
             
         }
         
-        if (data[8].matches(".*[a-zA-Z]+.*")) { // if ZIP code field contains a letter
+        if (data[6].matches(".*[a-zA-Z]+.*")) { // if ZIP code field contains a letter
             
             return "Error: Invalid ZIP Code";
             
@@ -281,22 +285,24 @@ public class BankingDAO implements DAOInterface {
         
         // transmit request
         
-        String username = data[0];
-        String password = data[1];
-        String employeeStatus = data[2];
-        String firstName = data[3];
-        String lastName = data[4];
-        String address = data[5];
-        String city = data[6];
-        String state = data[7];
-        String zipCode = data[8];
-        String phoneNumber = data[9];
+        String firstName = data[0];
+        String lastName = data[1];
+        String phoneNumber = data[2];
+        String address = data[3];
+        String city = data[4];
+        String state = data[5];
+        String zipCode = data[6];
+        String username = data[7];
+        String password = data[8];
+        String personType = data[9];
         
-        String command = (getUsername() + " " + getPassword() + " getRows personData");
+        String command = ("getRows personData");
         
-        return client(command, false);
+        String idNumber = client(command, false);
         
-        String command = (getUsername() + " " + getPassword() + " INSERT INTO personData VALUES=();
+        command = ("INSERT INTO personData VALUES('" + firstName + "', '" + lastName + "', '" + phoneNumber + 
+                "', '" + address + "', '" + city + "', '" + state + "', '" + zipCode + "', '" + username + 
+                "', '" + password + "', '" + idNumber + "', '" + personType + "');");
         
         return client(command, true);
         
@@ -305,12 +311,37 @@ public class BankingDAO implements DAOInterface {
     /**
      * Request to create a new bank account
      * 
-     * @param data: accountType, accountBalance, date
+     * @param data: accountNumber, accountType, accountBalance, dateCreated
      * 
      * @return String including new account number and all entered information, "error" if error occurs
      */
     
-    public String createNewAccount(String...data);
+    @Override
+    public String createNewAccount(String...data) {
+        
+        // validate arguments
+        
+        if (!errorChecking(data, 4).isEmpty()) {
+            
+            return errorChecking(data, 4);
+            
+        }
+        
+        String accountNumber = data[0];
+        String accountType = data[1];
+        String accountBalance = data[2];
+        String dateCreated = data[3];
+      
+        String command = ("getRows Accounts");
+        
+        String idNumber = client(command, false);
+        
+        command = ("INSERT INTO Accounts VALUES('" + idNumber + "', '" + accountNumber + "', '" +
+                accountBalance + "', '" + dateCreated + "');");
+        
+        return client(command, true);
+        
+    }
     
     /**
      * Request to delete a user profile
@@ -320,7 +351,25 @@ public class BankingDAO implements DAOInterface {
      * @return "confirm" if deleted, "error" if error occurs
      */
     
-    public String deleteUserProfile(String...data);
+    public String deleteUserProfile(String...data) {
+        
+        // validate arguments
+        
+        if (!errorChecking(data, 2).isEmpty()) {
+            
+            return errorChecking(data, 2);
+            
+        }
+        
+        String firstName = data[0];
+        String lastName = data[1];
+        
+        String command = ("DELETE FROM personData WHERE firstName='" + firstName + "' AND lastName='" + 
+                lastName + "';");
+        
+        return client(command, false);
+        
+    }
     
     /**
      * Request to delete bank account

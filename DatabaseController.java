@@ -76,8 +76,8 @@ public class DatabaseController extends Server {
             
         
             String connUrl = "jdbc:mysql://localhost:3306/cmsc495";
-            String username = getUsername();
-            String password = getPassword();
+            username = getUsername();
+            password = getPassword();
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(connUrl, username, password);
             Statement st = conn.createStatement();
@@ -122,7 +122,15 @@ public class DatabaseController extends Server {
             
             else if (query.startsWith("getRows")) {
                 
-                String 
+                String[] getRows = query.split(" ");
+                
+                ResultSet rs = st.executeQuery("SELECT * FROM " + getRows[1]);
+                rs = st.executeQuery("SELECT COUNT(*) FROM " + getRows[1]);
+                rs.next();
+                int rowCount = rs.getInt(1);
+                rowCount++;
+                DataObject encryptedToClient = prepareData(Integer.toString(rowCount));
+                transmitData(encryptedToClient);
                 
             }
             
@@ -186,10 +194,21 @@ public class DatabaseController extends Server {
                     jta.append("perform database update\n");
          
                 st.executeUpdate(query);
+                
+                ResultSet rs = st.executeQuery("SELECT ROW_COUNT();");
+                rs.next();
+                
+                String result = "Error: No records updated";
+                
+                if (rs.getInt(1) > 0) {
+                    
+                    result = "Update successful";
+                    
+                }
                         
                 jta.append("encrypt and transmit data\n");
             
-                DataObject encryptedToClient = prepareData("Database successfully updated\n");
+                DataObject encryptedToClient = prepareData(result);
                 transmitData(encryptedToClient); 
                     
                     }
