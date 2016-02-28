@@ -1,5 +1,8 @@
 package gui;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 /**
  * Screen with information on selected account
  * 
@@ -297,7 +300,7 @@ public class AccountInfo extends javax.swing.JFrame {
 
         //Set new blanace
         
-        this.dispose();
+        amountTextField1.setText("");
     }                                          
 
     private void withdrawalButtonMouseClicked(java.awt.event.MouseEvent evt) {                                              
@@ -323,8 +326,7 @@ public class AccountInfo extends javax.swing.JFrame {
             //Set new blanace
         }
         
-        this.dispose();
-        
+        amountTextField1.setText("");
     }                                             
 
     private void transferButtonMouseClicked(java.awt.event.MouseEvent evt) {                                            
@@ -352,7 +354,8 @@ public class AccountInfo extends javax.swing.JFrame {
             //Set new blanace
         }
         
-        this.dispose();
+        amountTextField2.setText("");
+        accountTextField.setText("");
     }                                           
 
     private void payMortgageButtonMouseClicked(java.awt.event.MouseEvent evt) {                                               
@@ -379,7 +382,8 @@ public class AccountInfo extends javax.swing.JFrame {
             //Set new blanace
         }
         
-        this.dispose();
+        amountTextField2.setText("");
+        accountTextField.setText("");
     }                 
 
     
