@@ -443,7 +443,7 @@ public class BankingDAO implements DAOInterface {
         }
         
         String accountNumber = data[0];
-        int amount = Integer.parseInt(data[1]);
+        double amount = Integer.parseInt(data[1]);
         
         String command = ("UPDATE Accounts SET accountBalance = accountBalance + " + amount + " WHERE "
                 + "accountNumber='" + accountNumber + "';");
@@ -458,9 +458,9 @@ public class BankingDAO implements DAOInterface {
         
         command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountNumber + 
                 "' ORDER BY transactionNumber DESC LIMIT 1;");
-        int startingBalance = Integer.parseInt(client(command, false));
+        double startingBalance = Integer.parseInt(client(command, false));
         
-        int endingBalance = startingBalance + amount;
+        double endingBalance = startingBalance + amount;
         
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumber + "', '" +
                 accountNumber + ", " + startingBalance + ", 'Deposit', " + amount + ", " + endingBalance + ");");
@@ -488,7 +488,7 @@ public class BankingDAO implements DAOInterface {
         }
         
         String accountNumber = data[0];
-        int amount = Integer.parseInt(data[1]);
+        double amount = Integer.parseInt(data[1]);
         
         String command = ("UPDATE Accounts SET accountBalance = accountBalance - " + amount + " WHERE "
                 + "accountNumber='" + accountNumber + "';");
@@ -503,9 +503,9 @@ public class BankingDAO implements DAOInterface {
         
         command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountNumber + 
                 "' ORDER BY transactionNumber DESC LIMIT 1;");
-        int startingBalance = Integer.parseInt(client(command, false));
+        double startingBalance = Integer.parseInt(client(command, false));
         
-        int endingBalance = startingBalance - amount;
+        double endingBalance = startingBalance - amount;
         
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumber + "', '" +
                 accountNumber + ", " + startingBalance + ", 'Withdrawal', " + amount + ", " + endingBalance + ");");
@@ -526,35 +526,69 @@ public class BankingDAO implements DAOInterface {
         
         // validate arguments
         
-        if (!errorChecking(data, 2).isEmpty()) {
+        if (!errorChecking(data, 3).isEmpty()) {
             
-            return errorChecking(data, 2);
+            return errorChecking(data, 3);
             
         }
         
-        String accountNumber = data[0];
-        int amount = Integer.parseInt(data[1]);
+        String accountFrom = data[0];
+        double amount = Integer.parseInt(data[1]);
+        String accountTo = data[2];
         
-        String command = ("UPDATE Accounts SET accountBalance = accountBalance - " + amount + " WHERE "
-                + "accountNumber='" + accountNumber + "';");
+        String command = ("SELECT accountBalance FROM Accounts WHERE accountNumber='" + accountFrom + "';");
+        double amountFrom = Integer.parseInt(client(command, false));
         
-        String result = client(command, false);
+        command = ("SELECT accountBalance FROM Accounts WHERE accountNumber='" + accountTo + "';");
+        double amountTo = Integer.parseInt(client(command, false));
         
-        command = ("SELECT IDNumber FROM Accounts WHERE accountNumber='" + accountNumber + ';');        
-        String idNumber = client(command, false);
+        double amountFromFinal = amountFrom - amount;
+        double amountToFinal = amountTo + amount;
+        
+        if (amountFromFinal < 0) {
+            
+            return "Error: Insufficient funds";
+            
+        }
+        
+        command = ("UPDATE Accounts SET accountBalance = " + amountFromFinal + " WHERE "
+                + "accountNumber='" + accountFrom + "';");        
+        client(command, false);
+        
+        command = ("UPDATE Accounts SET accountBalance = " + amountToFinal + " WHERE "
+                + "accountNumber='" + accountTo + "';");        
+        client(command, false);
+        
+        command = ("SELECT IDNumber FROM Accounts WHERE accountNumber='" + accountFrom + ';');        
+        String idNumberFrom = client(command, false);
+        
+        command = ("SELECT IDNumber FROM Accounts WHERE accountNumber='" + accountTo + ';');        
+        String idNumberTo = client(command, false);
         
         command = ("getRows Transactions");        
         int transactionNumber = Integer.parseInt(client(command, false));
         
-        command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountNumber + 
+        command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountFrom + 
                 "' ORDER BY transactionNumber DESC LIMIT 1;");
-        int startingBalance = Integer.parseInt(client(command, false));
+        double startingBalanceFrom = Integer.parseInt(client(command, false));
         
-        int endingBalance = startingBalance - amount;
+        command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountTo + 
+                "' ORDER BY transactionNumber DESC LIMIT 1;");
+        double startingBalanceTo = Integer.parseInt(client(command, false));
         
-        command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumber + "', '" +
-                accountNumber + ", " + startingBalance + ", 'Withdrawal', " + amount + ", " + endingBalance + ");");
+        double endingBalanceFrom = startingBalanceFrom - amount;
+        double endingBalanceTo = startingBalanceTo + amount;
         
+        command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumberFrom + "', '" +
+                accountFrom + ", " + startingBalanceFrom + ", 'Withdrawal - Transfer', " + amount + ", " + 
+                endingBalanceFrom + ");");
+        client(command, false);
+        
+        transactionNumber++;
+        
+        command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumberTo + "', '" +
+                accountTo + ", " + startingBalanceTo + ", 'Deposit - Transfer', " + amount + ", " + 
+                endingBalanceTo + ");");
         return client(command, false);
         
     }
@@ -567,7 +601,76 @@ public class BankingDAO implements DAOInterface {
      * @return new account balance for both accounts if successful, error type if error occurs
      */
     
-    public String payMortgage(String...data);
+    public String payMortgage(String...data) {
+        
+        // validate arguments
+        
+        if (!errorChecking(data, 3).isEmpty()) {
+            
+            return errorChecking(data, 3);
+            
+        }
+        
+        String accountFrom = data[0];
+        double amount = Integer.parseInt(data[1]);
+        String mortgageAccount = data[2];
+        
+        String command = ("SELECT accountBalance FROM Accounts WHERE accountNumber='" + accountFrom + "';");
+        double amountFrom = Integer.parseInt(client(command, false));
+        
+        command = ("SELECT accountBalance FROM Accounts WHERE accountNumber='" + mortgageAccount + "';");
+        double amountTo = Integer.parseInt(client(command, false));
+        
+        double amountFromFinal = amountFrom - amount;
+        double amountToFinal = amountTo + amount;
+        
+        if (amountFromFinal < 0) {
+            
+            return "Error: Insufficient funds";
+            
+        }
+        
+        command = ("UPDATE Accounts SET accountBalance = " + amountFromFinal + " WHERE "
+                + "accountNumber='" + accountFrom + "';");        
+        client(command, false);
+        
+        command = ("UPDATE Accounts SET accountBalance = " + amountToFinal + " WHERE "
+                + "accountNumber='" + mortgageAccount + "';");        
+        client(command, false);
+        
+        command = ("SELECT IDNumber FROM Accounts WHERE accountNumber='" + accountFrom + ';');        
+        String idNumberFrom = client(command, false);
+        
+        command = ("SELECT IDNumber FROM Accounts WHERE accountNumber='" + mortgageAccount + ';');        
+        String idNumberTo = client(command, false);
+        
+        command = ("getRows Transactions");        
+        int transactionNumber = Integer.parseInt(client(command, false));
+        
+        command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountFrom + 
+                "' ORDER BY transactionNumber DESC LIMIT 1;");
+        double startingBalanceFrom = Integer.parseInt(client(command, false));
+        
+        command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + mortgageAccount + 
+                "' ORDER BY transactionNumber DESC LIMIT 1;");
+        double startingBalanceTo = Integer.parseInt(client(command, false));
+        
+        double endingBalanceFrom = startingBalanceFrom - amount;
+        double endingBalanceTo = startingBalanceTo + amount;
+        
+        command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumberFrom + "', '" +
+                accountFrom + ", " + startingBalanceFrom + ", 'Withdrawal - Transfer', " + amount + ", " + 
+                endingBalanceFrom + ");");
+        client(command, false);
+        
+        transactionNumber++;
+        
+        command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumberTo + "', '" +
+                mortgageAccount + ", " + startingBalanceTo + ", 'Deposit - Transfer', " + amount + ", " + 
+                endingBalanceTo + ");");
+        return client(command, false);
+        
+    }
     
     public String errorChecking(String[] data, int numberArguments) {
         
