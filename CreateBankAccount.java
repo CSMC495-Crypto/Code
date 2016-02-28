@@ -1,7 +1,8 @@
 package gui;
 
+import client.BankingDAO;
+import java.awt.Component;
 import javax.swing.JOptionPane;
-import javax.swing.JDialog;
 
 /**
  * Form for adding a new bank account to the database
@@ -15,11 +16,14 @@ import javax.swing.JDialog;
  * Date: 02/20/2016
  * 02/20/2016 - Banner added by Brandon Lawson
  * 02/25/2016 - Added code to submit user information in a string format - WBaynard
+ * 02/28/2016 - Add code for BankingDAO - WBaynard
  */
 
 public class CreateBankAccount extends javax.swing.JFrame {
 
-    /**
+    private static final BankingDAO bankingDAO = new BankingDAO();
+
+     /**
      * Creates new form CreateBankAccount
      */
     public CreateBankAccount() {
@@ -173,16 +177,28 @@ public class CreateBankAccount extends javax.swing.JFrame {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // code for submitting form goes here
+        String acctNumber = "";
         String startBalance = startingBalanceTextField.toString();
         String acctType = accountTypeComboBox.toString();
         String dateSubmitted = dateTextField.toString();
         
-        //Submit User Info to BankingDOA
+        String[] newAcctInfomation = { acctNumber, acctType, startBalance, dateSubmitted };
         
-        JOptionPane pane = new JOptionPane();
-        pane.setMessage("Your Account information again.");
-        JDialog d = pane.createDialog(null, "Account Added");
-        d.setVisible(true);
+        //Submit User Info to BankingDOA
+        acctNumber = bankingDAO.createNewAccount(newAcctInfomation);
+        
+        if (!acctNumber.equals(""))
+        {
+            JOptionPane.showMessageDialog((Component) null, 
+                        "Your account has been created.",
+                   "Account Added", JOptionPane.OK_OPTION);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog((Component) null, 
+                        "Your account has been NOT created.",
+                   "Account Not Added", JOptionPane.OK_OPTION);
+        }
         
         this.dispose();
     }//GEN-LAST:event_submitButtonActionPerformed
