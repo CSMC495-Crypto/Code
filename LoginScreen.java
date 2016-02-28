@@ -1,5 +1,9 @@
 package gui;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
+
 /**
  * Login screen used by customers and employees
  * 
