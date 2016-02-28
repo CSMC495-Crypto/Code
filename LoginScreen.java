@@ -16,7 +16,9 @@ package gui;
  */
 
 public class LoginScreen extends javax.swing.JFrame {
-
+    
+    int loginAttempts = 0;
+    
     /**
      * Creates new form LoginScreen
      */
@@ -108,21 +110,30 @@ public class LoginScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordTextFieldActionPerformed
 
-    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
-            
-            //temporary log in for testing
-            //enter customer for customer page or employee for employee page
-            if(userNameTextField.getText().equalsIgnoreCase("customer")) {
-                new CustomerStart().setVisible(true);
-                this.dispose();
-            } // end if
-            else if(userNameTextField.getText().equalsIgnoreCase("employee")) {
-                new EmployeeStart().setVisible(true);
-                this.dispose();
-            } //end if
-            else {
-                System.out.println("Invalid entry");
-            }
+    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {                                         
+        
+        loginAttempts++;
+        
+        String username = userNameTextField.getText();
+        String password = passwordTextField.getText();
+        
+        userNameTextField.setText("");
+        passwordTextField.setText("");
+        
+        JOptionPane jPane = new JOptionPane();
+        jPane.setMessage("Checking Credentials");
+        JDialog jDialog = jPane.createDialog(null, "Processing");
+        jDialog.setVisible(true);
+        
+        //Check username and password
+        //If successful, take to appropriate screen (customer/employee)
+        //If failed, JOptionPane to notify
+        
+        if (loginAttempts == 3) {
+            System.exit(0);
+        }
+        this.dispose();
+
     }//GEN-LAST:event_loginButtonMouseClicked
 
     /**
