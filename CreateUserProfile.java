@@ -22,9 +22,6 @@ import client.BankingDAO;
 public class CreateUserProfile extends javax.swing.JFrame {
 
     private static final BankingDAO bankingDAO = new BankingDAO();
-    
-    //Returns true when user profile is created.
-    private boolean profileCreated = false;
 
     /**
      * Creates new form CreateUserProfile
@@ -292,6 +289,7 @@ public class CreateUserProfile extends javax.swing.JFrame {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // code for submitting form goes here
+        String userType = "Not an Employee";
         String userName = addressTextField.toString();
         String userPassword = confirmPasswordTextField.toString();
         String userFirstName = firstNameTextField.toString();
@@ -301,18 +299,20 @@ public class CreateUserProfile extends javax.swing.JFrame {
         String userState = stateTextField.toString();
         String userZip = zipCodeTextField.toString();
         String userPhoneNumber = phoneNumberTextField.toString();
-        String employeeStatus = "";
+        
+        if (employeeCheckBox.isSelected())
+        {
+            userType = "Employee";
+        }
         
         //Transmitt User Profile.        
-        String[] createProfile = { userName, userPassword, employeeStatus, 
-            userFirstName, userLastName, userAddress, userCity, userState, 
-            userZip, userPhoneNumber };
+        String[] createProfile = { userFirstName, userLastName, userAddress, userCity, userState, 
+            userZip, userPhoneNumber, userName, userPassword, userType };
         
         //BankingDAO bankingDAO = new BankingDAO();
-        bankingDAO.createUserProfile(createProfile);
-        bankingDAO.client(userPassword, profileCreated);
+        String checkProfile = bankingDAO.createUserProfile(createProfile);
         
-        if (profileCreated)
+        if (checkProfile.equalsIgnoreCase("confirm"))
         {
             JOptionPane.showMessageDialog((Component) null, 
                     "Your profile was created.",
