@@ -4,6 +4,8 @@ import java.awt.Component;
 
 import javax.swing.JOptionPane;
 
+import client.BankingDAO;
+
 import server.DatabaseController;
 
 /**
@@ -34,11 +36,13 @@ import server.DatabaseController;
 
 public class EmployeeStart extends javax.swing.JFrame {
 
-    /**
+    private static final BankingDAO dao = new BankingDAO();
+	/**
      * Creates new form EmployeeStart
      */
     public EmployeeStart() {
         initComponents();
+        
     }
 
     /**
@@ -49,7 +53,7 @@ public class EmployeeStart extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+    	
         customerPanel = new javax.swing.JPanel();
         firstNameLabel = new javax.swing.JLabel();
         firstNameTextField = new javax.swing.JTextField();
@@ -414,27 +418,50 @@ public class EmployeeStart extends javax.swing.JFrame {
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void accountSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountSearchButtonActionPerformed
-        new AccountInfo().setVisible(true);
     	
-        /*
-         * String accountNumber = accountSearchTextField.getText();
-         * String accountInfo = BankingDAO.getCustomerAccount(accountNumber);
-         * if (!accountInfo.equals(""))
-         * 		//populate Account balance Account Type Account Number
-         *      
-         * else {
-         *     //pop-up window "Account not found"
-         *     JOptionPane.showConfirmDialog((Component) null, "Account not found.",
-    	 *      "alert", JOptionPane.OK_OPTION);
-    	 *      }
-         *     
-        */
+         String accountNumber = accountSearchTextField.getText();
+         String accountInfo = "";
+        		 accountInfo = dao.getCustomerAccount(accountNumber);
+         	if (!accountInfo.equals("")) {
+         		//show AccountInfo
+         		 new AccountInfo().setVisible(true);
+          		//parse accountInfo and populate Account balance Account Type Account Number
+         	}
+            else {
+              //pop-up window "Account not found"
+            	
+              JOptionPane.showMessageDialog((Component) null, "Account not found.",
+    	       "alert", JOptionPane.OK_OPTION);
+    	       }
+             
+         	accountSearchTextField.setText("");
     }//GEN-LAST:event_accountSearchButtonActionPerformed
     
     private void nameSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        //BankingDAO.getCustomerInformation(firstNameSearchTextField.getText(), nameSearchTextField.getText());
-    	//populate form below with customers info
-    }
+        String customerInfo = "";
+        customerInfo = dao.getCustomerInformation(firstNameSearchTextField.getText(), nameSearchTextField.getText());
+        if (!customerInfo.equals("")) {
+        	
+        //parse customerInfo populate form below with customers info
+        	firstNameTextField.setText("something");
+        	lastNameTextField.setText("something");
+        	addressTextField.setText("something");
+        	cityTextField.setText("something");
+        	stateTextField.setText("something");
+        	zipCodeTextField.setText("something");
+        	phoneNumberTextField.setText("something");
+        	//accountsTable
+        }
+        else {
+            //pop-up window "Account not found"
+        	
+        	JOptionPane.showMessageDialog((Component) null, "Customer not found.",
+         	       "alert", JOptionPane.OK_OPTION);
+  	       }
+        firstNameSearchTextField.setText("");
+    	nameSearchTextField.setText("");
+        
+        }
 
     private void deleteCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {
     	
@@ -442,7 +469,7 @@ public class EmployeeStart extends javax.swing.JFrame {
     		    + "Do you want to delete this profile?",
     	        "alert", JOptionPane.YES_NO_OPTION);
     	if (value == JOptionPane.YES_OPTION) {
-    		 //BankingDAO.deleteUserProfile(firstNameTextField.getText(), lastNameTextField.getText());
+    		 dao.deleteUserProfile(firstNameTextField.getText(), lastNameTextField.getText());
     	} else if (value == JOptionPane.NO_OPTION) {
     	    //close dialog box
     	}
@@ -464,6 +491,10 @@ public class EmployeeStart extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_accountsTableMousePressed
 
+    /**
+     * @param args the command line arguments
+     */
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton accountSearchButton;
