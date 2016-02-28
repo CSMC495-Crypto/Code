@@ -2,14 +2,10 @@
  * Database controller
  * 
  * @author Jonathan Wojack
- */
-
-/* 
- * project Bank Encryption Application
- * course CMSC495
- * date 2/21/2016
- * updated by Jonathan Wojack on 2/23/2016
- * updated by Grant Sweeney on 2/27/2016
+ * @project Bank Encryption Application
+ * @course CMSC495
+ * @date 2/21/2016
+ * @updated by Jonathan Wojack on 2/23/2016
  * 
  * Changes:
  * 
@@ -42,11 +38,15 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JTextArea;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class DatabaseController extends Server {
    
     DataObject encryptedObject;
     Socket socket;
+    String username;
+    String password;
     
     public DatabaseController(Socket socket) {
         
@@ -57,7 +57,7 @@ public class DatabaseController extends Server {
     /**
      * Process data from client
      * 
-     * @param encryptedObject Encrypted data to be processed
+     * @param encryptedObject 
      */
     
     public void processData(DataObject encryptedObject) {
@@ -69,12 +69,14 @@ public class DatabaseController extends Server {
             setEncryptedObject(encryptedObject);
             String query = retrieveData();     
             System.out.println(query);
+            
+            
         
-            String connUrl="jdbc:mysql://localhost:3306/cmsc495";
-            String username="default";
-            String password="superSecretPassword";
+            String connUrl = "jdbc:mysql://localhost:3306/cmsc495";
+            String username = getUsername();
+            String password = getPassword();
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(connUrl,username,password);
+            Connection conn = DriverManager.getConnection(connUrl, username, password);
             Statement st = conn.createStatement();
                     
             jta.append("rows of data in database table to be selected\n");
@@ -86,18 +88,38 @@ public class DatabaseController extends Server {
             
             jta.append(query);
             
-            if (!query.startsWith("SELECT")) {  // update data
+            if (query.startsWith("Login")) {  // update data
                         
-                jta.append("perform database update\n");
-         
-                st.executeUpdate(query);
-                        
-                jta.append("encrypt and transmit data\n");
-            
-                DataObject encryptedToClient = prepareData("Database successfully updated\n");
-                transmitData(encryptedToClient);              
+                     
+                     
+                     String s = "";
+                     
+                     Process p = Runtime.getRuntime().exec("mysql -h localhost -u " + getUsername() + " -p" + getPassword());
+                     BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                     while ((s = stdInput.readLine()) != null) {
+                         
+                         if (s.startsWith("ERROR")) {
+                             
+                             s = "Error: Incorrect Username or Password";
+                             
+                         }
+                         
+                         else {
+                             
+                             s = "Successful login";
+                             
+                         }
+                         
+                         DataObject encryptedToClient = prepareData(s);
+                transmitData(encryptedToClient);
+                         
+                     }
                         
             }
+            
+            else if (query.startsWith("SELECT")) {
+            
+            
                     
             // otherwise, the client wishes to display data
                     
@@ -147,20 +169,29 @@ public class DatabaseController extends Server {
                 }
                         
             }
+            
+            }
+            
+            else {
+                    
+                    jta.append("perform database update\n");
+         
+                st.executeUpdate(query);
+                        
+                jta.append("encrypt and transmit data\n");
+            
+                DataObject encryptedToClient = prepareData("Database successfully updated\n");
+                transmitData(encryptedToClient); 
+                    
+                    }
         
         } catch(SQLException ex) {
                 
             // if client submits an invalid request
                 
-            String error1 = "************************************************\n";
-            String error2 = "   ERROR!!! Incorrectly formatted request\n";
-            String error3 = "************************************************\n\n";
-                
-            jta.append(error1 + error2 + error3);
-                
             jta.append("\nencrypt data");
                 
-            DataObject error = prepareData(error1 + error2 + error3);
+            DataObject error = prepareData("Error");
             transmitData(error);
                             
         } catch (Exception ex) {
@@ -174,7 +205,7 @@ public class DatabaseController extends Server {
     /**
      * Decrypt data from client
      * 
-     * @return decrypted data
+     * @return 
      */
     
     public String retrieveData() {
@@ -185,7 +216,13 @@ public class DatabaseController extends Server {
             DataObject object = getEncryptedObject();
             
             String decryptedData = dataProcessor.decryptData(object);
-            return decryptedData;
+            
+            String[] loginCredentials = decryptedData.split(" ", 3);
+            
+            setUsername(loginCredentials[0]);
+            setPassword(loginCredentials[1]);
+            
+            return loginCredentials[2];
             
         } catch (Exception ex) {
             
@@ -200,8 +237,8 @@ public class DatabaseController extends Server {
     /**
      * Encrypt data before sending it to the client
      * 
-     * @param data data to be encrypted
-     * @return data object to be returned
+     * @param data
+     * @return 
      */
     
     public DataObject prepareData(String data) {
@@ -223,7 +260,7 @@ public class DatabaseController extends Server {
     /**
      * Send data to client
      * 
-     * @param encryptedToClient data to be transferred
+     * @param encryptedToClient 
      */
     
     public void transmitData(DataObject encryptedToClient) {
@@ -245,7 +282,7 @@ public class DatabaseController extends Server {
     /**
      * DataObject setter method
      * 
-     * @param encryptedObject object to be set
+     * @param encryptedObject 
      */
     
     public void setEncryptedObject(DataObject encryptedObject) {
@@ -257,12 +294,36 @@ public class DatabaseController extends Server {
     /**
      * DataObject getter method
      * 
-     * @return current data object
+     * @return 
      */
     
     public DataObject getEncryptedObject() {
         
         return encryptedObject;
+        
+    }
+    
+    public void setUsername(String username) {
+        
+        this.username = username;
+        
+    }
+    
+    public void setPassword(String password) {
+        
+        this.password = password;
+        
+    }
+    
+    public String getUsername() {
+        
+        return this.username;
+        
+    }
+    
+    public String getPassword() {
+        
+        return this.password;
         
     }
     

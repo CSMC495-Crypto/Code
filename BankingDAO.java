@@ -33,6 +33,9 @@ import javax.swing.text.DefaultCaret;
 
 public class BankingDAO implements DAOInterface {
     
+    String username = "";
+    String password = "";
+    
     public String client(String plainText, Boolean requestType) {
 
         // declare I/O streams
@@ -158,6 +161,9 @@ public class BankingDAO implements DAOInterface {
         String password = data[1];
         
         String command = ("Login " + username + " " + password);
+        
+        setUsername(username);
+        setPassword(password);
         
         return client(command, false);
         
@@ -396,6 +402,30 @@ public class BankingDAO implements DAOInterface {
         }
         
         return "";
+        
+    }
+    
+    public void setUsername(String username) {
+        
+        this.username = username;
+        
+    }
+    
+    public void setPassword(String password) {
+        
+        this.password = password;
+        
+    }
+    
+    public String getUsername() {
+        
+        return this.username;
+        
+    }
+    
+    public String getPassword() {
+        
+        return this.password;
         
     }
     
