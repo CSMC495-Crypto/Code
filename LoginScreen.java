@@ -2,7 +2,7 @@ package gui;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-
+import client.BankingDAO;
 
 /**
  * Login screen used by customers and employees
@@ -17,11 +17,11 @@ import javax.swing.JOptionPane;
  * Date: 02/18/2016
  * 02/20/2016 - Modified layout
  * 02/21/2016 - Updated by Grant Sweeney
- * 02/28/2016 - Added functionality to buttons - Brandon Lawson
  */
 
 public class LoginScreen extends javax.swing.JFrame {
     
+    private static final BankingDAO bankingDAO = new BankingDAO();
     int loginAttempts = 0;
     
     /**
@@ -41,20 +41,16 @@ public class LoginScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         userNameTextField = new javax.swing.JTextField();
-        passwordTextField = new javax.swing.JTextField();
         loginButton = new javax.swing.JButton();
         bannerLabel = new javax.swing.JLabel();
         userNameLabel = new javax.swing.JLabel();
         passwordLabel = new javax.swing.JLabel();
+        passwordPasswordField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("UMUC Bank - Login");
 
-        passwordTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordTextFieldActionPerformed(evt);
-            }
-        });
+        userNameTextField.setText("default");
 
         loginButton.setText("Login");
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -65,7 +61,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
         bannerLabel.setBackground(new java.awt.Color(0, 0, 153));
         bannerLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/UMUC.logo.jpg"))); // NOI18N
+        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/UMUC logo.jpg"))); // NOI18N
 
         userNameLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         userNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -74,22 +70,24 @@ public class LoginScreen extends javax.swing.JFrame {
         passwordLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         passwordLabel.setText("Password");
 
+        passwordPasswordField.setText("superSecretPassword");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bannerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(311, 311, 311)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(userNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(loginButton)
-                    .addComponent(userNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(411, Short.MAX_VALUE))
+                    .addComponent(userNameTextField)
+                    .addComponent(passwordPasswordField))
+                .addContainerGap(386, Short.MAX_VALUE))
+            .addComponent(bannerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,8 +99,8 @@ public class LoginScreen extends javax.swing.JFrame {
                     .addComponent(userNameLabel))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passwordLabel))
+                    .addComponent(passwordLabel)
+                    .addComponent(passwordPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(loginButton)
                 .addContainerGap(194, Short.MAX_VALUE))
@@ -111,19 +109,15 @@ public class LoginScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void passwordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordTextFieldActionPerformed
-
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {                                         
         
         loginAttempts++;
         
         String username = userNameTextField.getText();
-        String password = passwordTextField.getText();
+        String password = new String(passwordPasswordField.getPassword());
         
         userNameTextField.setText("");
-        passwordTextField.setText("");
+        passwordPasswordField.setText("");
         
         JOptionPane jPane = new JOptionPane();
         jPane.setMessage("Checking Credentials");
@@ -131,14 +125,37 @@ public class LoginScreen extends javax.swing.JFrame {
         jDialog.setVisible(true);
         
         //Check username and password
-        //If successful, take to appropriate screen (customer/employee)
+        String[] loginCredentials = { username, password };
+        //default
+        //superSecretPassword
+        
+        String loginResults = bankingDAO.confirmLogIn(loginCredentials);
+        
+        System.out.println(loginResults);
+        //String1.contains(String2);
+        if (loginResults.toString().contains("login")) {
+            JOptionPane jPaneResponse = new JOptionPane();
+            jPaneResponse.setMessage("Success: " + loginResults);
+            JDialog jDialogResponse = jPaneResponse.createDialog(null, "Login Response");
+            jDialogResponse.setVisible(true);
+        } else {
+            JOptionPane jPaneResponse = new JOptionPane();
+            jPaneResponse.setMessage("Failed: " + loginResults);
+            JDialog jDialogResponse = jPaneResponse.createDialog(null, "Login Response");
+            jDialogResponse.setVisible(true);            
+        }
+        
+
+        
+        
+        //If successful, take to appropriate screen (customer/employee) and dispose screen
         //If failed, JOptionPane to notify
         
         if (loginAttempts == 3) {
             System.exit(0);
         }
 
-    }//GEN-LAST:event_loginButtonMouseClicked
+    }                                        
 
     /**
      * @param args the command line arguments
@@ -179,9 +196,8 @@ public class LoginScreen extends javax.swing.JFrame {
     private javax.swing.JLabel bannerLabel;
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel passwordLabel;
-    private javax.swing.JTextField passwordTextField;
+    private javax.swing.JPasswordField passwordPasswordField;
     private javax.swing.JLabel userNameLabel;
     private javax.swing.JTextField userNameTextField;
     // End of variables declaration//GEN-END:variables
 }
-
