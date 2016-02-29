@@ -81,6 +81,9 @@ public class DatabaseController extends Server {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(connUrl, username, password);
             Statement st = conn.createStatement();
+            
+            System.out.println("Username: " + username);
+            System.out.println("Password: " + password);
                     
             jta.append("rows of data in database table to be selected\n");
                     

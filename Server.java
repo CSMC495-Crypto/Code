@@ -35,6 +35,9 @@ import java.sql.*;
 // set up and start GUI
 
 public class Server extends JFrame {
+    
+    String username;
+    String password;
   
     public JTextArea jta = new JTextArea();
     
@@ -48,6 +51,30 @@ public class Server extends JFrame {
         
         new Server();
     
+    }
+    
+    public void setUsername(String username) {
+        
+        this.username = username;
+        
+    }
+    
+    public void setPassword(String password) {
+        
+        this.password = password;
+        
+    }
+    
+    public String getUsername() {
+        
+        return this.username;
+        
+    }
+    
+    public String getPassword() {
+        
+        return this.password;
+        
     }
     
     // default constructor
@@ -132,8 +159,7 @@ public class Server extends JFrame {
         // handle connection
         
         private Socket socket;
-        String username;
-        String password;
+
 
         // constructor creates a thread
     
@@ -178,10 +204,14 @@ public class Server extends JFrame {
                     jta.append("decrypt and report data\n");
                     
                     DatabaseController bankingDOA = new DatabaseController(socket);
+   
                     String[] loginCredentials = bankingDOA.processData(clientEncryptedObject, getUsername(), getPassword());
                     
                     setUsername(loginCredentials[0]);
                     setPassword(loginCredentials[1]);
+                    
+                    System.out.println("Server username: " + getUsername());
+                    System.out.println("Server password: " + getPassword());
                     
                 } 
                 
@@ -191,29 +221,7 @@ public class Server extends JFrame {
                     
         }
         
-        public void setUsername(String username) {
         
-        this.username = username;
-        
-    }
-    
-    public void setPassword(String password) {
-        
-        this.password = password;
-        
-    }
-    
-    public String getUsername() {
-        
-        return this.username;
-        
-    }
-    
-    public String getPassword() {
-        
-        return this.password;
-        
-    }
                
     }
             
