@@ -322,14 +322,23 @@ public class CustomerStart extends javax.swing.JFrame {
         // TODO add your handling code here:
         //String amount = amountTextField.toString();
         String acctNumberfrom = accountNumberFromTextField.toString();
-        String firstName = firstNameTextField.toString();
-        String lastName = lastNameTextField.toString();
+        //String firstName = firstNameTextField.toString();
+        //String lastName = lastNameTextField.toString();
         String acctNumberTo = accountNumberToTextField.toString();
         String amount = amountTextField.toString();
         
         //Trans mit account information
-        //DatabaseController acctTransfer = 
-    }   
+        String[] transferAccount = { acctNumberfrom, amount, acctNumberTo };
+        String newBalance = bankingDAO.transferMoney(transferAccount);
+        
+        if (!newBalance.equals(""))
+        {
+            JOptionPane.showMessageDialog((Component) null, 
+                    "Your new mortage balane is: " + newBalance,
+    	       "Mortage", JOptionPane.OK_OPTION);
+        }
+    } 
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel accountDetailsPanel1;
