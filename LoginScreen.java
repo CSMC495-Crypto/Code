@@ -1,8 +1,12 @@
 package gui;
 
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import client.BankingDAO;
+import java.awt.Dimension;
+import java.util.Scanner;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
 
 /**
  * Login screen used by customers and employees
@@ -17,13 +21,14 @@ import client.BankingDAO;
  * Date: 02/18/2016
  * 02/20/2016 - Modified layout
  * 02/21/2016 - Updated by Grant Sweeney
- * 02/28/2016 - Added button functionality - Brandon Lawson
+ * 02/28/2016 - Added functionality to buttons - Grant Sweeney
  */
 
 public class LoginScreen extends javax.swing.JFrame {
     
-    private static final BankingDAO bankingDAO = new BankingDAO();
     int loginAttempts = 0;
+    
+    BankingDAO dao = new BankingDAO();
     
     /**
      * Creates new form LoginScreen
@@ -42,27 +47,31 @@ public class LoginScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         userNameTextField = new javax.swing.JTextField();
+        passwordTextField = new javax.swing.JTextField();
         loginButton = new javax.swing.JButton();
         bannerLabel = new javax.swing.JLabel();
         userNameLabel = new javax.swing.JLabel();
         passwordLabel = new javax.swing.JLabel();
-        passwordPasswordField = new javax.swing.JPasswordField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UMUC Bank - Login");
 
-        userNameTextField.setText("default");
+        passwordTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordTextFieldActionPerformed(evt);
+            }
+        });
 
         loginButton.setText("Login");
-        loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginButtonMouseClicked(evt);
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
             }
         });
 
         bannerLabel.setBackground(new java.awt.Color(0, 0, 153));
         bannerLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/UMUC logo.jpg"))); // NOI18N
+        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/UMUC.logo.jpg"))); // NOI18N
 
         userNameLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         userNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -71,24 +80,22 @@ public class LoginScreen extends javax.swing.JFrame {
         passwordLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         passwordLabel.setText("Password");
 
-        passwordPasswordField.setText("superSecretPassword");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bannerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(311, 311, 311)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(userNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(loginButton)
-                    .addComponent(userNameTextField)
-                    .addComponent(passwordPasswordField))
-                .addContainerGap(386, Short.MAX_VALUE))
-            .addComponent(bannerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(userNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(411, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,8 +107,8 @@ public class LoginScreen extends javax.swing.JFrame {
                     .addComponent(userNameLabel))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passwordLabel)
-                    .addComponent(passwordPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passwordLabel))
                 .addGap(18, 18, 18)
                 .addComponent(loginButton)
                 .addContainerGap(194, Short.MAX_VALUE))
@@ -110,54 +117,68 @@ public class LoginScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {                                         
-        
+    private void passwordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordTextFieldActionPerformed
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         loginAttempts++;
         
         String username = userNameTextField.getText();
-        String password = new String(passwordPasswordField.getPassword());
+        String password = passwordTextField.getText();
         
         userNameTextField.setText("");
-        passwordPasswordField.setText("");
+        passwordTextField.setText("");
         
-        JOptionPane jPane = new JOptionPane();
-        jPane.setMessage("Checking Credentials");
-        JDialog jDialog = jPane.createDialog(null, "Processing");
-        jDialog.setVisible(true);
+        JFrame frame = new JFrame();
+        JLabel msgLabel = new JLabel ("Checking Credentials", SwingConstants.CENTER);
+        msgLabel.setPreferredSize(new Dimension(600, 400));
+        frame.add(msgLabel);
+        frame.setVisible(true);
         
         //Check username and password
-        String[] loginCredentials = { username, password };
-        //default
-        //superSecretPassword
-        
-        String loginResults = bankingDAO.confirmLogIn(loginCredentials);
-        
-        System.out.println(loginResults);
-        //String1.contains(String2);
-        if (loginResults.toString().contains("login")) {
-            JOptionPane jPaneResponse = new JOptionPane();
-            jPaneResponse.setMessage("Success: " + loginResults);
-            JDialog jDialogResponse = jPaneResponse.createDialog(null, "Login Response");
-            jDialogResponse.setVisible(true);
-        } else {
-            JOptionPane jPaneResponse = new JOptionPane();
-            jPaneResponse.setMessage("Failed: " + loginResults);
-            JDialog jDialogResponse = jPaneResponse.createDialog(null, "Login Response");
-            jDialogResponse.setVisible(true);            
-        }
-        
-
-        
-        
-        //If successful, take to appropriate screen (customer/employee) and dispose screen
+        //If successful, take to appropriate screen (customer/employee)
         //If failed, JOptionPane to notify
         
         if (loginAttempts == 3) {
             System.exit(0);
         }
+        
+        String screenType = dao.confirmLogIn(username, password);
+        
+        frame.dispose();
+        
+        if(screenType.equals("customer")) {
+            CustomerStart cs = new CustomerStart();
+            this.dispose();
+            
+            //populate form with information
+            String info = dao.getCustomerScreenInfo(username, password);
+            Scanner stdin = new Scanner(info);
+            
+            cs.setFirstName(stdin.nextLine());
+            cs.setLastName(stdin.nextLine());
+            int i = 0;
+            while(stdin.hasNext()) {
+                for (int j=0; j<3; j++) {
+                    cs.setAccountInformation(stdin.nextLine(), i, j);
+                } //end for
+                i++;
+                
+            } //end while
+            
+            cs.setVisible(true);
+            this.dispose();
+            
+        } //end if
+        
+        if(screenType.equals("employee")) {
+            new EmployeeStart().setVisible(true);
+        }
 
-    }                                        
-
+    }//GEN-LAST:event_loginButtonActionPerformed
+        
+   
     /**
      * @param args the command line arguments
      */
@@ -197,8 +218,9 @@ public class LoginScreen extends javax.swing.JFrame {
     private javax.swing.JLabel bannerLabel;
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel passwordLabel;
-    private javax.swing.JPasswordField passwordPasswordField;
+    private javax.swing.JTextField passwordTextField;
     private javax.swing.JLabel userNameLabel;
     private javax.swing.JTextField userNameTextField;
     // End of variables declaration//GEN-END:variables
 }
+

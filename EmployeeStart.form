@@ -196,6 +196,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="firstNameTextField">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lastNameLabel">
           <Properties>
@@ -206,6 +209,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="lastNameTextField">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="addressLabel">
           <Properties>
@@ -216,6 +222,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="addressTextField">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="cityLabel">
           <Properties>
@@ -226,6 +235,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="cityTextField">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="stateLabel">
           <Properties>
@@ -236,6 +248,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="stateTextField">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="zipCodeLabel">
           <Properties>
@@ -246,6 +261,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="zipCodeTextField">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="phoneNumberLabel">
           <Properties>
@@ -256,9 +274,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="phoneNumberTextField">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="phoneNumberTextFieldActionPerformed"/>
-          </Events>
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="accountsLabel">
           <Properties>
@@ -432,9 +450,6 @@
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="accountSearchTextFieldActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="accountSearchButton">
           <Properties>
@@ -456,6 +471,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Search for Customer"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nameSearchButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="firstNameSearchLabel">
           <Properties>

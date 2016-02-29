@@ -34,7 +34,7 @@
               </Group>
               <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
               <Component id="backToCustomerButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="91" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
           <Component id="bannerLabel" alignment="0" pref="0" max="32767" attributes="0"/>
       </Group>
@@ -69,7 +69,7 @@
     <Component class="javax.swing.JLabel" name="bannerLabel">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/gui/UMUC logo.jpg"/>
+          <Image iconType="3" name="/gui/UMUC.logo.jpg"/>
         </Property>
       </Properties>
     </Component>
@@ -145,6 +145,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="accountBalanceTextField1">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="accountTypeLabel1">
           <Properties>
@@ -156,6 +159,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="accountTypeTextField">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="accountNumberLabel1">
           <Properties>
@@ -167,6 +173,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="accountNumberTextField1">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="transactionButton">
           <Properties>
@@ -244,7 +253,7 @@
             <Property name="text" type="java.lang.String" value="Deposit"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="depositButtonMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="depositButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="withdrawalButton">
@@ -255,7 +264,7 @@
             <Property name="text" type="java.lang.String" value="Withdrawal"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="withdrawalButtonMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="withdrawalButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="amountLabel2">
@@ -337,7 +346,7 @@
             <Property name="text" type="java.lang.String" value="Pay Mortgage"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="payMortgageButtonMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="payMortgageButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="transferButton">
@@ -348,7 +357,7 @@
             <Property name="text" type="java.lang.String" value="Transfer"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="transferButtonMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transferButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="amountTextField2">
@@ -404,9 +413,8 @@
         <Property name="text" type="java.lang.String" value="Delete This Account"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="deleteAccountButtonMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteAccountButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
 </Form>
-

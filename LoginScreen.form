@@ -2,7 +2,7 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="UMUC Bank - Login"/>
   </Properties>
   <SyntheticProperties>
@@ -24,6 +24,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="bannerLabel" alignment="0" pref="0" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="311" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
@@ -31,14 +32,13 @@
                   <Component id="passwordLabel" min="-2" pref="104" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="loginButton" min="-2" max="-2" attributes="0"/>
-                  <Component id="userNameTextField" alignment="0" max="32767" attributes="0"/>
-                  <Component id="passwordPasswordField" alignment="0" max="32767" attributes="0"/>
+                  <Component id="userNameTextField" alignment="0" min="-2" pref="145" max="-2" attributes="0"/>
+                  <Component id="passwordTextField" alignment="0" min="-2" pref="145" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="386" max="32767" attributes="0"/>
+              <EmptySpace pref="411" max="32767" attributes="0"/>
           </Group>
-          <Component id="bannerLabel" alignment="0" pref="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -52,8 +52,8 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="passwordTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="passwordLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="passwordPasswordField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="loginButton" min="-2" max="-2" attributes="0"/>
@@ -64,16 +64,18 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="userNameTextField">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="default"/>
-      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="passwordTextField">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordTextFieldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="loginButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Login"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="loginButtonMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loginButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="bannerLabel">
@@ -83,7 +85,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/gui/UMUC logo.jpg"/>
+          <Image iconType="3" name="/gui/UMUC.logo.jpg"/>
         </Property>
       </Properties>
     </Component>
@@ -100,11 +102,6 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="Password"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JPasswordField" name="passwordPasswordField">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="superSecretPassword"/>
       </Properties>
     </Component>
   </SubComponents>

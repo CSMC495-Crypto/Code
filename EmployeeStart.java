@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 import client.BankingDAO;
 
-import server.DatabaseController;
+import java.util.Scanner;
 
 /**
  * Screen with all employee functionality
@@ -53,7 +53,7 @@ public class EmployeeStart extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-    	
+
         customerPanel = new javax.swing.JPanel();
         firstNameLabel = new javax.swing.JLabel();
         firstNameTextField = new javax.swing.JTextField();
@@ -96,40 +96,43 @@ public class EmployeeStart extends javax.swing.JFrame {
         firstNameLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         firstNameLabel.setText("First Name: ");
 
+        firstNameTextField.setEditable(false);
+
         lastNameLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lastNameLabel.setText("Last Name: ");
+
+        lastNameTextField.setEditable(false);
 
         addressLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         addressLabel.setText("Address: ");
 
+        addressTextField.setEditable(false);
+
         cityLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         cityLabel.setText("City: ");
+
+        cityTextField.setEditable(false);
 
         stateLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         stateLabel.setText("State: ");
 
+        stateTextField.setEditable(false);
+
         zipCodeLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         zipCodeLabel.setText("Zip Code: ");
+
+        zipCodeTextField.setEditable(false);
 
         phoneNumberLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         phoneNumberLabel.setText("Phone Number: ");
 
-        phoneNumberTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                phoneNumberTextFieldActionPerformed(evt);
-            }
-        });
+        phoneNumberTextField.setEditable(false);
 
         accountsLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         accountsLabel.setText("Accounts: ");
 
         deleteCustomerButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         deleteCustomerButton.setText("Delete Customer Profile");
-        deleteCustomerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteCustomerButtonActionPerformed(evt);
-            }
-        });
 
         addAccountButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         addAccountButton.setText("Add New Bank Account");
@@ -266,11 +269,6 @@ public class EmployeeStart extends javax.swing.JFrame {
         nameSearchLabel.setText("Enter Customer Last Name: ");
 
         accountSearchTextField.setToolTipText("");
-        accountSearchTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                accountSearchTextFieldActionPerformed(evt);
-            }
-        });
 
         accountSearchButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         accountSearchButton.setText("Search for Account");
@@ -405,10 +403,6 @@ public class EmployeeStart extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void accountSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountSearchTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_accountSearchTextFieldActionPerformed
-
     private void createProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createProfileButtonActionPerformed
         new CreateUserProfile().setVisible(true);
     }//GEN-LAST:event_createProfileButtonActionPerformed
@@ -424,8 +418,12 @@ public class EmployeeStart extends javax.swing.JFrame {
         		 accountInfo = dao.getCustomerAccount(accountNumber);
          	if (!accountInfo.equals("")) {
          		//show AccountInfo
-         		 new AccountInfo().setVisible(true);
+         		 AccountInfo ai = new AccountInfo();
           		//parse accountInfo and populate Account balance Account Type Account Number
+                        Scanner stdin = new Scanner(accountInfo);
+                        ai.setTopAccountInfo(stdin.next(), stdin.next(), stdin.next());
+                        
+                        ai.setVisible(true);
          	}
             else {
               //pop-up window "Account not found"
@@ -437,33 +435,6 @@ public class EmployeeStart extends javax.swing.JFrame {
          	accountSearchTextField.setText("");
     }//GEN-LAST:event_accountSearchButtonActionPerformed
     
-    private void nameSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        String customerInfo = "";
-        customerInfo = dao.getCustomerInformation(firstNameSearchTextField.getText(), nameSearchTextField.getText());
-        if (!customerInfo.equals("")) {
-        	
-        //parse customerInfo populate form below with customers info
-        	String[] customerInfoArray = customerInfo.split("\\s*,\\s*");
-        	firstNameTextField.setText(customerInfoArray[0]);
-        	lastNameTextField.setText(customerInfoArray[1]);
-        	addressTextField.setText(customerInfoArray[2]);
-        	cityTextField.setText(customerInfoArray[3]);
-        	stateTextField.setText(customerInfoArray[4]);
-        	zipCodeTextField.setText(customerInfoArray[5]);
-        	phoneNumberTextField.setText(customerInfoArray[6]);
-        	//accountsTable
-        }
-        else {
-            //pop-up window "Account not found"
-        	
-        	JOptionPane.showMessageDialog((Component) null, "Customer not found.",
-         	       "alert", JOptionPane.OK_OPTION);
-  	       }
-        firstNameSearchTextField.setText("");
-    	nameSearchTextField.setText("");
-        
-        }
-
     private void deleteCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {
     	
     	int value = JOptionPane.showConfirmDialog((Component) null, "The customer's profile will be deleted permanently.\n"
@@ -481,21 +452,68 @@ public class EmployeeStart extends javax.swing.JFrame {
         new CreateBankAccount().setVisible(true);
     }//GEN-LAST:event_addAccountButtonActionPerformed
 
-    private void phoneNumberTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneNumberTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_phoneNumberTextFieldActionPerformed
-
     private void accountsTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountsTableMousePressed
         int col = accountsTable.columnAtPoint(evt.getPoint());
+        int row = accountsTable.rowAtPoint(evt.getPoint());
         if(col == 0) {
-            new AccountInfo().setVisible(true);
+            String accountNumber = accountsTable.getModel().getValueAt(row, 0).toString();
+            String accountInfo = "";
+        		 accountInfo = dao.getCustomerAccount(accountNumber);
+         	if (!accountInfo.equals("")) {
+         		//show AccountInfo
+         		 AccountInfo ai = new AccountInfo();
+          		//parse accountInfo and populate Account balance Account Type Account Number
+                        Scanner stdin = new Scanner(accountInfo);
+                        ai.setTopAccountInfo(stdin.next(), stdin.next(), stdin.next());
+                        
+                        ai.setVisible(true);
+         	}
+            else {
+              //pop-up window "Account not found"
+            	
+              JOptionPane.showMessageDialog((Component) null, "Account not found.",
+    	       "alert", JOptionPane.OK_OPTION);
+    	       }
         }
     }//GEN-LAST:event_accountsTableMousePressed
 
-    /**
-     * @param args the command line arguments
-     */
-   
+    private void nameSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameSearchButtonActionPerformed
+        String customerInfo = "";
+        customerInfo = dao.getCustomerInformation(firstNameSearchTextField.getText(), nameSearchTextField.getText());
+        Scanner stdin = new Scanner(customerInfo);
+        if (!customerInfo.equals("")) {
+        	
+            //parse customerInfo populate form below with customers info
+        	firstNameTextField.setText(stdin.next());
+        	lastNameTextField.setText(stdin.next());
+                phoneNumberTextField.setText(stdin.next());
+        	addressTextField.setText(stdin.next());
+        	cityTextField.setText(stdin.next());
+        	stateTextField.setText(stdin.next());
+        	zipCodeTextField.setText(stdin.next());
+                
+                int i = 0;
+        	//accountsTable
+                while(stdin.hasNext()) {
+                for (int j=0; j<4; j++) {
+                    accountsTable.getModel().setValueAt(stdin.next(), i, j);
+                } //end for
+                i++;
+                
+            } //end while
+        }
+        else {
+            //pop-up window "Account not found"
+        	
+        	JOptionPane.showMessageDialog((Component) null, "Customer not found.",
+         	       "alert", JOptionPane.OK_OPTION);
+  	       }
+        firstNameSearchTextField.setText("");
+    	nameSearchTextField.setText("");
+        
+        
+    }//GEN-LAST:event_nameSearchButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton accountSearchButton;

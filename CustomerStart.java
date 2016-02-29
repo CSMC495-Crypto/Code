@@ -2,6 +2,7 @@ package gui;
 
 import client.BankingDAO;
 import java.awt.Component;
+import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 /**
@@ -81,8 +82,10 @@ public class CustomerStart extends javax.swing.JFrame {
 
         customerInformationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Customer Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 13))); // NOI18N
 
+        firstNameTextField.setEditable(false);
         firstNameTextField.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
 
+        lastNameTextField.setEditable(false);
         lastNameTextField.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
 
         firstNameLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
@@ -172,9 +175,19 @@ public class CustomerStart extends javax.swing.JFrame {
 
         payMortgageButton.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         payMortgageButton.setText("Pay Mortgage");
+        payMortgageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                payMortgageButtonActionPerformed(evt);
+            }
+        });
 
         transferButton.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         transferButton.setText("Transfer");
+        transferButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transferButtonActionPerformed(evt);
+            }
+        });
 
         amountTextField.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
 
@@ -289,55 +302,93 @@ public class CustomerStart extends javax.swing.JFrame {
 
     private void accountDetailsTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountDetailsTableMousePressed
         int col = accountDetailsTable.columnAtPoint(evt.getPoint());
+        int row = accountDetailsTable.rowAtPoint(evt.getPoint());
         if(col == 3) {
-            new Transactions().setVisible(true);
+            Transactions t = new Transactions();
+            String account = accountDetailsTable.getModel().getValueAt(row, 0).toString();
+            String transactions = bankingDAO.getTransactionHistory(account);
+            Scanner stdin = new Scanner(transactions);
+            stdin.useDelimiter(",");
+            
+            int i = 0;
+            while(stdin.hasNext()) {
+                for (int j=0; j<6; j++) {
+                    t.setTransactionInformation(stdin.next(), i, j);
+                } //end for
+                i++;
+                
+            } //end while
+            
+            t.setVisible(true);
+            
+        }
+        
+        if(col == 4) {
+            String account = accountDetailsTable.getModel().getValueAt(row, 0).toString();
+            accountNumberFromTextField.setText(account);
         }
     }//GEN-LAST:event_accountDetailsTableMousePressed
 
-    private void transferButtonActionPerformed(java.awt.event.ActionEvent evt)                                               
-    {                                                    
-        // TODO add your handling code here:
-        //String amount = amountTextField.toString();
-        String acctNumberfrom = accountNumberFromTextField.toString();
-        //String firstName = firstNameTextField.toString();
-        //String lastName = lastNameTextField.toString();
-        String acctNumberTo = accountNumberToTextField.toString();
-        String amount = amountTextField.toString();
+    private void transferButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferButtonActionPerformed
+        String acctNumberfrom = accountNumberFromTextField.getText();
+
+        String acctNumberTo = accountNumberToTextField.getText();
+        String amount = amountTextField.getText();
         
-        //Trans mit account information
+        //Transmit account information
         String[] transferAccount = { acctNumberfrom, amount, acctNumberTo };
         String newBalance = bankingDAO.transferMoney(transferAccount);
         
-        if (!newBalance.equals(""))
+        if (!newBalance.equals("error"))
         {
             JOptionPane.showMessageDialog((Component) null, 
                     "Your new balane is: " + newBalance,
     	       "Account Balance", JOptionPane.OK_OPTION);
         }
+        else {
+            JOptionPane.showMessageDialog((Component) null, 
+                    "An error has occured" + newBalance,
+    	       "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_transferButtonActionPerformed
 
-    } 
-    
-    private void payMortgageButtonActionPerformed(java.awt.event.ActionEvent evt)                                                  
-    {                                                      
-        // TODO add your handling code here:
-        //String amount = amountTextField.toString();
-        String acctNumberfrom = accountNumberFromTextField.toString();
-        //String firstName = firstNameTextField.toString();
-        //String lastName = lastNameTextField.toString();
-        String acctNumberTo = accountNumberToTextField.toString();
-        String amount = amountTextField.toString();
+    private void payMortgageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payMortgageButtonActionPerformed
+        String acctNumberfrom = accountNumberFromTextField.getText();
+        String acctNumberTo = accountNumberToTextField.getText();
+        String amount = amountTextField.getText();
         
         //Trans mit account information
         String[] transferAccount = { acctNumberfrom, amount, acctNumberTo };
-        String newBalance = bankingDAO.transferMoney(transferAccount);
+        String newBalance = bankingDAO.payMortgage(transferAccount);
         
-        if (!newBalance.equals(""))
+        if (!newBalance.equals("error"))
         {
+            Scanner stdin = new Scanner(newBalance);
+            String newMortgageBalance = stdin.next();
+            String newAccountBalance = stdin.next();
             JOptionPane.showMessageDialog((Component) null, 
-                    "Your new mortage balane is: " + newBalance,
+                    "Your new mortage balane is: " + newMortgageBalance
+                    + "\n Your new account balance is: " + newAccountBalance,
     	       "Mortage", JOptionPane.OK_OPTION);
         }
-    } 
+        else {
+            JOptionPane.showMessageDialog((Component) null, 
+                    "An error has occured" + newBalance,
+    	       "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_payMortgageButtonActionPerformed
+    
+    public void setFirstName(String name) {
+        firstNameTextField.setText(name);
+    }
+    
+    public void setLastName(String name) {
+        lastNameTextField.setText(name);
+    }
+    
+    public void setAccountInformation(String info, int row, int col) {
+        accountDetailsTable.getModel().setValueAt(info, row, col);
+    }
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

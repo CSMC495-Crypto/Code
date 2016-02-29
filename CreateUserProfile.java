@@ -289,7 +289,7 @@ public class CreateUserProfile extends javax.swing.JFrame {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // code for submitting form goes here
-        String userType = "Not an Employee";
+        String userType = "customer";
         String userName = addressTextField.toString();
         String userPassword = confirmPasswordTextField.toString();
         String userFirstName = firstNameTextField.toString();
@@ -302,12 +302,12 @@ public class CreateUserProfile extends javax.swing.JFrame {
         
         if (employeeCheckBox.isSelected())
         {
-            userType = "Employee";
+            userType = "employee";
         }
         
         //Transmitt User Profile.        
-        String[] createProfile = { userFirstName, userLastName, userAddress, userCity, userState, 
-            userZip, userPhoneNumber, userName, userPassword, userType };
+        String[] createProfile = { userFirstName, userLastName, userPhoneNumber, userAddress, userCity, userState, 
+            userZip, userName, userPassword, userType };
         
         //BankingDAO bankingDAO = new BankingDAO();
         String checkProfile = bankingDAO.createUserProfile(createProfile);

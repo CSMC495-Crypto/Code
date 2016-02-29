@@ -1,6 +1,8 @@
 package gui;
 
-import javax.swing.JDialog;
+import client.BankingDAO;
+import java.awt.Component;
+import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,6 +21,8 @@ import javax.swing.JOptionPane;
  */
 
 public class AccountInfo extends javax.swing.JFrame {
+    
+    BankingDAO bankingDAO = new BankingDAO();
 
     /**
      * Creates new form AccountInfo
@@ -63,7 +67,7 @@ public class AccountInfo extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("UMUC Bank - Account Info");
 
-        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/UMUC logo.jpg"))); // NOI18N
+        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/UMUC.logo.jpg"))); // NOI18N
 
         accountDetailsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Account Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 13))); // NOI18N
 
@@ -71,13 +75,19 @@ public class AccountInfo extends javax.swing.JFrame {
         accountBalanceLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         accountBalanceLabel1.setText("Account Balance");
 
+        accountBalanceTextField1.setEditable(false);
+
         accountTypeLabel1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         accountTypeLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         accountTypeLabel1.setText("Account Type");
 
+        accountTypeTextField.setEditable(false);
+
         accountNumberLabel1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         accountNumberLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         accountNumberLabel1.setText("Account Number");
+
+        accountNumberTextField1.setEditable(false);
 
         transactionButton.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         transactionButton.setText("Transaction History");
@@ -132,17 +142,17 @@ public class AccountInfo extends javax.swing.JFrame {
 
         depositButton.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         depositButton.setText("Deposit");
-        depositButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                depositButtonMouseClicked(evt);
+        depositButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                depositButtonActionPerformed(evt);
             }
         });
 
         withdrawalButton.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         withdrawalButton.setText("Withdrawal");
-        withdrawalButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                withdrawalButtonMouseClicked(evt);
+        withdrawalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                withdrawalButtonActionPerformed(evt);
             }
         });
 
@@ -187,17 +197,17 @@ public class AccountInfo extends javax.swing.JFrame {
 
         payMortgageButton.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         payMortgageButton.setText("Pay Mortgage");
-        payMortgageButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                payMortgageButtonMouseClicked(evt);
+        payMortgageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                payMortgageButtonActionPerformed(evt);
             }
         });
 
         transferButton.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         transferButton.setText("Transfer");
-        transferButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                transferButtonMouseClicked(evt);
+        transferButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transferButtonActionPerformed(evt);
             }
         });
 
@@ -262,9 +272,9 @@ public class AccountInfo extends javax.swing.JFrame {
 
         deleteAccountButton.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         deleteAccountButton.setText("Delete This Account");
-        deleteAccountButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                deleteAccountButtonMouseClicked(evt);
+        deleteAccountButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteAccountButtonActionPerformed(evt);
             }
         });
 
@@ -281,7 +291,7 @@ public class AccountInfo extends javax.swing.JFrame {
                     .addComponent(deleteAccountButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(48, 48, 48)
                 .addComponent(backToCustomerButton)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(bannerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -309,125 +319,144 @@ public class AccountInfo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void transactionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionButtonActionPerformed
-        new Transactions().setVisible(true);
+        Transactions t = new Transactions();
+            String account = accountNumberTextField1.getText();
+            String transactions = bankingDAO.getTransactionHistory(account);
+            Scanner stdin = new Scanner(transactions);
+            stdin.useDelimiter(",");
+            
+            int i = 0;
+            while(stdin.hasNext()) {
+                for (int j=0; j<6; j++) {
+                    t.setTransactionInformation(stdin.next(), i, j);
+                } //end for
+                i++;
+                
+            } //end while
+            
+            t.setVisible(true);
     }//GEN-LAST:event_transactionButtonActionPerformed
 
     private void backToCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToCustomerButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_backToCustomerButtonActionPerformed
 
-    private void depositButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_depositButtonMouseClicked
+    private void depositButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depositButtonActionPerformed
         String accountNumber = accountNumberTextField1.getText();
-        double depositAmount = Double.parseDouble(amountTextField1.getText());
+        String depositAmount = amountTextField1.getText();
         
         //Process deposit
+        String newBalance = bankingDAO.depositMoney(accountNumber, depositAmount);
         
-        JOptionPane jPane = new JOptionPane();
-        jPane.setMessage("Complete");
-        JDialog jDialog = jPane.createDialog(null, "Transaction processed");
-        jDialog.setVisible(true);
-
-        //Set new blanace
+        if (!newBalance.equals("error"))
+        {
+            JOptionPane.showMessageDialog((Component) null, 
+                    "Your new balane is: " + newBalance,
+    	       "Account Balance", JOptionPane.OK_OPTION);
+        }
+        else {
+            JOptionPane.showMessageDialog((Component) null, 
+                    "An error has occured",
+    	       "Error", JOptionPane.ERROR_MESSAGE);
+        }
         
-        amountTextField1.setText("");
-    }//GEN-LAST:event_depositButtonMouseClicked
+        amountTextField1.setText(newBalance);
+    }//GEN-LAST:event_depositButtonActionPerformed
 
-    private void withdrawalButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_withdrawalButtonMouseClicked
+    private void withdrawalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_withdrawalButtonActionPerformed
         String accountNumber = accountNumberTextField1.getText();
-        double accountBalance = Double.parseDouble(accountBalanceTextField1.getText());
-        double withdrawalAmount = Double.parseDouble(amountTextField1.getText());
+        String withdrawalAmount = amountTextField1.getText();
         
-        if (withdrawalAmount > accountBalance) {
-            
-            JOptionPane jPane = new JOptionPane();
-            jPane.setMessage("Not enough available funds");
-            JDialog jDialog = jPane.createDialog(null, "Transaction not processed");
-            jDialog.setVisible(true);
-            
-        } else {
             //Process withdrawal
-            
-            JOptionPane jPane = new JOptionPane();
-            jPane.setMessage("Complete");
-            JDialog jDialog = jPane.createDialog(null, "Transaction processed");
-            jDialog.setVisible(true);
-            
-            //Set new blanace
+            String newBalance = bankingDAO.withdrawMoney(accountNumber, withdrawalAmount);
+        
+        if (!newBalance.equals("error"))
+        {
+            JOptionPane.showMessageDialog((Component) null, 
+                    "Your new balane is: " + newBalance,
+    	       "Account Balance", JOptionPane.OK_OPTION);
+        }
+        else {
+            JOptionPane.showMessageDialog((Component) null, 
+                    "An error has occured",
+    	       "Error", JOptionPane.ERROR_MESSAGE);
         }
         
-        amountTextField1.setText("");
+        amountTextField1.setText(newBalance);
         
-    }//GEN-LAST:event_withdrawalButtonMouseClicked
+    }//GEN-LAST:event_withdrawalButtonActionPerformed
 
-    private void transferButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transferButtonMouseClicked
+    private void transferButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferButtonActionPerformed
         String accountNumber = accountNumberTextField1.getText();
         String toAccountNumber = accountTextField.getText();
-        double accountBalance = Double.parseDouble(accountBalanceTextField1.getText());
-        double transferAmount = Double.parseDouble(amountTextField2.getText());
+        String transferAmount = amountTextField2.getText();
         
+        String amounts = bankingDAO.transferMoney(accountNumber, transferAmount, toAccountNumber);
+        Scanner stdin = new Scanner(amounts);
+        String accountNewBalance = stdin.next();
         
-        if (transferAmount > accountBalance) {
-            
-            JOptionPane jPane = new JOptionPane();
-            jPane.setMessage("Not enough available funds");
-            JDialog jDialog = jPane.createDialog(null, "Transaction not processed");
-            jDialog.setVisible(true);
-            
-        } else {
-            //Process transfer
-            
-            JOptionPane jPane = new JOptionPane();
-            jPane.setMessage("Complete");
-            JDialog jDialog = jPane.createDialog(null, "Transaction processed");
-            jDialog.setVisible(true);
-            
-            //Set new blanace
+        //Process transfer
+        if (!accountNewBalance.equals("error"))
+        {
+            JOptionPane.showMessageDialog((Component) null, 
+                    "Your new balane is: " + accountNewBalance,
+    	       "Account Balance", JOptionPane.OK_OPTION);
+        }
+        else {
+            JOptionPane.showMessageDialog((Component) null, 
+                    "An error has occured",
+    	       "Error", JOptionPane.ERROR_MESSAGE);
         }
         
-        amountTextField2.setText("");
-        accountTextField.setText("");
-    }//GEN-LAST:event_transferButtonMouseClicked
+        //Set new blanace
+        accountTextField.setText(accountNewBalance);
+    }//GEN-LAST:event_transferButtonActionPerformed
 
-    private void payMortgageButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_payMortgageButtonMouseClicked
-        String accountNumber = accountNumberTextField1.getText();
-        String toAccountNumber = accountTextField.getText();
-        double accountBalance = Double.parseDouble(accountBalanceTextField1.getText());
-        double transferAmount = Double.parseDouble(amountTextField2.getText());
+    private void payMortgageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payMortgageButtonActionPerformed
+        String acctNumberfrom = accountNumberTextField1.getText();
+        String acctNumberTo = accountTextField.getText();
+        String amount = amountTextField2.getText();
         
-        if (transferAmount > accountBalance) {
-            
-            JOptionPane jPane = new JOptionPane();
-            jPane.setMessage("Not enough available funds");
-            JDialog jDialog = jPane.createDialog(null, "Transaction not processed");
-            jDialog.setVisible(true);
-            
-        } else {
-            //Process transfer
-            
-            JOptionPane jPane = new JOptionPane();
-            jPane.setMessage("Complete");
-            JDialog jDialog = jPane.createDialog(null, "Transaction processed");
-            jDialog.setVisible(true);
-            
-            //Set new blanace
+        //Transmit account information
+        String[] transferAccount = { acctNumberfrom, amount, acctNumberTo };
+        String newBalance = bankingDAO.payMortgage(transferAccount);
+        
+        Scanner stdin = new Scanner(newBalance);
+        String newMortgageBalance = stdin.next();
+        String newAccountBalance = stdin.next();
+        
+        if (!newBalance.equals("error"))
+        {
+            JOptionPane.showMessageDialog((Component) null, 
+                    "Your new mortage balane is: " + newMortgageBalance
+                    + "\n Your new account balance is: " + newAccountBalance,
+    	       "Mortage", JOptionPane.OK_OPTION);
+        }
+        else {
+            JOptionPane.showMessageDialog((Component) null, 
+                    "An error has occured" + newBalance,
+    	       "Error", JOptionPane.ERROR_MESSAGE);
         }
         
-        amountTextField2.setText("");
-        accountTextField.setText("");
-        
-    }//GEN-LAST:event_payMortgageButtonMouseClicked
+        //Set new blanace
+        accountTextField.setText(newAccountBalance);
+    }//GEN-LAST:event_payMortgageButtonActionPerformed
 
-    private void deleteAccountButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteAccountButtonMouseClicked
+    private void deleteAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAccountButtonActionPerformed
         int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this account", "Confirmation", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
             //Delete account
+            bankingDAO.deleteAccount(accountNumberTextField1.getText());
             this.dispose();
         }
-        else {
-           //Do Nothing
-        }
-    }//GEN-LAST:event_deleteAccountButtonMouseClicked
+    }//GEN-LAST:event_deleteAccountButtonActionPerformed
 
+    
+    public void setTopAccountInfo(String balance, String type, String number) {
+        accountBalanceTextField1.setText(balance);
+        accountTypeTextField.setText(type);
+        accountNumberTextField1.setText(number);
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accountBalanceLabel1;

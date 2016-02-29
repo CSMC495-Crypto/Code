@@ -130,6 +130,11 @@ public class Transactions extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_backToAccountButtonActionPerformed
 
+    
+    public void setTransactionInformation(String info, int row, int col) {
+        transactionsTable.getModel().setValueAt(info, row, col);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backToAccountButton;
     private javax.swing.JLabel bannerLabel;
