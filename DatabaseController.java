@@ -91,34 +91,36 @@ public class DatabaseController extends Server {
             
             jta.append(query);
             
+            System.out.println(query);
+            
             if (query.startsWith("Login")) {  // update data
                         
+                     System.out.println("Login...");
                      
-                     
-                     String s = "";
-                     
-                     Process p = Runtime.getRuntime().exec("mysql -h localhost -u " + getUsername() + " -p" + getPassword());
-                     BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-                     while ((s = stdInput.readLine()) != null) {
+                               
+            username = getUsername();
+            password = getPassword();
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(connUrl, username, password);
+            st = conn.createStatement();
+            
+            System.out.println(".....");
+            
+          //  ResultSet rs = st.executeQuery("SELECT * FROM personData");
+            
+            DataObject encryptedToClient = prepareData("Successful login");
+            transmitData(encryptedToClient);
+            
+            
+            System.out.println(".....");
+            
                          
-                         if (s.startsWith("ERROR")) {
-                             
-                             s = "Error: Incorrect Username or Password";
-                             
-                         }
-                         
-                         else {
-                             
-                             s = "Successful login";
-                             
-                         }
-                         
-                         DataObject encryptedToClient = prepareData(s);
-                transmitData(encryptedToClient);
+               //         DataObject encryptedToClient = prepareData("Error: Incorrect username or password");
+             //   transmitData(encryptedToClient);
                          
                      }
                         
-            }
+            
             
             else if (query.startsWith("getRows")) {
                 
@@ -280,12 +282,13 @@ public class DatabaseController extends Server {
      */
     
     public DataObject prepareData(String data) {
-                
+        
+        System.out.println("Data: " + data);
+               
         try {
             
-            DataObject encryptedData;
             DataProcessor dataProcessor = new DataProcessor();
-            encryptedData = dataProcessor.encryptData(data);
+            return dataProcessor.encryptData(data);
                
         } catch (Exception ex) {
             

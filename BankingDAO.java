@@ -113,17 +113,27 @@ public class BankingDAO implements DAOInterface {
             }
                     
             else {  // if only a database update is to be performed
+                
+                
         
                 DataObject serverEncryptedObject = null;
             
                 ObjectInputStream fromServerOIS = new ObjectInputStream(socket.getInputStream());
                         
                 // get response from server
+                
+                
               
                 serverEncryptedObject = (DataObject) fromServerOIS.readObject();
               
                 // decrypt and report server response
-                        
+                
+                System.out.println("sggsg");
+                
+                DataProcessor dataProcessorFalse = new DataProcessor();
+                       
+                System.out.println(dataProcessorFalse.decryptData(serverEncryptedObject));
+                
                 return dataProcessor.decryptData(serverEncryptedObject);    // return update status       
                         
             }
