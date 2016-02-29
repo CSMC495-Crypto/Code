@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  * Date: 02/18/2016
  * 02/21/2016 - Updated by Grant Sweeney
  * 02/25/2016 - Added code to submit user information in a string format - WBaynard
- * 02/25/2016 - Added code to submit user information in a string format - WBaynard
+ * 02/28/2016 - Add code for BankingDAO - WBaynard
  */
 
 public class CustomerStart extends javax.swing.JFrame {
