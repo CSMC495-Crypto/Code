@@ -1,5 +1,9 @@
 package gui;
 
+import client.BankingDAO;
+import java.awt.Component;
+import javax.swing.JOptionPane;
+
 /**
  * Screen with all customer functionality functionality
  * 
@@ -13,9 +17,12 @@ package gui;
  * Date: 02/18/2016
  * 02/21/2016 - Updated by Grant Sweeney
  * 02/25/2016 - Added code to submit user information in a string format - WBaynard
+ * 02/25/2016 - Added code to submit user information in a string format - WBaynard
  */
 
 public class CustomerStart extends javax.swing.JFrame {
+
+    private static final BankingDAO bankingDAO = new BankingDAO();
 
     /**
      * Creates new form CustomerStart
@@ -288,17 +295,25 @@ public class CustomerStart extends javax.swing.JFrame {
     }//GEN-LAST:event_accountDetailsTableMousePressed
 
     private void transferButtonActionPerformed(java.awt.event.ActionEvent evt)                                               
-    {                                                   
+    {                                                    
         // TODO add your handling code here:
         //String amount = amountTextField.toString();
         String acctNumberfrom = accountNumberFromTextField.toString();
-        String firstName = firstNameTextField.toString();
-        String lastName = lastNameTextField.toString();
+        //String firstName = firstNameTextField.toString();
+        //String lastName = lastNameTextField.toString();
         String acctNumberTo = accountNumberToTextField.toString();
         String amount = amountTextField.toString();
         
         //Trans mit account information
-        //DatabaseController acctTransfer = 
+        String[] transferAccount = { acctNumberfrom, amount, acctNumberTo };
+        String newBalance = bankingDAO.transferMoney(transferAccount);
+        
+        if (!newBalance.equals(""))
+        {
+            JOptionPane.showMessageDialog((Component) null, 
+                    "Your new balane is: " + newBalance,
+    	       "Account Balance", JOptionPane.OK_OPTION);
+        }
 
     } 
     
