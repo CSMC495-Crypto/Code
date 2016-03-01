@@ -39,6 +39,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JTextArea;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 
 public class DatabaseController extends Server {
@@ -254,13 +257,63 @@ public class DatabaseController extends Server {
             
             String decryptedData = dataProcessor.decryptData(object);
             
+            System.out.println (decryptedData);
+            
             if (decryptedData.startsWith("Login")) {
+                
+                System.out.println("Starts with login....");
             
             String[] loginCredentials = decryptedData.split(" ", 3);
             
             setUsername(loginCredentials[1]);
             setPassword(loginCredentials[2]);
             
+            
+	        try {
+
+	 FileWriter writer = new FileWriter("LoginCredentials.dat");
+
+	           System.out.println("Username: " + getUsername() + " Password: " + getPassword());
+
+	            writer.write(getUsername());
+                    writer.write("\n" + getPassword());
+
+	 
+
+	     /*   } catch (IOException e) {
+
+	 
+
+	            System.err.println("Error writing the file : ");
+
+	            e.printStackTrace();
+
+	 
+
+	        } 
+	 */
+                        writer.close();
+	            
+
+	            } catch(IOException ex) {
+                        
+                        System.out.println("IOException!");
+                        
+                    }
+
+	 
+
+	        
+            
+            
+            /*
+            LoginCredentials loginCreds = new LoginCredentials(getUsername(), getPassword());
+            
+            FileOutputStream login = new FileOutputStream("loginCredentials");
+            ObjectOutputStream save = ObjectOutputStream(login);
+            save.writeObject(loginCreds);
+            save.close();
+            */
             return loginCredentials[0];
             
             }
@@ -349,26 +402,90 @@ public class DatabaseController extends Server {
     
     public void setUsername(String username) {
         
-        this.username = username;
+        try {
+
+	 FileWriter writer = new FileWriter("username.dat");        
+
+	            writer.write(username);     
+                        writer.close();
+	            
+
+	            } catch(IOException ex) {
+                        
+                        System.out.println("IOException!");
+                        
+                    }
+        
+       this.username = username;
         
     }
     
     public void setPassword(String password) {
         
-        this.password = password;
+       try {
+
+	 FileWriter writer = new FileWriter("password.dat");        
+
+	            writer.write(password);     
+                        writer.close();
+	            
+
+	            } catch(IOException ex) {
+                        
+                        System.out.println("IOException!");
+                        
+                    }
+        
+       this.password = password;
         
     }
     
     public String getUsername() {
         
-        return this.username;
+String username = null;
+try {
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("username.dat")));
+    
+    username = br.readLine();
+    br.close();
+
+} catch (IOException e) {
+    System.out.println("ERROR: unable to read file username.dat");
+    e.printStackTrace();   
+}
+
+
+
+System.out.println("Read username " + username);
+        
+        return username;
         
     }
     
     public String getPassword() {
         
-        return this.password;
         
-    }
+
+String password = null;
+try {
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("password.dat")));
+    
+    password = br.readLine();
+    br.close();
+
+} catch (IOException e) {
+    System.out.println("ERROR: unable to read file password.dat");
+    e.printStackTrace();   
+}
+
+
+
+System.out.println("Read password " + password);
+        
+        return password;
+    
+}
     
 }
