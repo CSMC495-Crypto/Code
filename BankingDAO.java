@@ -2,23 +2,12 @@ package client;
 
 import cryptography.DataProcessor;
 import data.DataObject;
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.sql.*;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.text.DefaultCaret;
+import java.util.Random;
 
 /**
  * Implements the DAOInterface and converts GUI data into SQL database commands
@@ -339,7 +328,7 @@ public class BankingDAO implements DAOInterface {
     /**
      * Request to create a new bank account
      * 
-     * @param data: accountNumber, accountType, accountBalance, dateCreated
+     * @param data: accountType, accountBalance, date
      * 
      * @return String including new account number and all entered information, "error" if error occurs
      */
@@ -349,23 +338,28 @@ public class BankingDAO implements DAOInterface {
         
         // validate arguments
         
-        if (!errorChecking(data, 4).isEmpty()) {
+        if (!errorChecking(data, 3).isEmpty()) {
             
-            return errorChecking(data, 4);
+            return errorChecking(data, 3);
             
         }
         
-        String accountNumber = data[0];
-        String accountType = data[1];
-        String accountBalance = data[2];
-        String dateCreated = data[3];
+        String accountType = data[0];
+        String accountBalance = data[1];
+        String date = data[2];
       
-        String command = ("getRows Accounts");
-        
+        String command = ("getRows Accounts");        
         String idNumber = client(command, false);
         
-        command = ("INSERT INTO Accounts VALUES('" + idNumber + "', '" + accountNumber + "', '" +
-                accountBalance + "', '" + dateCreated + "');");
+        command = ("SELECT accountNumber FROM Accounts ORDER BY IDNumber DESC LIMIT 1;");
+        String accountNumber = client(command, false);
+        
+        Random random = new Random();
+        
+        int newAccountNumber = Integer.parseInt(accountNumber) + random.nextInt(10);
+        
+        command = ("INSERT INTO Accounts VALUES('" + idNumber + "', '" + newAccountNumber + "', '" +
+                accountBalance + "', '" + date + "');");
         
         return client(command, true);
         
