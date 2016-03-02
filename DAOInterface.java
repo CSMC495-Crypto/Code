@@ -4,15 +4,11 @@ package client;
  * Interface that includes all functionality of the BankingDAO
  * 
  * @author Grant Sweeney
- */
-
-/*
- * date 2/22/2016
- * course CMSC495
- * project Cryptography Banking Application
- * updated by Jonathan Wojack on 2/24/2016
- * updated by Jonathan Wojack on 2/27/2016
- * updated by Grant Sweeney on 2/27/2016
+ * @date 2/22/2016
+ * @course CMSC495
+ * @project Cryptography Banking Application
+ * @updated by Jonathan Wojack on 2/24/2016
+ * @updated by Jonathan Wojack on 2/27/2016
  * 
  * Changes:
  * 
@@ -20,10 +16,14 @@ package client;
  * 
  */
 
+/**
+ * Interface
+ * 
+ */
+
 public interface DAOInterface {
     
     /**
-     * 
      * Sends log in information to be checked against database records
      * 
      * @param data: username, password
@@ -66,7 +66,7 @@ public interface DAOInterface {
     /**
      * Request to create a new user
      * 
-     * @param data: username, password, employeeStatus, firstName, lastName, address, city, state, zipCode, phoneNumber
+     * @param data: firstName, lastName, phoneNumber, address, city, state, zipCode, username, password, employeeStatus
      * 
      * @return "confirm" if created, "username taken" or "profile exists" if these errors occur
      */
