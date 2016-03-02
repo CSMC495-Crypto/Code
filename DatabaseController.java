@@ -171,6 +171,9 @@ public class DatabaseController extends Server {
                     
             DataObject cellsData = dataProcessor.encryptData(Integer.toString(cells));
             transmitData(cellsData);  
+            
+            DataObject columnsData = dataProcessor.encryptData(Integer.toString(columns));
+            transmitData(columnsData);  
         
             // execute client's query
                     

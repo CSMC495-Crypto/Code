@@ -62,7 +62,7 @@ public class BankingDAO implements DAOInterface {
 
             // get user input from text field and convert to data to send to server
           
-            int columns = 0;  // columns in selected SQL database table               
+              
           
             // encrypt data to be sent to server with custom XOR encryption algorithm       
         
@@ -79,30 +79,48 @@ public class BankingDAO implements DAOInterface {
             String dataReturned = "";
                 
             if (requestType) {  // if data is to be returned
-        
-                DataObject serverEncryptedObject = null;
-        
-                ObjectInputStream fromServerOIS = new ObjectInputStream(socket.getInputStream());
-              
-                serverEncryptedObject = (DataObject) fromServerOIS.readObject();
-              
+                
                 // get number of cells in selected SQL table
-                // decrypt and process data
+        
+                DataObject cellsObject = null;        
+                ObjectInputStream fromServerOISCells = new ObjectInputStream(socket.getInputStream());              
+                cellsObject = (DataObject) fromServerOISCells.readObject();
+                String cellsString = dataProcessor.decryptData(cellsObject).trim();
+                
+                // get number of columns in selected SQL table
                         
-                String cellsString = dataProcessor.decryptData(serverEncryptedObject).trim();
+                DataObject columnsObject = null;        
+                ObjectInputStream fromServerOISColumns = new ObjectInputStream(socket.getInputStream());              
+                columnsObject = (DataObject) fromServerOISColumns.readObject();
+                String columnsString = dataProcessor.decryptData(columnsObject).trim();
+                
+                System.out.println("cellsString: " + cellsString);
                         
                 int cells = Integer.parseInt(cellsString);
+                int columns = Integer.parseInt(columnsString);
+                
+                System.out.println("cells: " + cells);
+                
+                int rows = cells/columns;
                                       
                 // get table data from server, decrypt, and then process and display data
        
-                for (int i = 0; i < cells/columns; i++) {  // rows of data in table                 
+                for (int i = 0; i < rows; i++) {  // rows of data in table                 
                   
                     for (int j = 0; j < columns; j++) {
                       
                         DataObject serverEncryptedObjectLoop = null;                      
                         ObjectInputStream fromServerLoop = new ObjectInputStream(socket.getInputStream());
                         serverEncryptedObjectLoop = (DataObject) fromServerLoop.readObject();
-                        dataReturned.concat(dataProcessor.decryptData(serverEncryptedObjectLoop) + "\n");
+                        
+                        StringBuilder stringBuilder = new StringBuilder();
+                        
+                        dataReturned = stringBuilder.append(dataReturned).append(dataProcessor.decryptData(serverEncryptedObjectLoop) + "\n").toString();
+                        
+                        
+                        
+                        
+                        System.out.println("dataReturned: " + dataReturned);
                                 
                     }
                                               
