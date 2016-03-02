@@ -68,7 +68,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
         bannerLabel.setBackground(new java.awt.Color(0, 0, 153));
         bannerLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/UMUC logo.jpg"))); // NOI18N
+        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/UMUC.logo.jpg"))); // NOI18N
 
         userNameLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         userNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
