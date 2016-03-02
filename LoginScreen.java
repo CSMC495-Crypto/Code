@@ -123,24 +123,14 @@ public class LoginScreen extends javax.swing.JFrame {
         userNameTextField.setText("");
         passwordPasswordField.setText("");
         
-        JOptionPane jPane = new JOptionPane();
-        jPane.setMessage("Checking Credentials");
-        JDialog jDialog = jPane.createDialog(null, "Processing");
-        jDialog.setVisible(true);
+        SecondFrame credentialsFrame = new SecondFrame();
         
         //Check username and password
-        //default
-        //superSecretPassword
+        //If successful, take to appropriate screen (customer/employee)
+        //If failed, JOptionPane to notify
         String loginResults = dao.confirmLogIn(username, password);
         
-        System.out.println(loginResults);
-
-        if (loginResults.toString().contains("login")) { // Testing: This block will go away once the interface starts returning values
-            loginResults = "customer";
-        } else {
-            loginResults = "employee";
-        }
-        
+        credentialsFrame.dispose();
         
         if (loginResults.equalsIgnoreCase("customer")) {
             
@@ -149,11 +139,7 @@ public class LoginScreen extends javax.swing.JFrame {
             //populate form with information
             String info = dao.getCustomerScreenInfo(username, password);
             Scanner stdin = new Scanner(info);
-            
-            cs.setFirstName("My_Firstname"); // Testing
-            cs.setLastName("My_Lastname"); // Testing
-            
-            /*  This block will be enabled once the interface is returing values
+         
             cs.setFirstName(stdin.nextLine());
             cs.setLastName(stdin.nextLine());
             
@@ -165,15 +151,11 @@ public class LoginScreen extends javax.swing.JFrame {
                 i++;
                 
             } //end while
-            */
+
             cs.setVisible(true);
             this.dispose();
             
         } else if (loginResults.equalsIgnoreCase("employee")) {
-            JOptionPane jPaneResponse = new JOptionPane();
-            jPaneResponse.setMessage("Employee");
-            JDialog jDialogResponse = jPaneResponse.createDialog(null, "Login Response");
-            jDialogResponse.setVisible(true);       
             
             EmployeeStart es = new EmployeeStart();
             es.setVisible(true);
@@ -237,4 +219,17 @@ public class LoginScreen extends javax.swing.JFrame {
     private javax.swing.JLabel userNameLabel;
     private javax.swing.JTextField userNameTextField;
     // End of variables declaration//GEN-END:variables
+
+    private class SecondFrame extends JFrame {
+        
+        public SecondFrame() {
+            setSize(300, 200);
+            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            JLabel msgLabel = new JLabel ("Checking Credentials....", SwingConstants.CENTER);
+            add(msgLabel);
+            setLocationRelativeTo(null);
+            setVisible(true);
+        }
+        
+    } //end class
 }
