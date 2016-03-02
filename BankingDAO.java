@@ -278,7 +278,7 @@ public class BankingDAO implements DAOInterface {
     /**
      * Request to create a new user
      * 
-     * @param data: firstName, lastName, phoneNumber, address, city, state, zipCode, username, password, personType
+     * @param data: firstName, lastName, phoneNumber, address, city, state, zipCode, username, password, employeeStatus
      * 
      * @return "confirm" if created, "username taken" or "profile exists" if these errors occur
      */
@@ -311,15 +311,32 @@ public class BankingDAO implements DAOInterface {
         String zipCode = data[6];
         String username = data[7];
         String password = data[8];
-        String personType = data[9];
+        String employeeStatus = data[9];
         
-        String command = ("getRows personData");
+        String command = "getRows personData";
         
         String idNumber = client(command, false);
         
+        command = "CREATE USER '" + username + "' IDENTIFIED BY '" + password + "';";
+        client(command, false);
+        
+        if (employeeStatus.startsWith("employee")) {
+        
+            command = "GRANT ALL PRIVILEGES ON *.* TO '" + username + "' IDENTIFIED BY '" + password + "';";
+            client(command, false);
+        
+        }
+        
+        else {
+            
+            command = "GRANT SELECT, UPDATE ON *.* TO '" + username + "' IDENTIFIED BY '" + password + "';";
+            client(command, false);
+        
+        }
+        
         command = ("INSERT INTO personData VALUES('" + firstName + "', '" + lastName + "', '" + phoneNumber + 
                 "', '" + address + "', '" + city + "', '" + state + "', '" + zipCode + "', '" + username + 
-                "', '" + password + "', '" + idNumber + "', '" + personType + "');");
+                "', '" + password + "', '" + idNumber + "', '" + employeeStatus + "');");
         
         return client(command, true);
         
