@@ -305,12 +305,9 @@ public class CreateUserProfile extends javax.swing.JFrame {
             userType = "employee";
         }
         
-        //Transmitt User Profile.        
-        String[] createProfile = { userFirstName, userLastName, userPhoneNumber, userAddress, userCity, userState, 
-            userZip, userName, userPassword, userType };
-        
-        //BankingDAO bankingDAO = new BankingDAO();
-        String checkProfile = bankingDAO.createUserProfile(createProfile);
+        String checkProfile = bankingDAO.createUserProfile(userFirstName, userLastName, 
+                                    userPhoneNumber, userAddress, userCity, userState, 
+                                    userZip, userName, userPassword, userType);
         
         if (checkProfile.equalsIgnoreCase("confirm"))
         {
@@ -321,7 +318,7 @@ public class CreateUserProfile extends javax.swing.JFrame {
         else
         {
             JOptionPane.showMessageDialog((Component) null, 
-                    "Your profile was NOT created.",
+                    "Attempt failed.  There was a problem creating the profile.",
     	       "alert", JOptionPane.OK_OPTION);
         }
         

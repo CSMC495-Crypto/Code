@@ -415,13 +415,16 @@ public class EmployeeStart extends javax.swing.JFrame {
     	
          String accountNumber = accountSearchTextField.getText();
          String accountInfo = "";
-        		 accountInfo = dao.getCustomerAccount(accountNumber);
+                accountInfo = dao.getCustomerAccount(accountNumber);
          	if (!accountInfo.equals("")) {
          		//show AccountInfo
          		 AccountInfo ai = new AccountInfo();
           		//parse accountInfo and populate Account balance Account Type Account Number
                         Scanner stdin = new Scanner(accountInfo);
-                        ai.setTopAccountInfo(stdin.next(), stdin.next(), stdin.next());
+                        String balance = stdin.next();
+                        String type = stdin.next();
+                        String number = stdin.next();
+                        ai.setTopAccountInfo(balance, type, number);
                         
                         ai.setVisible(true);
          	}
@@ -514,7 +517,7 @@ public class EmployeeStart extends javax.swing.JFrame {
         
     }//GEN-LAST:event_nameSearchButtonActionPerformed
 
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton accountSearchButton;
     private javax.swing.JLabel accountSearchLabel;

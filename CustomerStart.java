@@ -330,14 +330,12 @@ public class CustomerStart extends javax.swing.JFrame {
     }//GEN-LAST:event_accountDetailsTableMousePressed
 
     private void transferButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferButtonActionPerformed
-        String acctNumberfrom = accountNumberFromTextField.getText();
-
+        String acctNumberFrom = accountNumberFromTextField.getText();
         String acctNumberTo = accountNumberToTextField.getText();
         String amount = amountTextField.getText();
         
         //Transmit account information
-        String[] transferAccount = { acctNumberfrom, amount, acctNumberTo };
-        String newBalance = bankingDAO.transferMoney(transferAccount);
+        String newBalance = bankingDAO.transferMoney(acctNumberFrom, amount, acctNumberTo );
         
         if (!newBalance.equals("error"))
         {
@@ -353,13 +351,12 @@ public class CustomerStart extends javax.swing.JFrame {
     }//GEN-LAST:event_transferButtonActionPerformed
 
     private void payMortgageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payMortgageButtonActionPerformed
-        String acctNumberfrom = accountNumberFromTextField.getText();
-        String acctNumberTo = accountNumberToTextField.getText();
+        String acctNumberFrom = accountNumberFromTextField.getText();
+        String mortgageAccount = accountNumberToTextField.getText();
         String amount = amountTextField.getText();
         
         //Trans mit account information
-        String[] transferAccount = { acctNumberfrom, amount, acctNumberTo };
-        String newBalance = bankingDAO.payMortgage(transferAccount);
+        String newBalance = bankingDAO.payMortgage(acctNumberFrom, amount, mortgageAccount);
         
         if (!newBalance.equals("error"))
         {

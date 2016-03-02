@@ -414,12 +414,11 @@ public class AccountInfo extends javax.swing.JFrame {
 
     private void payMortgageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payMortgageButtonActionPerformed
         String acctNumberfrom = accountNumberTextField1.getText();
-        String acctNumberTo = accountTextField.getText();
+        String mortgageAccount = accountTextField.getText();
         String amount = amountTextField2.getText();
         
         //Transmit account information
-        String[] transferAccount = { acctNumberfrom, amount, acctNumberTo };
-        String newBalance = bankingDAO.payMortgage(transferAccount);
+        String newBalance = bankingDAO.payMortgage(acctNumberfrom, amount, mortgageAccount);
         
         Scanner stdin = new Scanner(newBalance);
         String newMortgageBalance = stdin.next();

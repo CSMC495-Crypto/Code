@@ -176,18 +176,14 @@ public class CreateBankAccount extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        // code for submitting form goes here
-        String acctNumber;
         String startBalance = startingBalanceTextField.toString();
         String acctType = accountTypeComboBox.toString();
         String dateSubmitted = dateTextField.toString();
         
-        String[] newAcctInfomation = { acctType, startBalance, dateSubmitted };
-        
         //Submit User Info to BankingDOA
-        acctNumber = bankingDAO.createNewAccount(newAcctInfomation);
+        String acctInfo = bankingDAO.createNewAccount(acctType, startBalance, dateSubmitted);
         
-        if (!acctNumber.equals("error"))
+        if (!acctInfo.equals("error"))
         {
             JOptionPane.showMessageDialog((Component) null, 
                         "Your account has been created.",
@@ -196,7 +192,7 @@ public class CreateBankAccount extends javax.swing.JFrame {
         else
         {
             JOptionPane.showMessageDialog((Component) null, 
-                        "Your account has been NOT created.",
+                        "Attempt failed.  There was a problem creating the account.",
                    "Account Not Added", JOptionPane.OK_OPTION);
         }
         

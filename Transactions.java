@@ -135,6 +135,7 @@ public class Transactions extends javax.swing.JFrame {
         transactionsTable.getModel().setValueAt(info, row, col);
     }
     
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backToAccountButton;
     private javax.swing.JLabel bannerLabel;
