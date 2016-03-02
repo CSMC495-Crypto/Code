@@ -74,7 +74,7 @@ public class DatabaseController extends Server {
         
             setEncryptedObject(encryptedObject);
             String query = retrieveData();     
-            System.out.println(query);
+      //      System.out.println(query);
             
             
         
@@ -85,8 +85,8 @@ public class DatabaseController extends Server {
             Connection conn = DriverManager.getConnection(connUrl, username, password);
             Statement st = conn.createStatement();
             
-            System.out.println("Username: " + username);
-            System.out.println("Password: " + password);
+       //     System.out.println("Username: " + username);
+         //   System.out.println("Password: " + password);
                     
             jta.append("rows of data in database table to be selected\n");
                     
@@ -107,18 +107,28 @@ public class DatabaseController extends Server {
             username = getUsername();
             password = getPassword();
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(connUrl, username, password);
-            st = conn.createStatement();
+            Connection loginConn = DriverManager.getConnection(connUrl, username, password);
+            Statement loginSt = loginConn.createStatement();
             
-            System.out.println(".....");
+         //   System.out.println(".....");
             
           //  ResultSet rs = st.executeQuery("SELECT * FROM personData");
             
-            DataObject encryptedToClient = prepareData("Successful login");
+            ResultSet loginRs = loginSt.executeQuery("SELECT employeeStatus FROM personData WHERE Username='" + 
+                    username + "';");
+            
+
+            
+       //     System.out.println("ResultSet...");
+            
+            loginRs.next();
+            System.out.println(loginRs.getString(1));
+            
+            DataObject encryptedToClient = prepareData(loginRs.getString(1));
             transmitData(encryptedToClient);
             
             
-            System.out.println(".....");
+        //    System.out.println(".....");
             
                          
                //         DataObject encryptedToClient = prepareData("Error: Incorrect username or password");

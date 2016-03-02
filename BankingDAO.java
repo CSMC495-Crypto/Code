@@ -83,12 +83,12 @@ public class BankingDAO implements DAOInterface {
                 columnsObject = (DataObject) fromServerOISColumns.readObject();
                 String columnsString = dataProcessor.decryptData(columnsObject).trim();
                 
-                System.out.println("cellsString: " + cellsString);
+           //     System.out.println("cellsString: " + cellsString);
                         
                 int cells = Integer.parseInt(cellsString);
                 int columns = Integer.parseInt(columnsString);
                 
-                System.out.println("cells: " + cells);
+             //   System.out.println("cells: " + cells);
                 
                 int rows = cells/columns;
                                       
@@ -109,7 +109,7 @@ public class BankingDAO implements DAOInterface {
                         
                         
                         
-                        System.out.println("dataReturned: " + dataReturned);
+                //        System.out.println("dataReturned: " + dataReturned);
                                 
                     }
                                               
@@ -135,13 +135,13 @@ public class BankingDAO implements DAOInterface {
               
                 // decrypt and report server response
                 
-                System.out.println("sggsg");
+          //      System.out.println("sggsg");
                 
                 DataProcessor dataProcessorFalse = new DataProcessor();
                        
-                System.out.println(dataProcessorFalse.decryptData(serverEncryptedObject));
+          //      System.out.println("RETURNING: " + dataProcessorFalse.decryptData(serverEncryptedObject));
                 
-                return dataProcessor.decryptData(serverEncryptedObject);    // return update status       
+                return dataProcessorFalse.decryptData(serverEncryptedObject);    // return update status       
                         
             }
             
