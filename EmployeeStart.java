@@ -484,7 +484,7 @@ public class EmployeeStart extends javax.swing.JFrame {
         String customerInfo = "";
         customerInfo = dao.getCustomerInformation(firstNameSearchTextField.getText(), nameSearchTextField.getText());
         Scanner stdin = new Scanner(customerInfo);
-        if (!customerInfo.equals("")) {
+        if (!customerInfo.equalsIgnoreCase("")) {
         	
             //parse customerInfo populate form below with customers info
         	firstNameTextField.setText(stdin.next());

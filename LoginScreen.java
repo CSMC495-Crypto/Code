@@ -1,7 +1,6 @@
 package gui;
 
 import client.BankingDAO;
-import java.awt.Dimension;
 import java.util.Scanner;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -123,14 +122,11 @@ public class LoginScreen extends javax.swing.JFrame {
         userNameTextField.setText("");
         passwordPasswordField.setText("");
         
-        SecondFrame credentialsFrame = new SecondFrame();
-        
         //Check username and password
         //If successful, take to appropriate screen (customer/employee)
         //If failed, JOptionPane to notify
         String loginResults = dao.confirmLogIn(username, password);
-        
-        credentialsFrame.dispose();
+        System.out.println(loginResults);
         
         if (loginResults.equalsIgnoreCase("customer")) {
             
@@ -225,10 +221,9 @@ public class LoginScreen extends javax.swing.JFrame {
         public SecondFrame() {
             setSize(300, 200);
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-            JLabel msgLabel = new JLabel ("Checking Credentials....", SwingConstants.CENTER);
-            add(msgLabel);
+            add(new JLabel ("Checking Credentials....", SwingConstants.CENTER));
             setLocationRelativeTo(null);
-            setVisible(true);
+            //setVisible(true);
         }
         
     } //end class
