@@ -295,8 +295,21 @@ public class BankingDAO implements DAOInterface {
         String firstName = data[0];
         String lastName = data[1];
         
-        String command = ("SELECT * FROM personData WHERE firstName='" + firstName + "' AND lastName='" + lastName + "';");
+        String command = ("SELECT COUNT(*) FROM personData WHERE firstName='" + firstName + "' AND lastName='" + lastName + "';");
+        String count = client(command, true).trim();
         
+                
+        if (Integer.parseInt(count) == 0) {
+            
+            return "Error: No such customer";
+            
+        }
+        
+        command = "SELECT personData.firstName, personData.lastName, personData.phoneNumber, "
+                + "personData.Address, personData.City, personData.State, personData.zipCode, accountNumber, "
+                + "accountType, accountBalance FROM (SELECT * FROM personData INNER JOIN Accounts ON "
+                + "personData.IDNumber = Accounts.ID)personData WHERE personData.firstName='" + firstName + 
+                "' AND personData.lastName='" + lastName + "';";
         return client(command, true);
         
     }
