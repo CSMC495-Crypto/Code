@@ -80,7 +80,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/gui/UMUC logo.jpg"/>
+          <Image iconType="3" name="/gui/UMUC.logo.jpg"/>
         </Property>
       </Properties>
     </Component>
