@@ -222,8 +222,13 @@ public class BankingDAO implements DAOInterface {
             
         }
         
-        command = ("SELECT * FROM personData WHERE Username='" + username + "' AND Password='" + password + "';");
+        command = "SELECT personData.firstName, personData.lastName, accountNumber, accountType, "
+                + "accountBalance FROM (SELECT * FROM personData INNER JOIN Accounts ON "
+                + "personData.IDNumber = Accounts.ID)personData WHERE personData.Username='" + username +
+                "' AND Password='" + password + "';";
         return client(command, true);
+        
+        // first name, last name, account number, account type, and account balance
    
        
     }
