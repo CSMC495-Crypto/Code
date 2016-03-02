@@ -210,10 +210,22 @@ public class BankingDAO implements DAOInterface {
         String username = data[0];
         String password = data[1];
         
-        String command = ("SELECT * FROM personData WHERE username='" + username + "' AND password='" + password + "';");
+        String command = "SELECT COUNT(*) FROM personData WHERE Username='" + username + "' AND Password='" +
+                password + "';";
+        String count = client(command, true).trim();
         
+       
+        
+        if (Integer.parseInt(count) == 0) {
+            
+            return "Error: Invalid username or password";
+            
+        }
+        
+        command = ("SELECT * FROM personData WHERE Username='" + username + "' AND Password='" + password + "';");
         return client(command, true);
-        
+   
+       
     }
         
     /**
@@ -313,9 +325,30 @@ public class BankingDAO implements DAOInterface {
         String password = data[8];
         String employeeStatus = data[9];
         
-        String command = "getRows personData";
+        String command = "SELECT COUNT(*) FROM personData WHERE firstName='" + firstName + "' AND lastName='" +
+                lastName + "' AND phoneNumber='" + phoneNumber + "' AND Address='" + address + "' AND City='" +
+                city + "' AND State='" + state + "' AND zipCode='" + zipCode + "' AND employeeStatus='" +
+                employeeStatus + "';";
+        String duplicate = client(command, true).trim();
         
-        String idNumber = client(command, false);
+        if (Integer.parseInt(duplicate) > 0) {
+            
+            return "Error: Profile already exists";
+        
+        }
+        
+        command = "SELECT COUNT(*) FROM personData WHERE Username='" + username + "';";
+        duplicate = client(command, true).trim();
+        
+        if (Integer.parseInt(duplicate) > 0) {
+            
+            return "Error: Username already exists";
+        
+        }
+        
+        command = "SELECT COUNT(*) FROM personData";        
+        String iD = client(command, false);
+        int idNumber = Integer.parseInt(iD) + 1;
         
         command = "CREATE USER '" + username + "' IDENTIFIED BY '" + password + "';";
         client(command, false);
@@ -334,11 +367,25 @@ public class BankingDAO implements DAOInterface {
         
         }
         
-        command = ("INSERT INTO personData VALUES('" + firstName + "', '" + lastName + "', '" + phoneNumber + 
+        command = "INSERT INTO personData VALUES('" + firstName + "', '" + lastName + "', '" + phoneNumber + 
                 "', '" + address + "', '" + city + "', '" + state + "', '" + zipCode + "', '" + username + 
-                "', '" + password + "', '" + idNumber + "', '" + employeeStatus + "');");
+                "', '" + password + "', '" + idNumber + "', '" + employeeStatus + "');";
+        client(command, false);
         
-        return client(command, true);
+        command = "SELECT COUNT(*) FROM personData WHERE firstName='" + firstName + "' AND lastName='" +
+                lastName + "' AND phoneNumber='" + phoneNumber + "' AND Address='" + address + "' AND City='" +
+                city + "' AND State='" + state + "' AND zipCode='" + zipCode + "' AND Username='" + username +
+                "' AND Password='" + password + "' AND IDNumber='" + idNumber + "' AND employeeStatus='" +
+                employeeStatus + "';";
+        String confirm = client(command, false);
+        
+        if (Integer.parseInt(confirm) == 1) {
+            
+            return "Confirmed";
+            
+        }
+        
+        return "Error: User profile creation failed";
         
     }
     

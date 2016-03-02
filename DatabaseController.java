@@ -138,19 +138,7 @@ public class DatabaseController extends Server {
                         
             
             
-            else if (query.startsWith("getRows")) {
-                
-                String[] getRows = query.split(" ");
-                
-                ResultSet rs = st.executeQuery("SELECT * FROM " + getRows[1]);
-                rs = st.executeQuery("SELECT COUNT(*) FROM " + getRows[1]);
-                rs.next();
-                int rowCount = rs.getInt(1);
-                rowCount++;
-                DataObject encryptedToClient = prepareData(Integer.toString(rowCount));
-                transmitData(encryptedToClient);
-                
-            }
+            
             
             else if (query.startsWith("SELECT")) {
             
