@@ -227,8 +227,7 @@ public class BankingDAO implements DAOInterface {
                 + "personData.IDNumber = Accounts.ID)personData WHERE personData.Username='" + username +
                 "' AND Password='" + password + "';";
         return client(command, true);
-        
-        // first name, last name, account number, account type, and account balance
+ 
    
        
     }
@@ -256,10 +255,20 @@ public class BankingDAO implements DAOInterface {
         
         String accountNumber = data[0];
         
-        String command = ("SELECT * FROM accounts WHERE accountNumber='" + accountNumber + "';");
+        String command = "SELECT COUNT(*) FROM Accounts WHERE accountNumber='" + accountNumber + "';";
+        String count = client(command, true).trim();
         
+       
+        
+        if (Integer.parseInt(count) == 0) {
+            
+            return "Error: Account does not exist";
+            
+        }
+        
+        command = "SELECT accountNumber, accountType, accountBalance FROM Accounts WHERE accountNumber='" + 
+                accountNumber + "';";
         return client(command, true);
-        
     }
     
     /**
