@@ -307,7 +307,7 @@ public class BankingDAO implements DAOInterface {
         
         command = "SELECT personData.firstName, personData.lastName, personData.phoneNumber, "
                 + "personData.Address, personData.City, personData.State, personData.zipCode, accountNumber, "
-                + "accountType, accountBalance FROM (SELECT * FROM personData INNER JOIN Accounts ON "
+                + "accountType, accountBalance, dateCreated FROM (SELECT * FROM personData INNER JOIN Accounts ON "
                 + "personData.IDNumber = Accounts.ID)personData WHERE personData.firstName='" + firstName + 
                 "' AND personData.lastName='" + lastName + "';";
         return client(command, true);
@@ -374,7 +374,7 @@ public class BankingDAO implements DAOInterface {
         }
         
         command = "SELECT COUNT(*) FROM personData";        
-        String iD = client(command, false);
+        String iD = client(command, true);
         int idNumber = Integer.parseInt(iD) + 1;
         
         command = "CREATE USER '" + username + "' IDENTIFIED BY '" + password + "';";
@@ -404,7 +404,7 @@ public class BankingDAO implements DAOInterface {
                 city + "' AND State='" + state + "' AND zipCode='" + zipCode + "' AND Username='" + username +
                 "' AND Password='" + password + "' AND IDNumber='" + idNumber + "' AND employeeStatus='" +
                 employeeStatus + "';";
-        String confirm = client(command, false);
+        String confirm = client(command, true);
         
         if (Integer.parseInt(confirm) == 1) {
             
@@ -419,7 +419,7 @@ public class BankingDAO implements DAOInterface {
     /**
      * Request to create a new bank account
      * 
-     * @param data: accountType, accountBalance, date
+     * @param data: accountType, accountBalance, date, idNumber
      * 
      * @return String including new account number and all entered information, "error" if error occurs
      */
@@ -429,7 +429,7 @@ public class BankingDAO implements DAOInterface {
         
         // validate arguments
         
-        if (!errorChecking(data, 3).isEmpty()) {
+        if (!errorChecking(data, 4).isEmpty()) {
             
             return errorChecking(data, 3);
             

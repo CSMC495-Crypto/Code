@@ -76,7 +76,7 @@ public interface DAOInterface {
     /**
      * Request to create a new bank account
      * 
-     * @param data: accountType, accountBalance, date
+     * @param data: accountType, accountBalance, date, firstName, lastName
      * 
      * @return String including new account number and all entered information, "error" if error occurs
      */
