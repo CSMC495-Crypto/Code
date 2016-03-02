@@ -22,11 +22,13 @@ import javax.swing.JOptionPane;
 public class CreateBankAccount extends javax.swing.JFrame {
 
     private static final BankingDAO bankingDAO = new BankingDAO();
+    private EmployeeStart es;
 
      /**
      * Creates new form CreateBankAccount
      */
-    public CreateBankAccount() {
+    public CreateBankAccount(EmployeeStart es) {
+        this.es = es;
         initComponents();
     }
 
@@ -176,12 +178,15 @@ public class CreateBankAccount extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        String startBalance = startingBalanceTextField.toString();
-        String acctType = accountTypeComboBox.toString();
-        String dateSubmitted = dateTextField.toString();
+        String startBalance = startingBalanceTextField.getText();
+        String acctType = accountTypeComboBox.getSelectedItem().toString();
+        String dateSubmitted = dateTextField.getText();
+        String firstName = es.getFirstName();
+        String lastName = es.getLastName();
         
         //Submit User Info to BankingDOA
-        String acctInfo = bankingDAO.createNewAccount(acctType, startBalance, dateSubmitted);
+        String acctInfo = bankingDAO.createNewAccount(acctType, startBalance, dateSubmitted,
+                                    firstName, lastName);
         
         if (!acctInfo.equals("error"))
         {

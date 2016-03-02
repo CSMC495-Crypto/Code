@@ -126,7 +126,6 @@ public class LoginScreen extends javax.swing.JFrame {
         //If successful, take to appropriate screen (customer/employee)
         //If failed, JOptionPane to notify
         String loginResults = dao.confirmLogIn(username, password);
-        System.out.println(loginResults);
         
         if (loginResults.equalsIgnoreCase("customer")) {
             

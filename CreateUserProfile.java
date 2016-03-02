@@ -290,15 +290,15 @@ public class CreateUserProfile extends javax.swing.JFrame {
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // code for submitting form goes here
         String userType = "customer";
-        String userName = addressTextField.toString();
-        String userPassword = confirmPasswordTextField.toString();
-        String userFirstName = firstNameTextField.toString();
-        String userLastName = lastNameTextField.toString();
-        String userAddress = addressTextField.toString();
-        String userCity = cityTextField.toString();
-        String userState = stateTextField.toString();
-        String userZip = zipCodeTextField.toString();
-        String userPhoneNumber = phoneNumberTextField.toString();
+        String userName = addressTextField.getText();
+        String userPassword = confirmPasswordTextField.getText();
+        String userFirstName = firstNameTextField.getText();
+        String userLastName = lastNameTextField.getText();
+        String userAddress = addressTextField.getText();
+        String userCity = cityTextField.getText();
+        String userState = stateTextField.getText();
+        String userZip = zipCodeTextField.getText();
+        String userPhoneNumber = phoneNumberTextField.getText();
         
         if (employeeCheckBox.isSelected())
         {

@@ -452,7 +452,7 @@ public class EmployeeStart extends javax.swing.JFrame {
     }
     
     private void addAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAccountButtonActionPerformed
-        new CreateBankAccount().setVisible(true);
+        new CreateBankAccount(this).setVisible(true);
     }//GEN-LAST:event_addAccountButtonActionPerformed
 
     private void accountsTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountsTableMousePressed
@@ -487,13 +487,13 @@ public class EmployeeStart extends javax.swing.JFrame {
         if (!customerInfo.equalsIgnoreCase("")) {
         	
             //parse customerInfo populate form below with customers info
-        	firstNameTextField.setText(stdin.next());
-        	lastNameTextField.setText(stdin.next());
-                phoneNumberTextField.setText(stdin.next());
-        	addressTextField.setText(stdin.next());
-        	cityTextField.setText(stdin.next());
-        	stateTextField.setText(stdin.next());
-        	zipCodeTextField.setText(stdin.next());
+        	firstNameTextField.setText(stdin.nextLine());
+        	lastNameTextField.setText(stdin.nextLine());
+                phoneNumberTextField.setText(stdin.nextLine());
+        	addressTextField.setText(stdin.nextLine());
+        	cityTextField.setText(stdin.nextLine());
+        	stateTextField.setText(stdin.nextLine());
+        	zipCodeTextField.setText(stdin.nextLine());
                 
                 int i = 0;
         	//accountsTable
@@ -517,6 +517,13 @@ public class EmployeeStart extends javax.swing.JFrame {
         
     }//GEN-LAST:event_nameSearchButtonActionPerformed
 
+    public String getFirstName() {
+        return firstNameTextField.getText();
+    }
+    
+    public String getLastName() {
+        return lastNameTextField.getText();
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton accountSearchButton;
