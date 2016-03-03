@@ -340,7 +340,7 @@ public class CustomerStart extends javax.swing.JFrame {
         if (!newBalance.equals("error"))
         {
             JOptionPane.showMessageDialog((Component) null, 
-                    "Your new balane is: " + newBalance,
+                    "Your new balance is: " + newBalance,
     	       "Account Balance", JOptionPane.OK_OPTION);
         }
         else {
@@ -364,7 +364,7 @@ public class CustomerStart extends javax.swing.JFrame {
             String newMortgageBalance = stdin.next();
             String newAccountBalance = stdin.next();
             JOptionPane.showMessageDialog((Component) null, 
-                    "Your new mortage balane is: " + newMortgageBalance
+                    "Your new mortage balance is: " + newMortgageBalance
                     + "\n Your new account balance is: " + newAccountBalance,
     	       "Mortage", JOptionPane.OK_OPTION);
         }

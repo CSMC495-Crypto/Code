@@ -458,26 +458,29 @@ public class EmployeeStart extends javax.swing.JFrame {
     private void accountsTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountsTableMousePressed
         int col = accountsTable.columnAtPoint(evt.getPoint());
         int row = accountsTable.rowAtPoint(evt.getPoint());
-        if(col == 0) {
-            String accountNumber = accountsTable.getModel().getValueAt(row, 0).toString();
-            String accountInfo = "";
-        		 accountInfo = dao.getCustomerAccount(accountNumber);
-         	if (!accountInfo.equals("")) {
-         		//show AccountInfo
-         		 AccountInfo ai = new AccountInfo();
+        try {
+            if(col == 0) {
+                String accountNumber = accountsTable.getModel().getValueAt(row, 0).toString();
+                String accountInfo = "";
+            	accountInfo = dao.getCustomerAccount(accountNumber);
+                    if (!accountInfo.equals("")) {
+                        //show AccountInfo
+                         AccountInfo ai = new AccountInfo();
           		//parse accountInfo and populate Account balance Account Type Account Number
                         Scanner stdin = new Scanner(accountInfo);
                         ai.setTopAccountInfo(stdin.next(), stdin.next(), stdin.next());
                         
                         ai.setVisible(true);
-         	}
+            }
             else {
               //pop-up window "Account not found"
             	
               JOptionPane.showMessageDialog((Component) null, "Account not found.",
     	       "alert", JOptionPane.OK_OPTION);
     	       }
-        }
+            } //end if
+        } //end try
+        catch (NullPointerException npe) {}
     }//GEN-LAST:event_accountsTableMousePressed
 
     private void nameSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameSearchButtonActionPerformed
