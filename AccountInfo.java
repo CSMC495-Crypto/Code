@@ -46,9 +46,9 @@ public class AccountInfo extends javax.swing.JFrame {
         accountBalanceTextField1 = new javax.swing.JTextField();
         accountTypeLabel1 = new javax.swing.JLabel();
         accountTypeTextField = new javax.swing.JTextField();
-        accountNumberLabel1 = new javax.swing.JLabel();
         accountNumberTextField1 = new javax.swing.JTextField();
         transactionButton = new javax.swing.JButton();
+        accountNumberLabel1 = new javax.swing.JLabel();
         depositWithdrawalPanel = new javax.swing.JPanel();
         amountTextField1 = new javax.swing.JTextField();
         depositButton = new javax.swing.JButton();
@@ -83,10 +83,6 @@ public class AccountInfo extends javax.swing.JFrame {
 
         accountTypeTextField.setEditable(false);
 
-        accountNumberLabel1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        accountNumberLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        accountNumberLabel1.setText("Account Number");
-
         accountNumberTextField1.setEditable(false);
 
         transactionButton.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
@@ -97,23 +93,29 @@ public class AccountInfo extends javax.swing.JFrame {
             }
         });
 
+        accountNumberLabel1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        accountNumberLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        accountNumberLabel1.setText("Account Number");
+
         javax.swing.GroupLayout accountDetailsPanelLayout = new javax.swing.GroupLayout(accountDetailsPanel);
         accountDetailsPanel.setLayout(accountDetailsPanelLayout);
         accountDetailsPanelLayout.setHorizontalGroup(
             accountDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(accountDetailsPanelLayout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
-                .addGroup(accountDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(accountBalanceLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(accountBalanceTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(accountDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(accountDetailsPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(accountBalanceTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(accountNumberLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(50, 50, 50)
                 .addGroup(accountDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(accountTypeLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(accountTypeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
-                .addGroup(accountDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(accountNumberLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(accountNumberTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(accountDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(accountNumberTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(accountBalanceLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21))
             .addGroup(accountDetailsPanelLayout.createSequentialGroup()
                 .addGap(146, 146, 146)
@@ -263,7 +265,7 @@ public class AccountInfo extends javax.swing.JFrame {
         );
 
         backToCustomerButton.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        backToCustomerButton.setText("Back to Customer");
+        backToCustomerButton.setText("Go Back");
         backToCustomerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backToCustomerButtonActionPerformed(evt);
@@ -283,7 +285,7 @@ public class AccountInfo extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(273, 273, 273)
+                .addGap(271, 271, 271)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(depositWithdrawalPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(transferPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -291,7 +293,7 @@ public class AccountInfo extends javax.swing.JFrame {
                     .addComponent(deleteAccountButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(48, 48, 48)
                 .addComponent(backToCustomerButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(149, Short.MAX_VALUE))
             .addComponent(bannerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
