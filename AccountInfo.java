@@ -348,11 +348,12 @@ public class AccountInfo extends javax.swing.JFrame {
         //Process deposit
         String newBalance = bankingDAO.depositMoney(accountNumber, depositAmount);
         
-        if (!newBalance.equals("error"))
+        if (!newBalance.contains("Error"))
         {
             JOptionPane.showMessageDialog((Component) null, 
-                    "Your new balane is: " + newBalance,
+                    "Your new balance is: " + newBalance,
     	       "Account Balance", JOptionPane.OK_OPTION);
+            accountBalanceTextField1.setText(newBalance);
         }
         else {
             JOptionPane.showMessageDialog((Component) null, 
@@ -360,7 +361,6 @@ public class AccountInfo extends javax.swing.JFrame {
     	       "Error", JOptionPane.ERROR_MESSAGE);
         }
         
-        amountTextField1.setText(newBalance);
     }//GEN-LAST:event_depositButtonActionPerformed
 
     private void withdrawalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_withdrawalButtonActionPerformed
@@ -370,19 +370,18 @@ public class AccountInfo extends javax.swing.JFrame {
             //Process withdrawal
             String newBalance = bankingDAO.withdrawMoney(accountNumber, withdrawalAmount);
         
-        if (!newBalance.equals("error"))
+        if (!newBalance.contains("Error"))
         {
             JOptionPane.showMessageDialog((Component) null, 
                     "Your new balane is: " + newBalance,
     	       "Account Balance", JOptionPane.OK_OPTION);
+            accountBalanceTextField1.setText(newBalance);
         }
         else {
             JOptionPane.showMessageDialog((Component) null, 
                     "An error has occured",
     	       "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
-        amountTextField1.setText(newBalance);
         
     }//GEN-LAST:event_withdrawalButtonActionPerformed
 
@@ -396,11 +395,12 @@ public class AccountInfo extends javax.swing.JFrame {
         String accountNewBalance = stdin.next();
         
         //Process transfer
-        if (!accountNewBalance.equals("error"))
+        if (!accountNewBalance.contains("Error"))
         {
             JOptionPane.showMessageDialog((Component) null, 
-                    "Your new balane is: " + accountNewBalance,
+                    "Your new balance is: " + accountNewBalance,
     	       "Account Balance", JOptionPane.OK_OPTION);
+            accountBalanceTextField1.setText(accountNewBalance);
         }
         else {
             JOptionPane.showMessageDialog((Component) null, 
@@ -408,8 +408,6 @@ public class AccountInfo extends javax.swing.JFrame {
     	       "Error", JOptionPane.ERROR_MESSAGE);
         }
         
-        //Set new blanace
-        accountTextField.setText(accountNewBalance);
     }//GEN-LAST:event_transferButtonActionPerformed
 
     private void payMortgageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payMortgageButtonActionPerformed
@@ -424,21 +422,20 @@ public class AccountInfo extends javax.swing.JFrame {
         String newMortgageBalance = stdin.next();
         String newAccountBalance = stdin.next();
         
-        if (!newBalance.equals("error"))
+        if (!newBalance.contains("Error"))
         {
             JOptionPane.showMessageDialog((Component) null, 
-                    "Your new mortage balane is: " + newMortgageBalance
+                    "Your new mortage balance is: " + newMortgageBalance
                     + "\n Your new account balance is: " + newAccountBalance,
     	       "Mortage", JOptionPane.OK_OPTION);
+            accountBalanceTextField1.setText(newBalance);
         }
         else {
             JOptionPane.showMessageDialog((Component) null, 
                     "An error has occured" + newBalance,
     	       "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
-        //Set new blanace
-        accountTextField.setText(newAccountBalance);
+
     }//GEN-LAST:event_payMortgageButtonActionPerformed
 
     private void deleteAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAccountButtonActionPerformed
