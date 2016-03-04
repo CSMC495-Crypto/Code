@@ -1,5 +1,5 @@
- 
 package client;
+
 import cryptography.DataProcessor;
 import data.DataObject;
 import java.io.DataInputStream;
@@ -7,7 +7,9 @@ import java.io.DataOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.text.DecimalFormat;
 import java.util.Random;
+
 /**
  * Implements the DAOInterface and converts GUI data into SQL database commands
  * and transceives data with the server
@@ -18,12 +20,14 @@ import java.util.Random;
  * @project Cryptography Banking Application
  * 
  */
+
 public class BankingDAO implements DAOInterface {
     
     String username = "";
     String password = "";
     
     public String client(String plainText, Boolean requestType) {
+
         // declare I/O streams
   
         DataOutputStream toServer;
@@ -45,6 +49,7 @@ public class BankingDAO implements DAOInterface {
             toServer = new DataOutputStream(socket.getOutputStream()); 
                 
             DataProcessor dataProcessor = new DataProcessor();
+
             // get user input from text field and convert to data to send to server
           
               
@@ -58,6 +63,7 @@ public class BankingDAO implements DAOInterface {
             ObjectOutputStream toServerOOS = new ObjectOutputStream(socket.getOutputStream());
             toServerOOS.writeObject(clientEncryptedObject);
             toServerOOS.flush();
+
             // get data from server
         
             String dataReturned = "";
@@ -273,6 +279,7 @@ public class BankingDAO implements DAOInterface {
      * 
      * @return all customer information including name, address, phone number, and account info
      */
+
     @Override
     public String getCustomerInformation(String...data) {
         
@@ -315,6 +322,7 @@ public class BankingDAO implements DAOInterface {
      * 
      * @return "confirm" if created, "username taken" or "profile exists" if these errors occur
      */
+
     @Override
     public String createUserProfile(String...data) {
         
@@ -367,22 +375,24 @@ public class BankingDAO implements DAOInterface {
         }
         
         command = "SELECT COUNT(*) FROM personData";        
-        String iD = client(command, true);
-        int idNumber = Integer.parseInt(iD) + 1;
+        String idNumber = client(command, true).trim();
+        idNumber = Integer.toString(Integer.parseInt(idNumber) + 1);
         
         command = "CREATE USER '" + username + "' IDENTIFIED BY '" + password + "';";
         client(command, false);
         
         if (employeeStatus.startsWith("employee")) {
         
-            command = "GRANT ALL PRIVILEGES ON *.* TO '" + username + "' IDENTIFIED BY '" + password + "';";
+            command = "GRANT ALL PRIVILEGES ON *.* TO '" + username + "' IDENTIFIED BY '" + password + "'"
+                    + " WITH GRANT OPTION;";
             client(command, false);
         
         }
         
         else {
             
-            command = "GRANT SELECT, UPDATE ON *.* TO '" + username + "' IDENTIFIED BY '" + password + "';";
+            command = "GRANT SELECT, UPDATE ON *.* TO '" + username + "' IDENTIFIED BY '" + password + 
+                    "' WITH GRANT OPTION;";
             client(command, false);
         
         }
@@ -397,7 +407,7 @@ public class BankingDAO implements DAOInterface {
                 city + "' AND State='" + state + "' AND zipCode='" + zipCode + "' AND Username='" + username +
                 "' AND Password='" + password + "' AND IDNumber='" + idNumber + "' AND employeeStatus='" +
                 employeeStatus + "';";
-        String confirm = client(command, true);
+        String confirm = client(command, true).trim();
         
         if (Integer.parseInt(confirm) == 1) {
             
@@ -412,7 +422,7 @@ public class BankingDAO implements DAOInterface {
     /**
      * Request to create a new bank account
      * 
-     * @param data: accountType, accountBalance, date, idNumber
+     * @param data: accountType, accountBalance, date, firstName, lastName
      * 
      * @return String including new account number and all entered information, "error" if error occurs
      */
@@ -422,28 +432,41 @@ public class BankingDAO implements DAOInterface {
         
         // validate arguments
         
-        if (!errorChecking(data, 4).isEmpty()) {
+        if (!errorChecking(data, 5).isEmpty()) {
             
-            return errorChecking(data, 3);
+            return errorChecking(data, 5);
             
         }
         
         String accountType = data[0];
         String accountBalance = data[1];
         String date = data[2];
+        String firstName = data[3];
+        String lastName = data[4];
       
-        String command = ("getRows Accounts");        
-        String idNumber = client(command, false);
+        String command = "SELECT COUNT(*) FROM personData WHERE firstName='" + firstName + "' AND lastName='"
+                + lastName + "';";        
+        String duplicate = client(command, true).trim();
+        
+        if (Integer.parseInt(duplicate) == 0) {
+            
+            return "Error: No such customer";
+            
+        }
+        
+        command = "SELECT IDNumber FROM personData WHERE firstName='" + firstName + "' AND lastName='"
+                + lastName + "';";
+        String id = client(command, true).trim();
         
         command = ("SELECT accountNumber FROM Accounts ORDER BY IDNumber DESC LIMIT 1;");
-        String accountNumber = client(command, false);
+        String accountNumber = client(command, true).trim();
         
         Random random = new Random();
         
         int newAccountNumber = Integer.parseInt(accountNumber) + random.nextInt(10);
         
-        command = ("INSERT INTO Accounts VALUES('" + idNumber + "', '" + newAccountNumber + "', '" +
-                accountBalance + "', '" + date + "');");
+        command = ("INSERT INTO Accounts VALUES('" + id + "', '" + newAccountNumber + "', '" +
+                accountType + "', '" + date + "');");
         
         return client(command, true);
         
@@ -538,6 +561,7 @@ public class BankingDAO implements DAOInterface {
      * @return new account balance if successful, "error" if error occurs
      */
     
+    @Override
     public String depositMoney(String...data) {
         
         // validate arguments
@@ -549,31 +573,62 @@ public class BankingDAO implements DAOInterface {
         }
         
         String accountNumber = data[0];
-        double amount = Integer.parseInt(data[1]);
         
-        String command = ("UPDATE Accounts SET accountBalance = accountBalance + " + amount + " WHERE "
+        String command = "SELECT COUNT(*) FROM Accounts WHERE accountNumber='" + accountNumber + "';";
+        int account = Integer.parseInt(client(command, true).trim());
+        
+        if (account == 0) {
+            
+            return "Error: Account does not exist";
+            
+        }
+        
+        try {
+            
+        double amount = Double.parseDouble(data[1]);
+        
+        if (amount < 0) {
+            
+            return "Error: Amount must be a positive value";
+            
+        }
+        
+        
+        
+        command = ("UPDATE Accounts SET accountBalance = accountBalance + " + amount + " WHERE "
                 + "accountNumber='" + accountNumber + "';");
         
         String result = client(command, false);
         
-        command = ("SELECT ID FROM Accounts WHERE accountNumber='" + accountNumber + ';');        
-        String idNumber = client(command, false);
+        command = ("SELECT ID FROM Accounts WHERE accountNumber='" + accountNumber + "';");        
+        String idNumber = client(command, true).trim();
         
-        command = ("SELECT COUNT(*) FROM Transactions"); 
-        int transactionNumber = Integer.parseInt(client(command, false).trim());
+        command = ("SELECT COUNT(*) FROM Transactions;");        
+        int transactionNumber = Integer.parseInt(client(command, true).trim()) + 1;
         
         command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountNumber + 
                 "' ORDER BY transactionNumber DESC LIMIT 1;");
-        double startingBalance = Integer.parseInt(client(command, false).trim());
+        double startingBalance = Double.parseDouble(client(command, true).trim());
         
         double endingBalance = startingBalance + amount;
         
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumber + "', '" +
-                accountNumber + ", " + startingBalance + ", 'Deposit', " + amount + ", " + endingBalance + ");");
+                accountNumber + "', " + startingBalance + ", 'Deposit', " + amount + ", " + endingBalance + 
+                ");");        
+        client(command, false);
         
-        return client(command, false);
+        command = "SELECT endingBalance FROM Transactions WHERE transactionNumber = " + transactionNumber +
+                ";";
+        return client(command, true).trim();
+        
+        } catch(NumberFormatException ex) {
+            
+            return "Error: Input must be numeric";
+            
+        }
         
     }
+
     /**
      * Request to withdraw money from selected account
      * 
@@ -593,31 +648,63 @@ public class BankingDAO implements DAOInterface {
         }
         
         String accountNumber = data[0];
-        double amount = Integer.parseInt(data[1]);
         
-        String command = ("UPDATE Accounts SET accountBalance = accountBalance - " + amount + " WHERE "
+        String command = "SELECT COUNT(*) FROM Accounts WHERE accountNumber='" + accountNumber + "';";
+        int account = Integer.parseInt(client(command, true).trim());
+        
+        if (account == 0) {
+            
+            return "Error: Account does not exist";
+            
+        }
+        
+        try {
+        
+        double amount = Double.parseDouble(data[1]);
+        
+        if (amount < 0) {
+            
+            return "Error: Amount must be a positive value";
+            
+        }
+        
+        command = ("UPDATE Accounts SET accountBalance = accountBalance - " + amount + " WHERE "
                 + "accountNumber='" + accountNumber + "';");
         
         String result = client(command, false);
         
-        command = ("SELECT ID FROM Accounts WHERE accountNumber='" + accountNumber + ';');        
-        String idNumber = client(command, false);
+        command = ("SELECT ID FROM Accounts WHERE accountNumber='" + accountNumber + "';");        
+        String idNumber = client(command, true).trim();
         
-        command = ("SELECT COUNT(*) FROM Transactions");       
-
-
-        int transactionNumber = Integer.parseInt(client(command, false).trim());
+        command = ("SELECT COUNT(*) FROM Transactions;");        
+        int transactionNumber = Integer.parseInt(client(command, true).trim()) + 1;
         
         command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountNumber + 
                 "' ORDER BY transactionNumber DESC LIMIT 1;");
-        double startingBalance = Integer.parseInt(client(command, false).trim());
+        double startingBalance = Double.parseDouble(client(command, true).trim());
         
         double endingBalance = startingBalance - amount;
         
-        command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumber + "', '" +
-                accountNumber + ", " + startingBalance + ", 'Withdrawal', " + amount + ", " + endingBalance + ");");
+        if (endingBalance < 0) {
+            
+            return "Error: Insufficient funds";
+            
+        }
         
-        return client(command, false);
+        command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumber + "', '" +
+                accountNumber + "', " + startingBalance + ", 'Withdrawal', " + amount + ", " + endingBalance + 
+                ");");        
+        client(command, false);
+        
+        command = "SELECT endingBalance FROM Transactions WHERE transactionNumber = " + transactionNumber + 
+                ";";
+        return client(command, true).trim();
+        
+        } catch(NumberFormatException ex) {
+            
+            return "Error: Input must be numeric";
+            
+        }
         
     }
     
@@ -640,16 +727,50 @@ public class BankingDAO implements DAOInterface {
         }
         
         String accountFrom = data[0];
-        double amount = Integer.parseInt(data[1]);
+        
+        String command = "SELECT COUNT(*) FROM Accounts WHERE accountNumber='" + accountFrom + "';";
+        int account = Integer.parseInt(client(command, true).trim());
+        
+        if (account == 0) {
+            
+            return "Error: Source account does not exist";
+            
+        }
+        
+        try {
+        
+        double amount = Double.parseDouble(data[1]);
+        
+        if (amount < 0) {
+            
+            return "Error: Amount must be a positive value";
+            
+        }
         String accountTo = data[2];
         
-        String command = ("SELECT accountBalance FROM Accounts WHERE accountNumber='" + accountFrom + "';");
-        double amountFrom = Integer.parseInt(client(command, false).trim());
+        command = "SELECT COUNT(*) FROM Accounts WHERE accountNumber='" + accountTo + "';";
+        account = Integer.parseInt(client(command, true).trim());
+        
+        if (account == 0) {
+            
+            return "Error: Destination account does not exist";
+            
+        }
+        
+        command = ("SELECT accountBalance FROM Accounts WHERE accountNumber='" + accountFrom + "';");
+        double amountFrom = Double.parseDouble(client(command, true).trim());
         
         command = ("SELECT accountBalance FROM Accounts WHERE accountNumber='" + accountTo + "';");
-        double amountTo = Integer.parseInt(client(command, false).trim());
+        double amountTo = Double.parseDouble(client(command, true).trim());
         
         double amountFromFinal = amountFrom - amount;
+        
+        if (amountFromFinal < 0) {
+            
+            return "Error: Insufficient funds";
+            
+        }
+        
         double amountToFinal = amountTo + amount;
         
         if (amountFromFinal < 0) {
@@ -666,37 +787,47 @@ public class BankingDAO implements DAOInterface {
                 + "accountNumber='" + accountTo + "';");        
         client(command, false);
         
-        command = ("SELECT ID FROM Accounts WHERE accountNumber='" + accountFrom + ';');        
-        String idNumberFrom = client(command, false);
+        command = ("SELECT ID FROM Accounts WHERE accountNumber='" + accountFrom + "';");        
+        String idNumberFrom = client(command, true).trim();
         
-        command = ("SELECT ID FROM Accounts WHERE accountNumber='" + accountTo + ';');        
-        String idNumberTo = client(command, false);
+        command = ("SELECT ID FROM Accounts WHERE accountNumber='" + accountTo + "';");        
+        String idNumberTo = client(command, true).trim();
         
-        command = ("getRows Transactions");        
-        int transactionNumber = Integer.parseInt(client(command, false).trim());
+        command = ("SELECT COUNT(*) FROM Transactions;");        
+        int transactionNumber = Integer.parseInt(client(command, true).trim()) + 1;
         
         command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountFrom + 
                 "' ORDER BY transactionNumber DESC LIMIT 1;");
-        double startingBalanceFrom = Integer.parseInt(client(command, false).trim());
+        double startingBalanceFrom = Double.parseDouble(client(command, true).trim());
         
         command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountTo + 
                 "' ORDER BY transactionNumber DESC LIMIT 1;");
-        double startingBalanceTo = Integer.parseInt(client(command, false).trim());
+        double startingBalanceTo = Double.parseDouble(client(command, true).trim());
         
         double endingBalanceFrom = startingBalanceFrom - amount;
         double endingBalanceTo = startingBalanceTo + amount;
-        
+        transactionNumber++;
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumberFrom + "', '" +
-                accountFrom + ", " + startingBalanceFrom + ", 'Withdrawal - Transfer', " + amount + ", " + 
+                accountFrom + "', " + startingBalanceFrom + ", 'Withdrawal - Transfer', " + amount + ", " + 
                 endingBalanceFrom + ");");
         client(command, false);
         
-        transactionNumber++;
+        int transactionNumberNext = transactionNumber + 1;
         
-        command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumberTo + "', '" +
-                accountTo + ", " + startingBalanceTo + ", 'Deposit - Transfer', " + amount + ", " + 
+        command = ("INSERT INTO Transactions VALUES(" + transactionNumberNext + ", '" + idNumberTo + "', '" +
+                accountTo + "', " + startingBalanceTo + ", 'Deposit - Transfer', " + amount + ", " + 
                 endingBalanceTo + ");");
-        return client(command, false);
+        client(command, false);
+        
+        command = "SELECT endingBalance FROM Transactions WHERE transactionNumber = " + transactionNumber +
+                " OR transactionNumber = " + transactionNumberNext + ";";
+        return client(command, true).trim();
+        
+        } catch(NumberFormatException ex) {
+            
+            return "Error: Input must be numeric";
+            
+        }
         
     }
     
@@ -719,16 +850,49 @@ public class BankingDAO implements DAOInterface {
         }
         
         String accountFrom = data[0];
-        double amount = Integer.parseInt(data[1]);
+        
+        String command = "SELECT COUNT(*) FROM Accounts WHERE accountNumber='" + accountFrom + "';";
+        int account = Integer.parseInt(client(command, true).trim());
+        
+        if (account == 0) {
+            
+            return "Error: Source account does not exist";
+            
+        }
+        
+        try {
+        double amount = Double.parseDouble(data[1]);
+        
+        if (amount < 0) {
+            
+            return "Error: Amount must be a positive value";
+            
+        }
         String mortgageAccount = data[2];
         
-        String command = ("SELECT accountBalance FROM Accounts WHERE accountNumber='" + accountFrom + "';");
-        double amountFrom = Integer.parseInt(client(command, false).trim());
+        command = "SELECT COUNT(*) FROM Accounts WHERE accountNumber='" + mortgageAccount + "';";
+        account = Integer.parseInt(client(command, true).trim());
+        
+        if (account == 0) {
+            
+            return "Error: Mortgage account does not exist";
+            
+        }
+        
+        command = ("SELECT accountBalance FROM Accounts WHERE accountNumber='" + accountFrom + "';");
+        double amountFrom = Double.parseDouble(client(command, true).trim());
         
         command = ("SELECT accountBalance FROM Accounts WHERE accountNumber='" + mortgageAccount + "';");
-        double amountTo = Integer.parseInt(client(command, false).trim());
+        double amountTo = Double.parseDouble(client(command, true).trim());
         
         double amountFromFinal = amountFrom - amount;
+        
+        if (amountFromFinal < 0) {
+            
+            return "Error: Insufficient funds";
+            
+        }
+        
         double amountToFinal = amountTo + amount;
         
         if (amountFromFinal < 0) {
@@ -745,37 +909,47 @@ public class BankingDAO implements DAOInterface {
                 + "accountNumber='" + mortgageAccount + "';");        
         client(command, false);
         
-        command = ("SELECT IDNumber FROM Accounts WHERE accountNumber='" + accountFrom + ';');        
-        String idNumberFrom = client(command, false);
+        command = ("SELECT ID FROM Accounts WHERE accountNumber='" + accountFrom + "';");        
+        String idNumberFrom = client(command, true).trim();
         
-        command = ("SELECT IDNumber FROM Accounts WHERE accountNumber='" + mortgageAccount + ';');        
-        String idNumberTo = client(command, false);
+        command = ("SELECT ID FROM Accounts WHERE accountNumber='" + mortgageAccount + "';");        
+        String idNumberTo = client(command, true).trim();
         
-        command = ("getRows Transactions");        
-        int transactionNumber = Integer.parseInt(client(command, false).trim());
+        command = ("SELECT COUNT(*) FROM Transactions;");        
+        int transactionNumber = Integer.parseInt(client(command, false).trim()) + 1;
         
         command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountFrom + 
                 "' ORDER BY transactionNumber DESC LIMIT 1;");
-        double startingBalanceFrom = Integer.parseInt(client(command, false).trim());
+        double startingBalanceFrom = Double.parseDouble(client(command, false).trim());
         
         command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + mortgageAccount + 
                 "' ORDER BY transactionNumber DESC LIMIT 1;");
-        double startingBalanceTo = Integer.parseInt(client(command, false).trim());
+        double startingBalanceTo = Double.parseDouble(client(command, false).trim());
         
         double endingBalanceFrom = startingBalanceFrom - amount;
         double endingBalanceTo = startingBalanceTo + amount;
         
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumberFrom + "', '" +
-                accountFrom + ", " + startingBalanceFrom + ", 'Withdrawal - Transfer', " + amount + ", " + 
+                accountFrom + "', " + startingBalanceFrom + ", 'Withdrawal - Transfer', " + amount + ", " + 
                 endingBalanceFrom + ");");
         client(command, false);
         
-        transactionNumber++;
+        int transactionNumberNext = transactionNumber + 1;
         
-        command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumberTo + "', '" +
-                mortgageAccount + ", " + startingBalanceTo + ", 'Deposit - Transfer', " + amount + ", " + 
+        command = ("INSERT INTO Transactions VALUES(" + transactionNumberNext + ", '" + idNumberTo + "', '" +
+                mortgageAccount + "', " + startingBalanceTo + ", 'Deposit - Transfer', " + amount + ", " + 
                 endingBalanceTo + ");");
-        return client(command, false);
+        client(command, false);
+        
+        command = "SELECT endingBalance FROM Transactions WHERE transactionNumber = " + transactionNumber +
+                " OR transactionNumber = " + transactionNumberNext + ";";
+        return client(command, true).trim();
+        
+        } catch(NumberFormatException ex) {
+            
+            return "Error: Input must be numeric";
+            
+        }
         
     }
     
@@ -828,5 +1002,7 @@ public class BankingDAO implements DAOInterface {
         return this.password;
         
     }
+    
+
     
 }
