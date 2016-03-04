@@ -434,12 +434,17 @@ public class EmployeeStart extends javax.swing.JFrame {
                         
                         ai.setVisible(true);
          	}
-            else {
-              //pop-up window "Account not found"
-            	
-              JOptionPane.showMessageDialog((Component) null, "Account not found.",
-    	       "alert", JOptionPane.OK_OPTION);
-    	       }
+                else if (accountInfo.contains("Error: Empty argument value")) {
+                    
+                    JOptionPane.showMessageDialog((Component) null, "No account entered.",
+                    "alert", JOptionPane.OK_OPTION);
+                    
+    	        }
+                else {
+                     //pop-up window "Account not found"
+                     JOptionPane.showMessageDialog((Component) null, "Account not found.",
+                    "alert", JOptionPane.OK_OPTION);
+                }
              
          	accountSearchTextField.setText("");
     }//GEN-LAST:event_accountSearchButtonActionPerformed
@@ -479,6 +484,7 @@ public class EmployeeStart extends javax.swing.JFrame {
     private void nameSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameSearchButtonActionPerformed
         String customerInfo = "";
         customerInfo = dao.getCustomerInformation(firstNameSearchTextField.getText(), nameSearchTextField.getText());
+        System.out.println(customerInfo);
         Scanner stdin = new Scanner(customerInfo);
         if (!(customerInfo.equalsIgnoreCase("") || customerInfo.contains("Error"))) {
         	
@@ -501,12 +507,16 @@ public class EmployeeStart extends javax.swing.JFrame {
                 
             } //end while
         }
-        else {
-            //pop-up window "Account not found"
-        	
-        	JOptionPane.showMessageDialog((Component) null, "Customer not found.",
+        else if(customerInfo.contains("Error: Empty argument value")) {
+            
+        	JOptionPane.showMessageDialog((Component) null, "No customer information entered.",
          	       "alert", JOptionPane.OK_OPTION);
   	       }
+        else {
+                 //pop-up window "Account not found"
+                 JOptionPane.showMessageDialog((Component) null, "Customer not found.",
+                    "alert", JOptionPane.OK_OPTION);
+                }
         firstNameSearchTextField.setText("");
     	nameSearchTextField.setText("");
         
