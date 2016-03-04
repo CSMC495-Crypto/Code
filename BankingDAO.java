@@ -1,5 +1,4 @@
 package client;
-
 import cryptography.DataProcessor;
 import data.DataObject;
 import java.io.DataInputStream;
@@ -9,7 +8,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.text.DecimalFormat;
 import java.util.Random;
-
 /**
  * Implements the DAOInterface and converts GUI data into SQL database commands
  * and transceives data with the server
@@ -20,14 +18,12 @@ import java.util.Random;
  * @project Cryptography Banking Application
  * 
  */
-
 public class BankingDAO implements DAOInterface {
     
     String username = "";
     String password = "";
     
     public String client(String plainText, Boolean requestType) {
-
         // declare I/O streams
   
         DataOutputStream toServer;
@@ -49,7 +45,6 @@ public class BankingDAO implements DAOInterface {
             toServer = new DataOutputStream(socket.getOutputStream()); 
                 
             DataProcessor dataProcessor = new DataProcessor();
-
             // get user input from text field and convert to data to send to server
           
               
@@ -63,7 +58,6 @@ public class BankingDAO implements DAOInterface {
             ObjectOutputStream toServerOOS = new ObjectOutputStream(socket.getOutputStream());
             toServerOOS.writeObject(clientEncryptedObject);
             toServerOOS.flush();
-
             // get data from server
         
             String dataReturned = "";
@@ -279,7 +273,6 @@ public class BankingDAO implements DAOInterface {
      * 
      * @return all customer information including name, address, phone number, and account info
      */
-
     @Override
     public String getCustomerInformation(String...data) {
         
@@ -322,7 +315,6 @@ public class BankingDAO implements DAOInterface {
      * 
      * @return "confirm" if created, "username taken" or "profile exists" if these errors occur
      */
-
     @Override
     public String createUserProfile(String...data) {
         
@@ -492,12 +484,21 @@ public class BankingDAO implements DAOInterface {
         
         String firstName = data[0];
         String lastName = data[1];
+        String command = "SELECT COUNT(*) FROM personData WHERE firstName='" + firstName + "' AND lastName='" 
+                + lastName + "';";
+        int person = Integer.parseInt(client(command, true).trim());
+        if (person == 0) {
+            return "Error: User does not exist";
+        }
         
-        String command = ("DELETE FROM personData WHERE firstName='" + firstName + "' AND lastName='" + 
+        command = "SELECT Username FROM Accounts WHERE firstName='" + firstName + "' AND lastName='" + lastName + "';";
+        String username = client(command, true).trim();
+        command = ("DELETE FROM personData WHERE firstName='" + firstName + "' AND lastName='" + 
                 lastName + "';");
-        
-        return client(command, false);
-        
+        client(command, false);       
+        command = "DROP USER '" + username + "';";
+        client(command, false);
+        return "Confirmed: User deleted";
     }
     
     /**
@@ -519,10 +520,19 @@ public class BankingDAO implements DAOInterface {
         }
         
         String accountNumber = data[0];
+        String command = "SELECT COUNT(*) FROM Accounts WHERE accountNumber='" + accountNumber + "';";
+        int account = Integer.parseInt(client(command, true).trim());
+        if (account == 0) {
+            return "Error: Account does not exist";
+        }        
         
-        String command = ("DELETE FROM Accounts WHERE accountNumber='" + accountNumber + "';");
-        
-        return client(command, false);
+        command = ("DELETE FROM Accounts WHERE accountNumber='" + accountNumber + "';");        
+        client(command, false);
+        command = ("DELETE FROM Transactions WHERE accountNumber='" + accountNumber + "';");        
+        client(command, false);
+        return "Confirmed: Account deleted";
+
+
         
     }
     
@@ -628,7 +638,6 @@ public class BankingDAO implements DAOInterface {
         }
         
     }
-
     /**
      * Request to withdraw money from selected account
      * 
@@ -1002,7 +1011,5 @@ public class BankingDAO implements DAOInterface {
         return this.password;
         
     }
-    
-
     
 }
