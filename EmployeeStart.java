@@ -37,6 +37,7 @@ import java.util.Scanner;
 public class EmployeeStart extends javax.swing.JFrame {
 
     private static final BankingDAO dao = new BankingDAO();
+    JOptionPane window = new JOptionPane();
 	/**
      * Creates new form EmployeeStart
      */
@@ -133,6 +134,11 @@ public class EmployeeStart extends javax.swing.JFrame {
 
         deleteCustomerButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         deleteCustomerButton.setText("Delete Customer Profile");
+        deleteCustomerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteCustomerButtonActionPerformed(evt);
+            }
+        });
 
         addAccountButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         addAccountButton.setText("Add New Bank Account");
@@ -416,7 +422,7 @@ public class EmployeeStart extends javax.swing.JFrame {
          String accountNumber = accountSearchTextField.getText();
          String accountInfo = "";
                 accountInfo = dao.getCustomerAccount(accountNumber);
-         	if (!accountInfo.equals("")) {
+         	if (!(accountInfo.equals("") || accountInfo.contains("Error"))) {
          		//show AccountInfo
          		 AccountInfo ai = new AccountInfo();
           		//parse accountInfo and populate Account balance Account Type Account Number
@@ -438,19 +444,6 @@ public class EmployeeStart extends javax.swing.JFrame {
          	accountSearchTextField.setText("");
     }//GEN-LAST:event_accountSearchButtonActionPerformed
     
-    private void deleteCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {
-    	
-    	int value = JOptionPane.showConfirmDialog((Component) null, "The customer's profile will be deleted permanently.\n"
-    		    + "Do you want to delete this profile?",
-    	        "alert", JOptionPane.YES_NO_OPTION);
-    	if (value == JOptionPane.YES_OPTION) {
-    		 dao.deleteUserProfile(firstNameTextField.getText(), lastNameTextField.getText());
-    	} else if (value == JOptionPane.NO_OPTION) {
-    	    //close dialog box
-    	}
-       
-    }
-    
     private void addAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAccountButtonActionPerformed
         new CreateBankAccount(this).setVisible(true);
     }//GEN-LAST:event_addAccountButtonActionPerformed
@@ -463,7 +456,7 @@ public class EmployeeStart extends javax.swing.JFrame {
                 String accountNumber = accountsTable.getModel().getValueAt(row, 0).toString();
                 String accountInfo = "";
             	accountInfo = dao.getCustomerAccount(accountNumber);
-                    if (!accountInfo.equals("")) {
+                    if (!(accountInfo.equals("") || accountInfo.contains("Error"))) {
                         //show AccountInfo
                          AccountInfo ai = new AccountInfo();
           		//parse accountInfo and populate Account balance Account Type Account Number
@@ -487,7 +480,7 @@ public class EmployeeStart extends javax.swing.JFrame {
         String customerInfo = "";
         customerInfo = dao.getCustomerInformation(firstNameSearchTextField.getText(), nameSearchTextField.getText());
         Scanner stdin = new Scanner(customerInfo);
-        if (!customerInfo.equalsIgnoreCase("")) {
+        if (!(customerInfo.equalsIgnoreCase("") || customerInfo.contains("Error"))) {
         	
             //parse customerInfo populate form below with customers info
         	firstNameTextField.setText(stdin.nextLine());
@@ -519,6 +512,28 @@ public class EmployeeStart extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_nameSearchButtonActionPerformed
+
+    private void deleteCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCustomerButtonActionPerformed
+        String firstName = firstNameTextField.getText();
+        String lastName = lastNameTextField.getText();
+        
+        if(!(firstName.equals("") && lastName.equals(""))) {
+            int value = window.showConfirmDialog((Component) null, "The customer's profile will be deleted permanently.\n"
+                        + "Do you want to delete this profile?",
+                    "alert", JOptionPane.YES_NO_OPTION);
+            if (value == JOptionPane.YES_OPTION) {
+                    dao.deleteUserProfile(firstNameTextField.getText(), lastNameTextField.getText());
+            } else if (value == JOptionPane.NO_OPTION) {
+                //close dialog box
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(window,
+            "There is no profile selected",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_deleteCustomerButtonActionPerformed
 
     public String getFirstName() {
         return firstNameTextField.getText();
