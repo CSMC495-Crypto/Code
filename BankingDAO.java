@@ -583,7 +583,7 @@ public class BankingDAO implements DAOInterface {
             
         }
         
-        command = "SELECT @rownum:=@rownum+1 ‘endingBalance’, p.accountNumber, p.startingBalance, "
+        command = "SELECT @rownum:=@rownum+1 'endingBalance', p.accountNumber, p.startingBalance, "
                 + "p.transactionType, p.Amount, p.endingBalance FROM Transactions p, (SELECT @rownum:=0) "
                 + "r WHERE accountNumber='" + accountNumber + "';";
         return client(command, true);
