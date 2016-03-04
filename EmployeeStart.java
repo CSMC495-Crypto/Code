@@ -484,7 +484,6 @@ public class EmployeeStart extends javax.swing.JFrame {
     private void nameSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameSearchButtonActionPerformed
         String customerInfo = "";
         customerInfo = dao.getCustomerInformation(firstNameSearchTextField.getText(), nameSearchTextField.getText());
-        System.out.println(customerInfo);
         Scanner stdin = new Scanner(customerInfo);
         if (!(customerInfo.equalsIgnoreCase("") || customerInfo.contains("Error"))) {
         	

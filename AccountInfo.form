@@ -91,20 +91,22 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="accountBalanceTextField1" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="accountNumberLabel1" pref="100" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="accountNumberLabel1" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="accountNumberTextField1" min="-2" pref="100" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="accountTypeLabel1" max="32767" attributes="0"/>
                       <Component id="accountTypeTextField" min="-2" pref="100" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="accountNumberTextField1" min="-2" pref="100" max="-2" attributes="0"/>
                       <Component id="accountBalanceLabel1" min="-2" pref="100" max="-2" attributes="0"/>
+                      <Component id="accountBalanceTextField1" min="-2" pref="100" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               </Group>
@@ -126,9 +128,9 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="accountBalanceTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="accountTypeTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="accountNumberTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="accountBalanceTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="transactionButton" min="-2" max="-2" attributes="0"/>
@@ -145,11 +147,6 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Account Balance"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="accountBalanceTextField1">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="accountTypeLabel1">
@@ -190,6 +187,14 @@
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Account Number"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="accountBalanceTextField1">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="accountBalanceTextField1ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

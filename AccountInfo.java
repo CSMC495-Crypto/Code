@@ -43,12 +43,12 @@ public class AccountInfo extends javax.swing.JFrame {
         bannerLabel = new javax.swing.JLabel();
         accountDetailsPanel = new javax.swing.JPanel();
         accountBalanceLabel1 = new javax.swing.JLabel();
-        accountBalanceTextField1 = new javax.swing.JTextField();
         accountTypeLabel1 = new javax.swing.JLabel();
         accountTypeTextField = new javax.swing.JTextField();
         accountNumberTextField1 = new javax.swing.JTextField();
         transactionButton = new javax.swing.JButton();
         accountNumberLabel1 = new javax.swing.JLabel();
+        accountBalanceTextField1 = new javax.swing.JTextField();
         depositWithdrawalPanel = new javax.swing.JPanel();
         amountTextField1 = new javax.swing.JTextField();
         depositButton = new javax.swing.JButton();
@@ -75,8 +75,6 @@ public class AccountInfo extends javax.swing.JFrame {
         accountBalanceLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         accountBalanceLabel1.setText("Account Balance");
 
-        accountBalanceTextField1.setEditable(false);
-
         accountTypeLabel1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         accountTypeLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         accountTypeLabel1.setText("Account Type");
@@ -97,6 +95,13 @@ public class AccountInfo extends javax.swing.JFrame {
         accountNumberLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         accountNumberLabel1.setText("Account Number");
 
+        accountBalanceTextField1.setEditable(false);
+        accountBalanceTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accountBalanceTextField1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout accountDetailsPanelLayout = new javax.swing.GroupLayout(accountDetailsPanel);
         accountDetailsPanel.setLayout(accountDetailsPanelLayout);
         accountDetailsPanelLayout.setHorizontalGroup(
@@ -105,17 +110,18 @@ public class AccountInfo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(accountDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(accountDetailsPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(accountBalanceTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(accountNumberLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(50, 50, 50)
+                        .addComponent(accountNumberLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                        .addGap(50, 50, 50))
+                    .addGroup(accountDetailsPanelLayout.createSequentialGroup()
+                        .addComponent(accountNumberTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(accountDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(accountTypeLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(accountTypeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addGroup(accountDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(accountNumberTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(accountBalanceLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(accountBalanceLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(accountBalanceTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21))
             .addGroup(accountDetailsPanelLayout.createSequentialGroup()
                 .addGap(146, 146, 146)
@@ -132,9 +138,9 @@ public class AccountInfo extends javax.swing.JFrame {
                     .addComponent(accountNumberLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(accountDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(accountBalanceTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(accountTypeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(accountNumberTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(accountNumberTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(accountBalanceTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(transactionButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -325,12 +331,11 @@ public class AccountInfo extends javax.swing.JFrame {
             String account = accountNumberTextField1.getText();
             String transactions = bankingDAO.getTransactionHistory(account);
             Scanner stdin = new Scanner(transactions);
-            stdin.useDelimiter(",");
-            
+           
             int i = 0;
             while(stdin.hasNext()) {
                 for (int j=0; j<6; j++) {
-                    t.setTransactionInformation(stdin.next(), i, j);
+                    t.setTransactionInformation(stdin.nextLine(), i, j);
                 } //end for
                 i++;
                 
@@ -449,8 +454,12 @@ public class AccountInfo extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteAccountButtonActionPerformed
 
+    private void accountBalanceTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountBalanceTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_accountBalanceTextField1ActionPerformed
+
     
-    public void setTopAccountInfo(String balance, String type, String number) {
+    public void setTopAccountInfo(String number, String type, String balance) {
         accountBalanceTextField1.setText(balance);
         accountTypeTextField.setText(type);
         accountNumberTextField1.setText(number);

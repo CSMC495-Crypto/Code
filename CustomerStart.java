@@ -308,12 +308,10 @@ public class CustomerStart extends javax.swing.JFrame {
             String account = accountDetailsTable.getModel().getValueAt(row, 0).toString();
             String transactions = bankingDAO.getTransactionHistory(account);
             Scanner stdin = new Scanner(transactions);
-            stdin.useDelimiter(",");
-            
             int i = 0;
             while(stdin.hasNext()) {
                 for (int j=0; j<6; j++) {
-                    t.setTransactionInformation(stdin.next(), i, j);
+                    t.setTransactionInformation(stdin.nextLine(), i, j);
                 } //end for
                 i++;
                 
