@@ -662,11 +662,16 @@ public class BankingDAO implements DAOInterface {
             
         }
         
+        command = "SELECT accountBalance FROM Accounts WHERE accountNumber='" + accountNumber + "';";
+        double balance = Double.parseDouble(client(command, true));
         
-        command = ("UPDATE Accounts SET accountBalance = accountBalance + " + amount + " WHERE "
+        double result = balance + amount;
+        
+        
+        command = ("UPDATE Accounts SET accountBalance = " + result + " WHERE "
                 + "accountNumber='" + accountNumber + "';");
         
-        String result = client(command, false);
+        client(command, false);
         
         command = ("SELECT ID FROM Accounts WHERE accountNumber='" + accountNumber + "';");        
         String idNumber = client(command, true).trim();
@@ -680,7 +685,7 @@ public class BankingDAO implements DAOInterface {
         double endingBalance = startingBalance + amount;
         
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumber + "', '" +
-                accountNumber + "', " + startingBalance + ", 'Deposit', " + amount + ", " + endingBalance + 
+                accountNumber + "', " + balance + ", 'Deposit', " + amount + ", " + result + 
                 ");");        
         client(command, false);
         
@@ -742,10 +747,21 @@ public class BankingDAO implements DAOInterface {
             
         }
         
-        command = ("UPDATE Accounts SET accountBalance = accountBalance - " + amount + " WHERE "
+        command = "SELECT accountBalance FROM Accounts WHERE accountNumber='" + accountNumber + "';";
+        double balance = Double.parseDouble(client(command, true));
+        
+        double result = balance - amount;
+        
+        if (result < 0) {
+            
+            return "Error: Insufficient funds";
+            
+        }
+        
+        command = ("UPDATE Accounts SET accountBalance = " + result + " WHERE "
                 + "accountNumber='" + accountNumber + "';");
         
-        String result = client(command, false);
+        client(command, false);
         
         command = ("SELECT ID FROM Accounts WHERE accountNumber='" + accountNumber + "';");        
         String idNumber = client(command, true).trim();
@@ -766,7 +782,7 @@ public class BankingDAO implements DAOInterface {
         }
         
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumber + "', '" +
-                accountNumber + "', " + startingBalance + ", 'Withdrawal', " + amount + ", " + endingBalance + 
+                accountNumber + "', " + balance + ", 'Withdrawal', " + amount + ", " + result + 
                 ");");        
         client(command, false);
         
@@ -887,15 +903,15 @@ public class BankingDAO implements DAOInterface {
         double endingBalanceTo = startingBalanceTo + amount;
      
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumberFrom + "', '" +
-                accountFrom + "', " + startingBalanceFrom + ", 'Withdrawal - Transfer', " + amount + ", " + 
-                endingBalanceFrom + ");");
+                accountFrom + "', " + amountFrom + ", 'Withdrawal - Transfer', " + amount + ", " + 
+                amountFromFinal + ");");
         client(command, false);
         
         int transactionNumberNext = transactionNumber + 1;
         
         command = ("INSERT INTO Transactions VALUES(" + transactionNumberNext + ", '" + idNumberTo + "', '" +
-                accountTo + "', " + startingBalanceTo + ", 'Deposit - Transfer', " + amount + ", " + 
-                endingBalanceTo + ");");
+                accountTo + "', " + amountTo + ", 'Deposit - Transfer', " + amount + ", " + 
+                amountToFinal + ");");
         client(command, false);
         
         command = "SELECT endingBalance FROM Transactions WHERE transactionNumber = " + transactionNumber +
@@ -1016,15 +1032,15 @@ public class BankingDAO implements DAOInterface {
         double endingBalanceTo = startingBalanceTo - amount;
         
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumberFrom + "', '" +
-                accountFrom + "', " + startingBalanceFrom + ", 'Withdrawal - Mortgage Payment', " + amount + ", " + 
-                endingBalanceFrom + ");");
+                accountFrom + "', " + amountFrom + ", 'Withdrawal - Mortgage Payment', " + amount + ", " + 
+                amountFromFinal + ");");
         client(command, false);
         
         int transactionNumberNext = transactionNumber + 1;
         
         command = ("INSERT INTO Transactions VALUES(" + transactionNumberNext + ", '" + idNumberTo + "', '" +
-                mortgageAccount + "', " + startingBalanceTo + ", 'Deposit - Mortgage Payment', " + amount + ", " + 
-                endingBalanceTo + ");");
+                mortgageAccount + "', " + amountTo + ", 'Deposit - Mortgage Payment', " + amount + ", " + 
+                amountToFinal + ");");
         client(command, false);
         
         command = "SELECT endingBalance FROM Transactions WHERE transactionNumber = " + transactionNumber +
