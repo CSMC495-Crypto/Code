@@ -7,7 +7,9 @@ import java.io.DataOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.text.DecimalFormat;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -294,11 +296,12 @@ public class BankingDAO implements DAOInterface {
         }
         
         command = "SELECT phoneNumber, Address, City, State, zipCode FROM personData WHERE "
-                + "firstName='" + firstName + "' AND lastName='" + lastName + "';";
+                + "firstName='" + firstName + "' AND lastName='" + lastName + "' ORDER BY IDNumber DESC LIMIT "
+                + "1;";
         String info = client(command, true);
         
         command = "SELECT IDNumber FROM personData WHERE firstName='" + firstName + "' AND lastName='" + 
-                lastName + "' LIMIT 2;";
+                lastName + "' ORDER BY IDNumber DESC LIMIT 1;";
         String id = client(command, true).trim();
         
         command = "SELECT accountNumber, accountType, accountBalance, dateCreated FROM Accounts WHERE ID='" + 
@@ -403,6 +406,12 @@ public class BankingDAO implements DAOInterface {
         
         if (Integer.parseInt(confirm) == 1) {
             
+            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            Date date = new Date();
+            String dateString = dateFormat.format(date).toString();
+            
+            createNewAccount("Savings", "1000", dateString, firstName, lastName);
+            
             return "Confirmed";
             
         }
@@ -447,15 +456,26 @@ public class BankingDAO implements DAOInterface {
         }
         
         command = "SELECT IDNumber FROM personData WHERE firstName='" + firstName + "' AND lastName='"
-                + lastName + "';";
+                + lastName + "' ORDER BY IDNumber DESC LIMIT 1;";
         String id = client(command, true).trim();
         
         command = ("SELECT accountNumber FROM Accounts ORDER BY ID DESC LIMIT 1;");
         String accountNumber = client(command, true).trim();
         
         Random random = new Random();
+        String newAccountNumber = null;
         
-        String newAccountNumber = Integer.toString(Integer.parseInt(accountNumber) + random.nextInt(10));
+        do {
+            
+            int x = 1;
+            
+            newAccountNumber = Integer.toString(Integer.parseInt(accountNumber) + random.nextInt(10 * x));
+            
+            command = "SELECT COUNT(*) FROM Accounts WHERE accountNumber='" + newAccountNumber + "';";
+            
+            x++;
+        
+        } while(Integer.parseInt(client(command, true).trim()) != 0);
         
         command = ("INSERT INTO Accounts VALUES('" + id + "', '" + newAccountNumber + "', '" +
                 accountType + "', '" + accountBalance + "', '" + date + "');");
