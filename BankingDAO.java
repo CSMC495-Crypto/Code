@@ -891,16 +891,7 @@ public class BankingDAO implements DAOInterface {
         command = ("SELECT COUNT(*) FROM Transactions;");        
         int transactionNumber = Integer.parseInt(client(command, true).trim()) + 1;
         
-        command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountFrom + 
-                "' ORDER BY transactionNumber DESC LIMIT 1;");
-        double startingBalanceFrom = Double.parseDouble(client(command, true).trim());
-        
-        command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountTo + 
-                "' ORDER BY transactionNumber DESC LIMIT 1;");
-        double startingBalanceTo = Double.parseDouble(client(command, true).trim());
-        
-        double endingBalanceFrom = startingBalanceFrom - amount;
-        double endingBalanceTo = startingBalanceTo + amount;
+     
      
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumberFrom + "', '" +
                 accountFrom + "', " + amountFrom + ", 'Withdrawal - Transfer', " + amount + ", " + 
@@ -1020,16 +1011,7 @@ public class BankingDAO implements DAOInterface {
         command = ("SELECT COUNT(*) FROM Transactions;");        
         int transactionNumber = Integer.parseInt(client(command, true).trim()) + 1;
         
-        command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountFrom + 
-                "' ORDER BY transactionNumber DESC LIMIT 1;");
-        double startingBalanceFrom = Double.parseDouble(client(command, true).trim());
-        
-        command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + mortgageAccount + 
-                "' ORDER BY transactionNumber DESC LIMIT 1;");
-        double startingBalanceTo = Double.parseDouble(client(command, true).trim());
-        
-        double endingBalanceFrom = startingBalanceFrom - amount;
-        double endingBalanceTo = startingBalanceTo - amount;
+
         
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumberFrom + "', '" +
                 accountFrom + "', " + amountFrom + ", 'Withdrawal - Mortgage Payment', " + amount + ", " + 
