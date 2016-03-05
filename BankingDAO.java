@@ -1013,7 +1013,7 @@ public class BankingDAO implements DAOInterface {
         double startingBalanceTo = Double.parseDouble(client(command, true).trim());
         
         double endingBalanceFrom = startingBalanceFrom - amount;
-        double endingBalanceTo = startingBalanceTo + amount;
+        double endingBalanceTo = startingBalanceTo - amount;
         
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumberFrom + "', '" +
                 accountFrom + "', " + startingBalanceFrom + ", 'Withdrawal - Mortgage Payment', " + amount + ", " + 
