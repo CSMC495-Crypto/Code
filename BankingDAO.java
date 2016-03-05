@@ -755,7 +755,7 @@ public class BankingDAO implements DAOInterface {
         String accountFrom = data[0];
         
         String command = "SELECT COUNT(*) FROM Accounts WHERE accountNumber='" + accountFrom + "';";
-        int account = Integer.parseInt(client(command, true).trim());
+        int account = Integer.parseInt(client(command, false).trim());
         
         if (account == 0) {
             
