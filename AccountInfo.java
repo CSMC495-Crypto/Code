@@ -426,8 +426,8 @@ public class AccountInfo extends javax.swing.JFrame {
         String newBalance = bankingDAO.payMortgage(acctNumberfrom, amount, mortgageAccount);
         
         Scanner stdin = new Scanner(newBalance);
-        String newMortgageBalance = stdin.next();
         String newAccountBalance = stdin.next();
+        String newMortgageBalance = stdin.next();
         
         if (!newBalance.contains("Error"))
         {
@@ -435,7 +435,7 @@ public class AccountInfo extends javax.swing.JFrame {
                     "Your new mortage balance is: " + newMortgageBalance
                     + "\n Your new account balance is: " + newAccountBalance,
     	       "Mortage", JOptionPane.OK_OPTION);
-            accountBalanceTextField1.setText(newBalance);
+            accountBalanceTextField1.setText(newAccountBalance);
         }
         else {
             JOptionPane.showMessageDialog((Component) null, 

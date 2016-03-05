@@ -2,6 +2,7 @@ package gui;
 
 import client.BankingDAO;
 import java.awt.Component;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
@@ -24,11 +25,15 @@ import javax.swing.JOptionPane;
 public class CustomerStart extends javax.swing.JFrame {
 
     private static final BankingDAO bankingDAO = new BankingDAO();
+    private String username;
+    private String password;
 
     /**
      * Creates new form CustomerStart
      */
-    public CustomerStart() {
+    public CustomerStart(String username, String password) {
+        this.username = username;
+        this.password = password;
         initComponents();
     }
 
@@ -128,6 +133,20 @@ public class CustomerStart extends javax.swing.JFrame {
 
         accountDetailsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
+                {null, null, null, "select this account", "select this account"},
                 {null, null, null, "select this account", "select this account"},
                 {null, null, null, "select this account", "select this account"},
                 {null, null, null, "select this account", "select this account"},
@@ -303,23 +322,27 @@ public class CustomerStart extends javax.swing.JFrame {
     private void accountDetailsTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountDetailsTableMousePressed
         int col = accountDetailsTable.columnAtPoint(evt.getPoint());
         int row = accountDetailsTable.rowAtPoint(evt.getPoint());
-        if(col == 3) {
-            Transactions t = new Transactions();
-            String account = accountDetailsTable.getModel().getValueAt(row, 0).toString();
-            String transactions = bankingDAO.getTransactionHistory(account);
-            Scanner stdin = new Scanner(transactions);
-            int i = 0;
-            while(stdin.hasNext()) {
-                for (int j=0; j<6; j++) {
-                    t.setTransactionInformation(stdin.nextLine(), i, j);
-                } //end for
-                i++;
+        try {
+            if(col == 3) {
+                Transactions t = new Transactions();
+                String account = accountDetailsTable.getModel().getValueAt(row, 0).toString();
+                String transactions = bankingDAO.getTransactionHistory(account);
+                Scanner stdin = new Scanner(transactions);
+                int i = 0;
+                while(stdin.hasNext()) {
+                    for (int j=0; j<6; j++) {
+                        t.setTransactionInformation(stdin.nextLine(), i, j);
+                    } //end for
+                    i++;
                 
-            } //end while
+                } //end while
             
-            t.setVisible(true);
-            
+                t.setVisible(true);
+            }
         }
+        catch (NoSuchElementException e){}
+            
+        
         
         if(col == 4) {
             String account = accountDetailsTable.getModel().getValueAt(row, 0).toString();
@@ -334,16 +357,34 @@ public class CustomerStart extends javax.swing.JFrame {
         
         //Transmit account information
         String newBalance = bankingDAO.transferMoney(acctNumberFrom, amount, acctNumberTo );
+        Scanner stdin = new Scanner(newBalance);
+        String accountNewBalance = stdin.next();
         
-        if (!newBalance.equals("error"))
+        if (!newBalance.contains("Error"))
         {
             JOptionPane.showMessageDialog((Component) null, 
-                    "Your new balance is: " + newBalance,
+                    "Your new balance is: " + accountNewBalance,
     	       "Account Balance", JOptionPane.OK_OPTION);
+            
+            //populate screen with updated info
+            String info = bankingDAO.getCustomerScreenInfo(username, password);
+            stdin = new Scanner(info);
+            System.out.println(info);
+            this.setFirstName(stdin.nextLine());
+            this.setLastName(stdin.nextLine());
+            
+            int i = 0;
+            while(stdin.hasNext()) {
+                for (int j=0; j<3; j++) {
+                    this.setAccountInformation(stdin.nextLine(), i, j);
+                } //end for
+                i++;
+                
+            } //end while
         }
         else {
             JOptionPane.showMessageDialog((Component) null, 
-                    "An error has occured" + newBalance,
+                    "An error has occured",
     	       "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_transferButtonActionPerformed
@@ -355,16 +396,32 @@ public class CustomerStart extends javax.swing.JFrame {
         
         //Trans mit account information
         String newBalance = bankingDAO.payMortgage(acctNumberFrom, amount, mortgageAccount);
+        Scanner stdin = new Scanner(newBalance);
+        String newMortgageBalance = stdin.next();
+        String newAccountBalance = stdin.next();
         
-        if (!newBalance.equals("error"))
+        if (!newBalance.contains("Error"))
         {
-            Scanner stdin = new Scanner(newBalance);
-            String newMortgageBalance = stdin.next();
-            String newAccountBalance = stdin.next();
             JOptionPane.showMessageDialog((Component) null, 
                     "Your new mortage balance is: " + newMortgageBalance
                     + "\n Your new account balance is: " + newAccountBalance,
     	       "Mortage", JOptionPane.OK_OPTION);
+            
+            //populate screen with updated info
+            String info = bankingDAO.getCustomerScreenInfo(username, password);
+            stdin = new Scanner(info);
+            System.out.println(info);
+            this.setFirstName(stdin.nextLine());
+            this.setLastName(stdin.nextLine());
+            
+            int i = 0;
+            while(stdin.hasNext()) {
+                for (int j=0; j<3; j++) {
+                    this.setAccountInformation(stdin.nextLine(), i, j);
+                } //end for
+                i++;
+                
+            } //end while
         }
         else {
             JOptionPane.showMessageDialog((Component) null, 

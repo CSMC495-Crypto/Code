@@ -229,7 +229,7 @@
             <Component class="javax.swing.JTable" name="accountDetailsTable">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="5" rowCount="6">
+                  <Table columnCount="5" rowCount="20">
                     <Column editable="false" title="Account Number" type="java.lang.Object"/>
                     <Column editable="false" title="Account Type" type="java.lang.Object"/>
                     <Column editable="false" title="Account Balance" type="java.lang.Object"/>
@@ -240,8 +240,36 @@
                       <Data value="select this account"/>
                       <Data value="select this account"/>
                       <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
                     </Column>
                     <Column editable="false" title="Transfer Funds" type="java.lang.Object">
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
+                      <Data value="select this account"/>
                       <Data value="select this account"/>
                       <Data value="select this account"/>
                       <Data value="select this account"/>

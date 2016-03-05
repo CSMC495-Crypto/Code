@@ -129,12 +129,12 @@ public class LoginScreen extends javax.swing.JFrame {
         
         if (loginResults.equalsIgnoreCase("customer")) {
             
-            CustomerStart cs = new CustomerStart();
+            CustomerStart cs = new CustomerStart(username, password);
             
             //populate form with information
             String info = dao.getCustomerScreenInfo(username, password);
             Scanner stdin = new Scanner(info);
-         
+            System.out.println(info);
             cs.setFirstName(stdin.nextLine());
             cs.setLastName(stdin.nextLine());
             
