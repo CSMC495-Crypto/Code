@@ -22,6 +22,7 @@ import client.BankingDAO;
 public class CreateUserProfile extends javax.swing.JFrame {
 
     private static final BankingDAO bankingDAO = new BankingDAO();
+    JOptionPane window = new JOptionPane();
 
     /**
      * Creates new form CreateUserProfile
@@ -290,7 +291,7 @@ public class CreateUserProfile extends javax.swing.JFrame {
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // code for submitting form goes here
         String userType = "customer";
-        String userName = addressTextField.getText();
+        String userName = userNameTextField.getText();
         String userPassword = confirmPasswordTextField.getText();
         String userFirstName = firstNameTextField.getText();
         String userLastName = lastNameTextField.getText();
@@ -308,8 +309,8 @@ public class CreateUserProfile extends javax.swing.JFrame {
         String checkProfile = bankingDAO.createUserProfile(userFirstName, userLastName, 
                                     userPhoneNumber, userAddress, userCity, userState, 
                                     userZip, userName, userPassword, userType);
-        
-        if (checkProfile.equalsIgnoreCase("confirm"))
+        System.out.println(checkProfile);
+        if (checkProfile.contains("Confirmed"))
         {
             JOptionPane.showMessageDialog((Component) null, 
                     "Your profile was created.",

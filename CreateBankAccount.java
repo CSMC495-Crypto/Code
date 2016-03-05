@@ -183,12 +183,10 @@ public class CreateBankAccount extends javax.swing.JFrame {
         String dateSubmitted = dateTextField.getText();
         String firstName = es.getFirstName();
         String lastName = es.getLastName();
-        
         //Submit User Info to BankingDOA
         String acctInfo = bankingDAO.createNewAccount(acctType, startBalance, dateSubmitted,
                                     firstName, lastName);
-        
-        if (!acctInfo.equals("error"))
+        if (!acctInfo.equalsIgnoreCase("error"))
         {
             JOptionPane.showMessageDialog((Component) null, 
                         "Your account has been created.",
