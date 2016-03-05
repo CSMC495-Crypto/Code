@@ -157,6 +157,18 @@ public class EmployeeStart extends javax.swing.JFrame {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
@@ -495,6 +507,13 @@ public class EmployeeStart extends javax.swing.JFrame {
         	cityTextField.setText(stdin.nextLine());
         	stateTextField.setText(stdin.nextLine());
         	zipCodeTextField.setText(stdin.nextLine());
+                
+                //clear table content
+                for (int k=0; k<20; k++) {
+                    for (int l=0; l<4; l++) {
+                        accountsTable.getModel().setValueAt("", k, l);
+                    }
+                }
                 
                 int i = 0;
         	//accountsTable
