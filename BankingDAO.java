@@ -219,7 +219,7 @@ public class BankingDAO implements DAOInterface {
                 password + "' ORDER BY IDNumber DESC LIMIT 1;";
         String id = client(command, true).trim();
         
-        command = "SELECT accountNumber, accountType, accountBalance, dateCreated FROM Accounts WHERE ID='" + 
+        command = "SELECT accountNumber, accountType, accountBalance FROM Accounts WHERE ID='" + 
                 id + "';";
         return info + client(command, true);
  
@@ -309,7 +309,7 @@ public class BankingDAO implements DAOInterface {
                 lastName + "' ORDER BY IDNumber DESC LIMIT 1;";
         String id = client(command, true).trim();
         
-        command = "SELECT accountNumber, accountType, accountBalance FROM Accounts WHERE ID='" + 
+        command = "SELECT accountNumber, accountType, accountBalance, dateCreated FROM Accounts WHERE ID='" + 
                 id + "';";
         return firstName + "\n" + lastName + "\n" + info + client(command, true);
         
