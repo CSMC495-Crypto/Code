@@ -638,9 +638,18 @@ public class BankingDAO implements DAOInterface {
             
         }
         
+        double amount = 0;
         
+        try {
             
-        double amount = Double.parseDouble(data[1]);
+            amount = Double.parseDouble(data[1]);
+            
+        } catch(NumberFormatException ex) {
+            
+            return "Error: Amount is not numeric";
+            
+        }
+        
         
         if (amount < 0) {
             
@@ -662,8 +671,7 @@ public class BankingDAO implements DAOInterface {
         
         command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountNumber + 
                 "' ORDER BY transactionNumber DESC LIMIT 1;");
-        double startingBalance = 0.23;
-        System.out.println("Starting balance: " + client(command, true).trim());
+        double startingBalance = Double.parseDouble(client(command, true).trim());
         double endingBalance = startingBalance + amount;
         
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumber + "', '" +
@@ -709,9 +717,19 @@ public class BankingDAO implements DAOInterface {
             
         }
         
-        try {
         
-        double amount = Double.parseDouble(data[1]);
+        
+        double amount = 0;
+        
+        try {
+            
+            amount = Double.parseDouble(data[1]);
+            
+        } catch(NumberFormatException ex) {
+            
+            return "Error: Amount is not numeric";
+            
+        }
         
         if (amount < 0) {
             
@@ -751,11 +769,7 @@ public class BankingDAO implements DAOInterface {
                 ";";
         return client(command, true).trim();
         
-        } catch(NumberFormatException ex) {
-            
-            return "Error: Input must be numeric";
-            
-        }
+        
         
     }
     
@@ -788,9 +802,18 @@ public class BankingDAO implements DAOInterface {
             
         }
         
-        try {
         
-        double amount = Double.parseDouble(data[1]);
+        double amount = 0;
+        
+        try {
+            
+            amount = Double.parseDouble(data[1]);
+            
+        } catch(NumberFormatException ex) {
+            
+            return "Error: Amount is not numeric";
+            
+        }
         
         if (amount < 0) {
             
@@ -857,7 +880,7 @@ public class BankingDAO implements DAOInterface {
         
         double endingBalanceFrom = startingBalanceFrom - amount;
         double endingBalanceTo = startingBalanceTo + amount;
-        transactionNumber++;
+     
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumberFrom + "', '" +
                 accountFrom + "', " + startingBalanceFrom + ", 'Withdrawal - Transfer', " + amount + ", " + 
                 endingBalanceFrom + ");");
@@ -871,14 +894,11 @@ public class BankingDAO implements DAOInterface {
         client(command, false);
         
         command = "SELECT endingBalance FROM Transactions WHERE transactionNumber = " + transactionNumber +
-                " OR transactionNumber = " + transactionNumberNext + ";";
+                " OR transactionNumber = " + transactionNumberNext + " ORDER BY transactionNumber ASC LIMIT 2;";
         return client(command, true).trim();
         
-        } catch(NumberFormatException ex) {
-            
-            return "Error: Input must be numeric";
-            
-        }
+        
+        
         
     }
     
@@ -911,8 +931,17 @@ public class BankingDAO implements DAOInterface {
             
         }
         
+        double amount = 0;
+        
         try {
-        double amount = Double.parseDouble(data[1]);
+            
+            amount = Double.parseDouble(data[1]);
+            
+        } catch(NumberFormatException ex) {
+            
+            return "Error: Amount is not numeric";
+            
+        }
         
         if (amount < 0) {
             
@@ -921,7 +950,8 @@ public class BankingDAO implements DAOInterface {
         }
         String mortgageAccount = data[2];
         
-        command = "SELECT COUNT(*) FROM Accounts WHERE accountNumber='" + mortgageAccount + "';";
+        command = "SELECT COUNT(*) FROM Accounts WHERE accountNumber='" + mortgageAccount + "' AND "
+                + "accountType='Mortgage';";
         account = Integer.parseInt(client(command, true).trim());
         
         if (account == 0) {
@@ -967,40 +997,37 @@ public class BankingDAO implements DAOInterface {
         String idNumberTo = client(command, true).trim();
         
         command = ("SELECT COUNT(*) FROM Transactions;");        
-        int transactionNumber = Integer.parseInt(client(command, false).trim()) + 1;
+        int transactionNumber = Integer.parseInt(client(command, true).trim()) + 1;
         
         command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountFrom + 
                 "' ORDER BY transactionNumber DESC LIMIT 1;");
-        double startingBalanceFrom = Double.parseDouble(client(command, false).trim());
+        double startingBalanceFrom = Double.parseDouble(client(command, true).trim());
         
         command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + mortgageAccount + 
                 "' ORDER BY transactionNumber DESC LIMIT 1;");
-        double startingBalanceTo = Double.parseDouble(client(command, false).trim());
+        double startingBalanceTo = Double.parseDouble(client(command, true).trim());
         
         double endingBalanceFrom = startingBalanceFrom - amount;
         double endingBalanceTo = startingBalanceTo + amount;
         
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumberFrom + "', '" +
-                accountFrom + "', " + startingBalanceFrom + ", 'Withdrawal - Transfer', " + amount + ", " + 
+                accountFrom + "', " + startingBalanceFrom + ", 'Withdrawal - Mortgage Payment', " + amount + ", " + 
                 endingBalanceFrom + ");");
         client(command, false);
         
         int transactionNumberNext = transactionNumber + 1;
         
         command = ("INSERT INTO Transactions VALUES(" + transactionNumberNext + ", '" + idNumberTo + "', '" +
-                mortgageAccount + "', " + startingBalanceTo + ", 'Deposit - Transfer', " + amount + ", " + 
+                mortgageAccount + "', " + startingBalanceTo + ", 'Deposit - Mortgage Payment', " + amount + ", " + 
                 endingBalanceTo + ");");
         client(command, false);
         
         command = "SELECT endingBalance FROM Transactions WHERE transactionNumber = " + transactionNumber +
-                " OR transactionNumber = " + transactionNumberNext + ";";
+                " OR transactionNumber = " + transactionNumberNext + " ORDER BY transactionNumber ASC "
+                + "LIMIT 2;";
         return client(command, true).trim();
         
-        } catch(NumberFormatException ex) {
-            
-            return "Error: Input must be numeric";
-            
-        }
+       
         
     }
     
