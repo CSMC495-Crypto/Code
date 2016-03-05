@@ -905,8 +905,7 @@ public class BankingDAO implements DAOInterface {
                 amountToFinal + ");");
         client(command, false);
         
-        command = "SELECT endingBalance FROM Transactions WHERE transactionNumber = " + transactionNumber +
-                " OR transactionNumber = " + transactionNumberNext + " ORDER BY transactionNumber ASC LIMIT 2;";
+        command = "SELECT endingBalance FROM Transactions WHERE transactionNumber = " + transactionNumber + ";";
         return client(command, true).trim();
         
         
@@ -1026,7 +1025,7 @@ public class BankingDAO implements DAOInterface {
         client(command, false);
         
         command = "SELECT endingBalance FROM Transactions WHERE transactionNumber = " + transactionNumber +
-                " OR transactionNumber = " + transactionNumberNext + " ORDER BY transactionNumber ASC "
+                " OR transactionNumber = " + transactionNumberNext + " ORDER BY transactionNumber DESC "
                 + "LIMIT 2;";
         return client(command, true).trim();
         
