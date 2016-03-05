@@ -293,14 +293,17 @@ public class BankingDAO implements DAOInterface {
             
         }
         
-    //    command = "SELECT phoneNumber FROM personData WHERE "
+        command = "SELECT phoneNumber, Address, City, State, zipCode FROM personData WHERE "
+                + "firstName='" + firstName + "' AND lastName='" + lastName + "';";
+        String info = client(command, true);
         
-        command = "SELECT personData.firstName, personData.lastName, personData.phoneNumber, "
-                + "personData.Address, personData.City, personData.State, personData.zipCode, accountNumber, "
-                + "accountType, accountBalance, dateCreated FROM (SELECT * FROM personData INNER JOIN Accounts ON "
-                + "personData.IDNumber = Accounts.ID)personData WHERE personData.firstName='" + firstName + 
-                "' AND personData.lastName='" + lastName + "';";
-        return client(command, true);
+        command = "SELECT IDNumber FROM personData WHERE firstName='" + firstName + "' AND lastName='" + 
+                lastName + "' LIMIT 2;";
+        String id = client(command, true).trim();
+        
+        command = "SELECT accountNumber, accountType, accountBalance, dateCreated FROM Accounts WHERE ID='" + 
+                id + "';";
+        return firstName + "\n" + lastName + "\n" + info + client(command, true);
         
     }
     
