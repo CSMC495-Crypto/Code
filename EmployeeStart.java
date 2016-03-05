@@ -551,6 +551,28 @@ public class EmployeeStart extends javax.swing.JFrame {
                     "alert", JOptionPane.YES_NO_OPTION);
             if (value == JOptionPane.YES_OPTION) {
                     dao.deleteUserProfile(firstNameTextField.getText(), lastNameTextField.getText());
+                    
+                //clear customer data
+                firstNameTextField.setText("");
+        	lastNameTextField.setText("");
+                phoneNumberTextField.setText("");
+        	addressTextField.setText("");
+        	cityTextField.setText("");
+        	stateTextField.setText("");
+        	zipCodeTextField.setText("");
+                
+                //clear table content
+                for (int k=0; k<20; k++) {
+                    for (int l=0; l<4; l++) {
+                        accountsTable.getModel().setValueAt("", k, l);
+                    }
+                }
+                
+                JOptionPane.showMessageDialog(window,
+                "The user profile was removed",
+                "Success",
+                JOptionPane.PLAIN_MESSAGE);
+                
             } else if (value == JOptionPane.NO_OPTION) {
                 //close dialog box
             }
