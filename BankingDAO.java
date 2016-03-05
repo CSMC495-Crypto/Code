@@ -410,9 +410,7 @@ public class BankingDAO implements DAOInterface {
             Date date = new Date();
             String dateString = dateFormat.format(date).toString();
             
-            createNewAccount("Savings", "1000", dateString, firstName, lastName);
-            
-            return "Confirmed";
+            return "Confirmed" + "\n" + createNewAccount("Savings", "1000", dateString, firstName, lastName);
             
         }
         
@@ -479,10 +477,16 @@ public class BankingDAO implements DAOInterface {
         
         command = ("INSERT INTO Accounts VALUES('" + id + "', '" + newAccountNumber + "', '" +
                 accountType + "', '" + accountBalance + "', '" + date + "');");
-        
         client(command, false);
         
-        return id + "\n" + newAccountNumber + "\n" + accountType + "\n" + accountBalance + "\n" + date;
+        command = ("SELECT COUNT(*) FROM Transactions;");        
+        int transactionNumber = Integer.parseInt(client(command, true).trim()) + 1;
+        
+        command = "INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + id + "', '" + 
+                accountNumber + "', 0, 'Open Account', 1000, 1000);";
+        client(command, false);
+        
+        return newAccountNumber + "\n" + accountType + "\n" + accountBalance + "\n" + date;
         
     }
     
@@ -634,7 +638,7 @@ public class BankingDAO implements DAOInterface {
             
         }
         
-        try {
+        
             
         double amount = Double.parseDouble(data[1]);
         
@@ -643,7 +647,6 @@ public class BankingDAO implements DAOInterface {
             return "Error: Amount must be a positive value";
             
         }
-        
         
         
         command = ("UPDATE Accounts SET accountBalance = accountBalance + " + amount + " WHERE "
@@ -659,8 +662,8 @@ public class BankingDAO implements DAOInterface {
         
         command = ("SELECT endingBalance FROM Transactions WHERE accountNumber='" + accountNumber + 
                 "' ORDER BY transactionNumber DESC LIMIT 1;");
-        double startingBalance = Double.parseDouble(client(command, true).trim());
-        
+        double startingBalance = 0.23;
+        System.out.println("Starting balance: " + client(command, true).trim());
         double endingBalance = startingBalance + amount;
         
         command = ("INSERT INTO Transactions VALUES(" + transactionNumber + ", '" + idNumber + "', '" +
@@ -672,11 +675,7 @@ public class BankingDAO implements DAOInterface {
                 ";";
         return client(command, true).trim();
         
-        } catch(NumberFormatException ex) {
-            
-            return "Error: Input must be numeric";
-            
-        }
+        
         
     }
 
@@ -688,6 +687,7 @@ public class BankingDAO implements DAOInterface {
      * @return new account balance if successful, error type if error occurs
      */
     
+    @Override
     public String withdrawMoney(String...data){
         
         // validate arguments
