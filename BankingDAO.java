@@ -995,7 +995,7 @@ public class BankingDAO implements DAOInterface {
             
         }
         
-        double amountToFinal = amountTo + amount;
+        double amountToFinal = amountTo - amount;
         
         if (amountFromFinal < 0) {
             
