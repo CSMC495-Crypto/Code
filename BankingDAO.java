@@ -293,6 +293,8 @@ public class BankingDAO implements DAOInterface {
             
         }
         
+    //    command = "SELECT phoneNumber FROM personData WHERE "
+        
         command = "SELECT personData.firstName, personData.lastName, personData.phoneNumber, "
                 + "personData.Address, personData.City, personData.State, personData.zipCode, accountNumber, "
                 + "accountType, accountBalance, dateCreated FROM (SELECT * FROM personData INNER JOIN Accounts ON "
@@ -443,7 +445,7 @@ public class BankingDAO implements DAOInterface {
         
         command = "SELECT IDNumber FROM personData WHERE firstName='" + firstName + "' AND lastName='"
                 + lastName + "';";
-        String id = client(command, false).trim();
+        String id = client(command, true).trim();
         
         command = ("SELECT accountNumber FROM Accounts ORDER BY ID DESC LIMIT 1;");
         String accountNumber = client(command, true).trim();
