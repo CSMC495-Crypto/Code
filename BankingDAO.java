@@ -203,9 +203,7 @@ public class BankingDAO implements DAOInterface {
         String command = "SELECT COUNT(*) FROM personData WHERE Username='" + username + "' AND Password='" +
                 password + "';";
         int count = Integer.parseInt(client(command, true).trim());
-        
        
-        
         if (count == 0) {
             
             return "Error: Invalid username or password";
@@ -311,7 +309,7 @@ public class BankingDAO implements DAOInterface {
                 lastName + "' ORDER BY IDNumber DESC LIMIT 1;";
         String id = client(command, true).trim();
         
-        command = "SELECT accountNumber, accountType, accountBalance, dateCreated FROM Accounts WHERE ID='" + 
+        command = "SELECT accountNumber, accountType, accountBalance FROM Accounts WHERE ID='" + 
                 id + "';";
         return firstName + "\n" + lastName + "\n" + info + client(command, true);
         
