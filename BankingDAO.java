@@ -210,7 +210,7 @@ public class BankingDAO implements DAOInterface {
             
         }
         
-        command = "SELECT firstName, lastName, phoneNumber, Address, City, State, zipCode FROM personData "
+        command = "SELECT firstName, lastName FROM personData "
                 + "WHERE Username='" + username + "' AND Password='" + password + "' ORDER BY IDNumber DESC "
                 + "LIMIT 1;";
         String info = client(command, true);
