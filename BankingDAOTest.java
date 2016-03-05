@@ -13,37 +13,6 @@ public class BankingDAOTest {
 	BankingDAO dao = new BankingDAO();
 
 	@Test
-	public void testConfirmLogIn() {
-		// tests confirmLogIn method
-		BankingDAO dao1 = new BankingDAO();
-		String userName = "default";
-		String password = "superSecretPassword";
-		dao1.confirmLogIn(userName, password);
-
-		// testing with correct user name and password
-		assertTrue(dao1.getUsername().equals(userName));
-		assertTrue(dao1.getPassword().equals(password));
-
-		BankingDAO dao2 = new BankingDAO();
-		String wrongName = "wrong";
-		String wrongPassword = "123";
-		// testing with wrong user name and password
-		assertFalse(dao2.getUsername().equals(wrongName));
-		assertFalse(dao2.getPassword().equals(wrongPassword));
-
-		BankingDAO dao3 = new BankingDAO();
-		// testing with wrong user name and correct password
-		assertFalse(dao3.getUsername().equals(wrongName));
-		assertFalse(dao3.getPassword().equals(password));
-
-		BankingDAO dao4 = new BankingDAO();
-		// testing with correct user name and wrong password
-		assertFalse(dao4.getUsername().equals(userName));
-		assertFalse(dao4.getPassword().equals(wrongPassword));
-
-	}
-
-	@Test
 	public void testErrorChecking() {
 		// testing errorChecking method
 
@@ -170,25 +139,26 @@ public class BankingDAOTest {
 		// depositing $1,000 to existing account 18011809
 
 		String deposit = "1000";
-		
-		//get current balance
+
+		// get current balance
 		String[] currentBalance = dao.getCustomerAccount("18011809").split(
 				System.getProperty("line.separator"));
 		double balance = Double.parseDouble(currentBalance[2]);
-		
-		//make a deposit
-		String returnedAmount = dao.depositMoney("18011809", deposit);
-		
-		//get new balance
-		double returnedAmountDouble = Double.parseDouble(returnedAmount);
-	
-		System.out.print("\nCurrent balence is "+balance);
 
-		System.out.print("\nDepositing "+deposit);
-		
-		System.out.print("\nReturned banace after deposit is "+returnedAmount);
-		
-		assertTrue(returnedAmountDouble == (balance+1000));
+		// make a deposit
+		String returnedAmount = dao.depositMoney("18011809", deposit);
+
+		// get new balance
+		double returnedAmountDouble = Double.parseDouble(returnedAmount);
+
+		System.out.print("\nCurrent balence is " + balance);
+
+		System.out.print("\nDepositing " + deposit);
+
+		System.out
+				.print("\nReturned banace after deposit is " + returnedAmount);
+
+		assertTrue(returnedAmountDouble == (balance + 1000));
 
 	}
 
@@ -201,7 +171,7 @@ public class BankingDAOTest {
 
 		// withdraw $1,000 from an existing account 18011809
 
-		//get current balance
+		// get current balance
 		String[] currentBalance = dao.getCustomerAccount("18011809").split(
 				System.getProperty("line.separator"));
 		double balance = Double.parseDouble(currentBalance[2]);
@@ -210,8 +180,9 @@ public class BankingDAOTest {
 
 		String returnedAmount = dao.withdrawMoney("18011809", withdraw);
 
-		System.out.print("\nBalance before withdrawal "+balance);
-		System.out.print("\nBalance after withdrawing 1,000 is "+ returnedAmount);
+		System.out.print("\nBalance before withdrawal " + balance);
+		System.out.print("\nBalance after withdrawing 1,000 is "
+				+ returnedAmount);
 		assertTrue((balance - Double.parseDouble(withdraw)) == Double
 				.parseDouble(returnedAmount));
 
@@ -224,6 +195,41 @@ public class BankingDAOTest {
 		// login
 		dao.confirmLogIn(userName, password1);
 
+		// get current balance on account 2011
+		String[] currentBalance = dao.getCustomerAccount("2011").split(
+				System.getProperty("line.separator"));
+		double balance = Double.parseDouble(currentBalance[2]);
+
+		// providing wrong source account
+		String result1 = dao.transferMoney("201111", "400", "2011");
+		assertTrue(result1.equals("Error: Source account does not exist"));
+
+		// providing wrong destination account
+		String result2 = dao.transferMoney("2011", "400", "20115765");
+		assertTrue(result2.equals("Error: Destination account does not exist"));
+
+		// insufficient funds
+		String result3 = dao.transferMoney("2011", "400000", "2017");
+		assertTrue(result3.equals("Error: Insufficient funds"));
+
+		// transfer amount
+		String transfer = "200";
+
+		String[] str = { "2011", transfer, "2012" };
+
+		// transfer to account 2012
+
+		String returnedAmount = dao.transferMoney(str);
+
+		System.out.print("\n\nBalance before transfer " + balance);
+		System.out.print("\n\nBalance in the other account "
+				+ dao.getCustomerAccount("2017").split(
+						System.getProperty("line.separator"))[2]);
+		System.out
+				.print("\nBalance after transfering 200 is " + returnedAmount);
+		assertTrue((balance - Double.parseDouble(transfer)) == Double
+				.parseDouble(returnedAmount));
+
 	}
 
 	@Test
@@ -233,7 +239,40 @@ public class BankingDAOTest {
 		// login
 		dao.confirmLogIn(userName, password1);
 
-		//
+		// get current balance on account 2011
+				String[] currentBalance = dao.getCustomerAccount("2011").split(
+						System.getProperty("line.separator"));
+				double balance = Double.parseDouble(currentBalance[2]);
+				
+				// providing wrong source account
+				String result1 = dao.payMortgage("201111", "400", "2011");
+				assertTrue(result1.equals("Error: Source account does not exist"));
+
+				// providing wrong destination account
+				String result2 = dao.payMortgage("2011", "400", "20115765");
+				assertTrue(result2.equals("Error: Mortgage account does not exist"));
+
+				// insufficient funds
+				String result3 = dao.payMortgage("2011", "400000", "2017");
+				System.out.print("\nHere"+result3);
+				assertTrue(result3.equals("Error: Insufficient funds"));
+
+				// transfer amount
+				String transfer = "200";
+
+				String[] str = { "2011", transfer, "2017" };
+
+				// transfer to account 2012
+
+				String returnedAmount = dao.payMortgage(str);
+
+				System.out.print("\n\nReturned amount " + returnedAmount);
+				System.out.print("\n\nBalance before transfer " + balance);
+				System.out.print("\n\nBalance in the other account "
+						+ dao.getCustomerAccount("2017").split(
+								System.getProperty("line.separator"))[2]);
+				assertTrue((balance - Double.parseDouble(transfer)) == Double
+						.parseDouble(returnedAmount));
 
 	}
 
