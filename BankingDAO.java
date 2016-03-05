@@ -16,8 +16,14 @@ import java.util.Random;
  * 
  * @author Jonathan Wojack
  * @date 2/27/2016
- * @course CMSC495
  * @project Cryptography Banking Application
+ * @updated by Jonathan Wojack on 3/4/2016
+ * 
+ * Changes:
+ * 
+ * 1.  Completed code for all methods and specified all database commands except for database login
+ * 2.  Beautified code
+ * 3.  Added comments
  * 
  */
 
@@ -26,7 +32,14 @@ public class BankingDAO implements DAOInterface {
     String username = "";
     String password = "";
     
-    public String client(String plainText, Boolean requestType) {
+    /**
+     * 
+     * @param plainText
+     * @param requestType
+     * @return Decrypted server response as a String 
+     */
+    
+    private String client(String plainText, Boolean requestType) {
 
         // declare I/O streams
   
@@ -46,15 +59,10 @@ public class BankingDAO implements DAOInterface {
       
             // create an output stream to send data to the server
       
-            toServer = new DataOutputStream(socket.getOutputStream()); 
-                
+            toServer = new DataOutputStream(socket.getOutputStream());                 
             DataProcessor dataProcessor = new DataProcessor();
 
-            // get user input from text field and convert to data to send to server
-          
-              
-          
-            // encrypt data to be sent to server with custom XOR encryption algorithm       
+            // get user input, encrypt it, package in an object ready to be sent to the server       
         
             DataObject clientEncryptedObject = dataProcessor.encryptData(plainText);
                 
@@ -68,7 +76,7 @@ public class BankingDAO implements DAOInterface {
         
             String dataReturned = "";
                 
-            if (requestType) {  // if data is to be returned
+            if (requestType) {  // if data is to be returned from the database
                 
                 // get number of cells in selected SQL table
         
@@ -77,25 +85,19 @@ public class BankingDAO implements DAOInterface {
                 cellsObject = (DataObject) fromServerOISCells.readObject();
                 String cellsString = dataProcessor.decryptData(cellsObject).trim();
                 
-                // get number of columns in selected SQL table
+                // get number of columns, cells, and rows in selected SQL table
                         
                 DataObject columnsObject = null;        
                 ObjectInputStream fromServerOISColumns = new ObjectInputStream(socket.getInputStream());              
                 columnsObject = (DataObject) fromServerOISColumns.readObject();
                 String columnsString = dataProcessor.decryptData(columnsObject).trim();
-                
-           //     System.out.println("cellsString: " + cellsString);
-                        
                 int cells = Integer.parseInt(cellsString);
                 int columns = Integer.parseInt(columnsString);
-                
-             //   System.out.println("cells: " + cells);
-                
                 int rows = cells/columns;
                                       
                 // get table data from server, decrypt, and then process and display data
        
-                for (int i = 0; i < rows; i++) {  // rows of data in table                 
+                for (int i = 0; i < rows; i++) {                 
                   
                     for (int j = 0; j < columns; j++) {
                       
@@ -103,15 +105,11 @@ public class BankingDAO implements DAOInterface {
                         ObjectInputStream fromServerLoop = new ObjectInputStream(socket.getInputStream());
                         serverEncryptedObjectLoop = (DataObject) fromServerLoop.readObject();
                         
-                        StringBuilder stringBuilder = new StringBuilder();
+                        // concatenate output into one String separated by newlines
                         
+                        StringBuilder stringBuilder = new StringBuilder();                        
                         dataReturned = stringBuilder.append(dataReturned).append(dataProcessor.decryptData(serverEncryptedObjectLoop) + "\n").toString();
                         
-                        
-                        
-                        
-                //        System.out.println("dataReturned: " + dataReturned);
-                                
                     }
                                               
                 } 
@@ -120,27 +118,18 @@ public class BankingDAO implements DAOInterface {
                         
             }
                     
-            else {  // if only a database update is to be performed
-                
-                
-        
-                DataObject serverEncryptedObject = null;
-            
+            else {  // if only a database update is to be performed        
+                        
+                DataObject serverEncryptedObject = null;            
                 ObjectInputStream fromServerOIS = new ObjectInputStream(socket.getInputStream());
                         
-                // get response from server
-                
-                
+                // get response from server                
               
                 serverEncryptedObject = (DataObject) fromServerOIS.readObject();
               
                 // decrypt and report server response
                 
-          //      System.out.println("sggsg");
-                
                 DataProcessor dataProcessorFalse = new DataProcessor();
-                       
-          //      System.out.println("RETURNING: " + dataProcessorFalse.decryptData(serverEncryptedObject));
                 
                 return dataProcessorFalse.decryptData(serverEncryptedObject);    // return update status       
                         
@@ -150,7 +139,7 @@ public class BankingDAO implements DAOInterface {
                 
         }
     
-        return "";
+        return null;
     
     }
     
@@ -173,16 +162,14 @@ public class BankingDAO implements DAOInterface {
             
         }
         
-        // transmit request
+        // store parameters
         
         String username = data[0];
         String password = data[1];
         
-        String command = ("Login " + username + " " + password);
+        // send login request to server
         
-        setUsername(username);
-        setPassword(password);
-        
+        String command = ("Login " + username + " " + password);       
         return client(command, false);
         
     }
@@ -456,19 +443,21 @@ public class BankingDAO implements DAOInterface {
         
         command = "SELECT IDNumber FROM personData WHERE firstName='" + firstName + "' AND lastName='"
                 + lastName + "';";
-        String id = client(command, true).trim();
+        String id = client(command, false).trim();
         
-        command = ("SELECT accountNumber FROM Accounts ORDER BY IDNumber DESC LIMIT 1;");
+        command = ("SELECT accountNumber FROM Accounts ORDER BY ID DESC LIMIT 1;");
         String accountNumber = client(command, true).trim();
         
         Random random = new Random();
         
-        int newAccountNumber = Integer.parseInt(accountNumber) + random.nextInt(10);
+        String newAccountNumber = Integer.toString(Integer.parseInt(accountNumber) + random.nextInt(10));
         
         command = ("INSERT INTO Accounts VALUES('" + id + "', '" + newAccountNumber + "', '" +
-                accountType + "', '" + date + "');");
+                accountType + "', '" + accountBalance + "', '" + date + "');");
         
-        return client(command, true);
+        client(command, false);
+        
+        return id + "\n" + newAccountNumber + "\n" + accountType + "\n" + accountBalance + "\n" + date;
         
     }
     
@@ -1016,29 +1005,7 @@ public class BankingDAO implements DAOInterface {
         
     }
     
-    public void setUsername(String username) {
-        
-        this.username = username;
-        
-    }
-    
-    public void setPassword(String password) {
-        
-        this.password = password;
-        
-    }
-    
-    public String getUsername() {
-        
-        return this.username;
-        
-    }
-    
-    public String getPassword() {
-        
-        return this.password;
-        
-    }
+   
     
 
     
