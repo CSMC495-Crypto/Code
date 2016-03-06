@@ -426,8 +426,8 @@ public class AccountInfo extends javax.swing.JFrame {
         String newBalance = bankingDAO.payMortgage(acctNumberfrom, amount, mortgageAccount);
         
         Scanner stdin = new Scanner(newBalance);
-        String newAccountBalance = stdin.next();
         String newMortgageBalance = stdin.next();
+        String newAccountBalance = stdin.next();
         
         if (!newBalance.contains("Error"))
         {

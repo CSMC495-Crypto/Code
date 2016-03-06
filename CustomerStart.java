@@ -354,7 +354,7 @@ public class CustomerStart extends javax.swing.JFrame {
         String acctNumberFrom = accountNumberFromTextField.getText();
         String acctNumberTo = accountNumberToTextField.getText();
         String amount = amountTextField.getText();
-        
+
         //Transmit account information
         String newBalance = bankingDAO.transferMoney(acctNumberFrom, amount, acctNumberTo );
         Scanner stdin = new Scanner(newBalance);
@@ -368,15 +368,14 @@ public class CustomerStart extends javax.swing.JFrame {
             
             //populate screen with updated info
             String info = bankingDAO.getCustomerScreenInfo(username, password);
-            stdin = new Scanner(info);
-            System.out.println(info);
-            this.setFirstName(stdin.nextLine());
-            this.setLastName(stdin.nextLine());
+            Scanner stdint = new Scanner(info);
+            this.setFirstName(stdint.nextLine());
+            this.setLastName(stdint.nextLine());
             
             int i = 0;
-            while(stdin.hasNext()) {
+            while(stdint.hasNext()) {
                 for (int j=0; j<3; j++) {
-                    this.setAccountInformation(stdin.nextLine(), i, j);
+                    this.setAccountInformation(stdint.nextLine(), i, j);
                 } //end for
                 i++;
                 
@@ -409,15 +408,14 @@ public class CustomerStart extends javax.swing.JFrame {
             
             //populate screen with updated info
             String info = bankingDAO.getCustomerScreenInfo(username, password);
-            stdin = new Scanner(info);
-            System.out.println(info);
-            this.setFirstName(stdin.nextLine());
-            this.setLastName(stdin.nextLine());
+            Scanner stdint = new Scanner(info);
+            this.setFirstName(stdint.nextLine());
+            this.setLastName(stdint.nextLine());
             
             int i = 0;
-            while(stdin.hasNext()) {
+            while(stdint.hasNext()) {
                 for (int j=0; j<3; j++) {
-                    this.setAccountInformation(stdin.nextLine(), i, j);
+                    this.setAccountInformation(stdint.nextLine(), i, j);
                 } //end for
                 i++;
                 
@@ -425,7 +423,7 @@ public class CustomerStart extends javax.swing.JFrame {
         }
         else {
             JOptionPane.showMessageDialog((Component) null, 
-                    "An error has occured" + newBalance,
+                    "An error has occured",
     	       "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_payMortgageButtonActionPerformed
